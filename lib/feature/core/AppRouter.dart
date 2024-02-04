@@ -4,7 +4,7 @@ import 'package:eductionsystem/Home/Peresention/view/WelcomePages/Page4.dart';
 import 'package:eductionsystem/Home/Peresention/view/WelcomePages/page2.dart';
 import 'package:eductionsystem/Home/login/login_page.dart';
 import 'package:go_router/go_router.dart';
-import '../../Home/Peresention/view/HomePage.dart';
+import '../../Home/HomePage/screens/home_page.dart';
 import '../../feature/splash/persentation/splash_view.dart';
 
 abstract class AppRouter {
@@ -33,6 +33,10 @@ abstract class AppRouter {
       GoRoute(
         path: '/LoginPage',
         builder: (context, state) => const LoginPage(),
+      ),
+      GoRoute(
+        path: '/HomePage',
+        builder: (context, state) => const HomePage(),
       ),
 
     //   GoRoute(

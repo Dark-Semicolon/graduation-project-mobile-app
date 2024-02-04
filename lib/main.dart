@@ -21,7 +21,7 @@ class eductionsystem extends StatelessWidget {
       debugShowCheckedModeBanner: false,
 
       //home: SplashView(),
-      theme: ThemeData.dark().copyWith(
+      theme: ThemeData.light().copyWith(
           scaffoldBackgroundColor:
               const Color(0xff4E74F9)), //background for all screens
     );

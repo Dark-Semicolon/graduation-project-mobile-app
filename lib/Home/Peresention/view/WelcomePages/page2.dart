@@ -39,10 +39,33 @@ class Page2 extends StatelessWidget {
           ),
           Scroller(),
           const SizedBox(height: 70,),
-          ElevatedButton(onPressed: () {
-          GoRouter.of(context).push('/Page3');
-    },
-              child: const Text('next'))
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              children: [
+                ElevatedButton(onPressed: () { GoRouter.of(context).push('/LoginPage'); },
+                  child: const Text('Skip',style: TextStyle(fontSize: 18,),),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.blue,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    minimumSize: Size(122, 42),
+                  ),),
+                const Spacer(),
+                ElevatedButton(onPressed: () { GoRouter.of(context).push('/Page3'); },
+                  child: const Text('next',style: TextStyle(fontSize: 18,),),
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.blue,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    minimumSize: Size(122, 42),
+                  ),
+                ),
+              ],
+            ),
+          )
         ],
       ),
     );
