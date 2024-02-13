@@ -1,4 +1,5 @@
-import 'package:eductionsystem/Features/splash/persentation/widgets/splash_body.dart';
+
+import 'package:eductionsystem/lib/Features/Splash/Persentation/widgets/splash_body.dart';
 import 'package:flutter/material.dart';
 
 class SplashView extends StatelessWidget {
@@ -9,4 +10,3 @@ class SplashView extends StatelessWidget {
     return const Scaffold(body: SplashViewbody());
   }
 }
-//dddddddd

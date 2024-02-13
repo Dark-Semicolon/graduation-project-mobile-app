@@ -1,8 +1,8 @@
-import 'package:eductionsystem/Features/Login/AppPreiew/Page2.dart';
-import 'package:go_router/go_router.dart';
 
+import 'package:go_router/go_router.dart';
 import '../Features/Home/Presentation/view/home_page.dart';
 import '../Features/Login/AppPreiew/Page1.dart';
+import '../Features/Login/AppPreiew/Page2.dart';
 import '../Features/Login/AppPreiew/Page3.dart';
 import '../Features/Login/AppPreiew/Page4.dart';
 import '../Features/Login/login_page.dart';
