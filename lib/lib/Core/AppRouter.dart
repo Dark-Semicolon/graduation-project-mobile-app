@@ -1,11 +1,12 @@
-import 'package:eductionsystem/Home/Peresention/view/WelcomePages/Page1.dart';
-import 'package:eductionsystem/Home/Peresention/view/WelcomePages/Page3.dart';
-import 'package:eductionsystem/Home/Peresention/view/WelcomePages/Page4.dart';
-import 'package:eductionsystem/Home/Peresention/view/WelcomePages/page2.dart';
-import 'package:eductionsystem/Home/login/login_page.dart';
+import 'package:eductionsystem/Features/Login/AppPreiew/Page2.dart';
 import 'package:go_router/go_router.dart';
-import '../../Home/HomePage/screens/home_page.dart';
-import '../../feature/splash/persentation/splash_view.dart';
+
+import '../Features/Home/Presentation/view/home_page.dart';
+import '../Features/Login/AppPreiew/Page1.dart';
+import '../Features/Login/AppPreiew/Page3.dart';
+import '../Features/Login/AppPreiew/Page4.dart';
+import '../Features/Login/login_page.dart';
+import '../Features/Splash/Persentation/splash_view.dart';
 
 abstract class AppRouter {
   static final router = GoRouter(
@@ -39,9 +40,9 @@ abstract class AppRouter {
         builder: (context, state) => const HomePage(),
       ),
 
-    //   GoRoute(
-    //       path: '/searchPage',
-    //       builder: (context, state) => const SearchViewBody()),
-     ],
+      //   GoRoute(
+      //       path: '/searchPage',
+      //       builder: (context, state) => const SearchViewBody()),
+    ],
   );
 }

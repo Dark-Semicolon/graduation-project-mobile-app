@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -7,15 +6,13 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-
             const TopImagInLogin(),
-
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -52,11 +49,14 @@ class LoginPage extends StatelessWidget {
                     decoration: InputDecoration(
                       labelText: 'Enter your name',
                       hintText: 'John Doe',
-                      hintStyle: TextStyle(color: Colors.black), // Set hint text color
-                      prefixIcon: Icon(Icons.person_2_outlined, color: Colors.black),
+                      hintStyle: TextStyle(color: Colors.black),
+                      // Set hint text color
+                      prefixIcon:
+                          Icon(Icons.person_2_outlined, color: Colors.black),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(20)),
-                        borderSide: BorderSide(color: Colors.black), // Set border color
+                        borderSide:
+                            BorderSide(color: Colors.black), // Set border color
                       ),
                     ),
                     style: TextStyle(
@@ -71,11 +71,14 @@ class LoginPage extends StatelessWidget {
                     decoration: InputDecoration(
                       labelText: 'Enter your Password',
                       hintText: '@123',
-                      hintStyle: TextStyle(color: Colors.black), // Set hint text color
-                      prefixIcon: Icon(Icons.lock_open_outlined, color: Colors.black),
+                      hintStyle: TextStyle(color: Colors.black),
+                      // Set hint text color
+                      prefixIcon:
+                          Icon(Icons.lock_open_outlined, color: Colors.black),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                        borderSide: BorderSide(color: Colors.red), // Set border color
+                        borderSide:
+                            BorderSide(color: Colors.red), // Set border color
                       ),
                     ),
                     style: TextStyle(
@@ -89,38 +92,79 @@ class LoginPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       TextButton(
-                        onPressed: (){},
-                        child: const Text('Forgot Password ?',style: TextStyle(color: Colors.black,fontSize:14
-                          ,fontFamily: 'Outfit',
-                          fontWeight: FontWeight.w500,),),
-                      ),],),
+                        onPressed: () {},
+                        child: const Text(
+                          'Forgot Password ?',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                            fontFamily: 'Outfit',
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                   const SizedBox(height: 10),
                   SizedBox(
                     width: MediaQuery.of(context).size.width,
                     height: 55,
                     child: ElevatedButton(
-                      onPressed: () {GoRouter.of(context).push('/HomePage');},
-                      child: Text('Login',style: TextStyle(fontSize: 22,fontFamily: 'Outfit', fontWeight: FontWeight.w700,),),
+                      onPressed: () {
+                        GoRouter.of(context).push('/HomePage');
+                      },
+                      child: Text(
+                        'Login',
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontFamily: 'Outfit',
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
                       style: ElevatedButton.styleFrom(
                         primary: Colors.blue,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15), // Rounded border
+                          borderRadius:
+                              BorderRadius.circular(15), // Rounded border
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(height:60),
-                  Row(mainAxisAlignment: MainAxisAlignment.center,
+                  const SizedBox(height: 60),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                   Container(width: 100,height:1,color: Colors.black,),SizedBox(width: 10,),
-                    TextButton(
-                      onPressed: (){},
-                      child: const Text('Or Sign Up With',style: TextStyle(color: Colors.black,fontSize:14
-                        ,fontFamily: 'Outfit',
-                        fontWeight: FontWeight.w400,),),),SizedBox(width: 10,),
-                    Container(width: 100,height:1,color: Colors.black,) ], ),
-                const SizedBox(height: 20),
-
+                      Container(
+                        width: 100,
+                        height: 1,
+                        color: Colors.black,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      TextButton(
+                        onPressed: () {},
+                        child: const Text(
+                          'Or Sign Up With',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 14,
+                            fontFamily: 'Outfit',
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Container(
+                        width: 100,
+                        height: 1,
+                        color: Colors.black,
+                      )
+                    ],
+                  ),
+                  const SizedBox(height: 20),
                 ],
               ),
             )
@@ -130,15 +174,6 @@ class LoginPage extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-
-
-
-
 
 // widget
 
@@ -163,14 +198,20 @@ class TopImagInLogin extends StatelessWidget {
               SizedBox(height: 20),
               Text(
                 'Login Page',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),
+                style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black),
               ),
               SizedBox(height: 5),
               Text(
                 'Welcome back',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400, color: Colors.black,),
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.black,
+                ),
               ),
-
             ],
           ),
         ),
@@ -178,4 +219,3 @@ class TopImagInLogin extends StatelessWidget {
     );
   }
 }
-

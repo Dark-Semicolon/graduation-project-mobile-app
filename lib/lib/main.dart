@@ -1,14 +1,9 @@
-
 import 'package:flutter/material.dart';
-import 'feature/core/AppRouter.dart';
-import 'feature/splash/persentation/splash_view.dart';
-import 'package:go_router/go_router.dart';
 
+import 'Core/AppRouter.dart';
 
-void main() async{
-
-runApp(const eductionsystem());
-
+void main() async {
+  runApp(const eductionsystem());
 }
 
 class eductionsystem extends StatelessWidget {
@@ -17,7 +12,7 @@ class eductionsystem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-       routerConfig: AppRouter.router,
+      routerConfig: AppRouter.router,
       debugShowCheckedModeBanner: false,
 
       //home: SplashView(),

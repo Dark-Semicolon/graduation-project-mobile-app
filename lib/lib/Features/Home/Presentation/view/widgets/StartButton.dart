@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../const.dart';
+import '../../../../../Constants/const.dart';
 
 class StartButton extends StatelessWidget {
   const StartButton({Key? key}) : super(key: key);
@@ -18,7 +18,7 @@ class StartButton extends StatelessWidget {
           child: ElevatedButton(
             onPressed: () {
               GoRouter.of(context).push('/Page2');
-              },
+            },
             style: ElevatedButton.styleFrom(
               primary: kPrimaryColor,
               shadowColor: Colors.black,
@@ -31,10 +31,9 @@ class StartButton extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                   Text(
+                  Text(
                     'Get Started  ',
                     style: TextStyle(
-
                       fontSize: 23,
                       color: Colors.white,
                     ),

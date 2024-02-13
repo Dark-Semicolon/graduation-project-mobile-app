@@ -1,11 +1,11 @@
-import 'package:eductionsystem/const.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../core/AssetsData.dart';
+import '../../../../Core/AssetsData.dart';
 
 class SplashViewbody extends StatefulWidget {
   const SplashViewbody({Key? key}) : super(key: key);
+
   @override
   State<SplashViewbody> createState() => _SplashViewbodyState();
 }
@@ -72,7 +72,8 @@ class _SplashViewbodyState extends State<SplashViewbody>
                         fontSize: 44,
                         color: Colors.white,
                       ),
-                    ),Text(
+                    ),
+                    Text(
                       'System',
                       textAlign: TextAlign.center,
                       style: TextStyle(
@@ -84,7 +85,6 @@ class _SplashViewbodyState extends State<SplashViewbody>
                     ),
                   ],
                 ),
-
               );
             })
       ],
