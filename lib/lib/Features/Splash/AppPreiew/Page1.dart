@@ -10,20 +10,18 @@ class Page1 extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const SizedBox(
-            height: 100,
+          const Divider(
+            height: 50,
           ),
-          Center(
-            child: Image.asset(
-                'assets/images/college students-rafiki.png'), // Adjust the path as needed
+          Image.asset(
+            'assets/images/college students-rafiki.png',
           ),
-          const SizedBox(
-            height: 18,
-          ),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.03),
           const Text(
             'Welcome To',
-            textAlign: TextAlign.center,
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 44,
@@ -32,36 +30,29 @@ class Page1 extends StatelessWidget {
           ),
           const Text(
             'Uni Name',
-            textAlign: TextAlign.center,
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 44,
               color: Colors.black,
             ),
           ),
-          Center(
-            child: Container(
-              padding: const EdgeInsets.all(16.0),
-              // Adjust the padding as needed
-              decoration: const BoxDecoration(
-                color: Colors
-                    .transparent, // Change this color to your desired box color
-              ),
-              child: const Text(
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt dolore magna aliqua',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Color(
-                      0xff45474B), // Change this color to your desired text color
+          const Expanded(
+            child: Center(
+              child: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Text(
+                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt dolore magna aliqua',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Color(0xff45474B),
+                  ),
                 ),
               ),
             ),
           ),
-          const SizedBox(
-            height: 20,
-          ),
           const StartButton(),
+          const SizedBox(height: 50), // Adjusted height
         ],
       ),
     );

@@ -12,8 +12,8 @@ class Page3 extends StatelessWidget {
       backgroundColor: Colors.grey[200],
       body: Column(
         children: [
-          const SizedBox(
-            height: 100,
+          const Expanded(
+            child: SizedBox(),
           ),
           Center(
             child: Image.asset('assets/images/Nerd-bro.png'),
@@ -83,7 +83,8 @@ class Page3 extends StatelessWidget {
                 ),
               ],
             ),
-          )
+          ),
+          const SizedBox(height: 50), // Adjusted height
         ],
       ),
     );

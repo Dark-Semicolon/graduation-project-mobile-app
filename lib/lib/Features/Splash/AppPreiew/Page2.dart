@@ -12,8 +12,8 @@ class Page2 extends StatelessWidget {
       backgroundColor: Colors.grey[200],
       body: Column(
         children: [
-          const SizedBox(
-            height: 100,
+          const Expanded(
+            child: SizedBox(),
           ),
           Center(
             child: Image.asset('assets/images/Grades-bro.png'),
@@ -83,7 +83,11 @@ class Page2 extends StatelessWidget {
                 ),
               ],
             ),
-          )
+          ),
+          const Expanded(
+              child: SizedBox(
+            height: 50,
+          ))
         ],
       ),
     );
