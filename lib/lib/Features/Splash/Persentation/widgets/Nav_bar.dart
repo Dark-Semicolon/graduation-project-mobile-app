@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
 import '../../../../Constants/const.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
@@ -11,18 +12,20 @@ class CustomBottomNavBar extends StatelessWidget {
   final MenuState selectedMenu;
 
   get inActiveIconColor => null;
-  double br=50;
+  double br = 50;
+
   @override
   Widget build(BuildContext context) {
     const Color inActiveIconColor = Color(0xFFB6B6B6);
 
     return Padding(
       padding: const EdgeInsets.all(0.0),
-      child: Container(height: 90,
+      child: Container(
+        height: 100,
         padding: const EdgeInsets.symmetric(vertical: 12),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius:  BorderRadius.only(
+          borderRadius: BorderRadius.only(
             topLeft: Radius.circular(br),
             topRight: Radius.circular(br),
             //   bottomLeft: Radius.circular(br),
@@ -30,9 +33,9 @@ class CustomBottomNavBar extends StatelessWidget {
           ),
           boxShadow: [
             BoxShadow(
-              offset: const Offset(1, 1),
-              blurRadius: 10,
-              spreadRadius: 5,
+              offset: const Offset(0, 0),
+              blurRadius: 0,
+              spreadRadius: 0,
               color: const Color(0xFF000000).withOpacity(0.33),
             ),
           ],
