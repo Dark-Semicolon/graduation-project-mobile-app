@@ -12,7 +12,7 @@ class CustomBottomNavBar extends StatelessWidget {
   final MenuState selectedMenu;
 
   get inActiveIconColor => null;
-  double br = 50;
+  double br = 45;
 
   @override
   Widget build(BuildContext context) {
@@ -33,9 +33,9 @@ class CustomBottomNavBar extends StatelessWidget {
           ),
           boxShadow: [
             BoxShadow(
-              offset: const Offset(0, 0),
-              blurRadius: 0,
-              spreadRadius: 0,
+              offset: const Offset(3, 5),
+              blurRadius: 20,
+              spreadRadius:5,
               color: const Color(0xFF000000).withOpacity(0.33),
             ),
           ],
