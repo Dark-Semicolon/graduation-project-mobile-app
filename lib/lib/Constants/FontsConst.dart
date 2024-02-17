@@ -31,8 +31,9 @@ class AppFonts {
   static const TextStyle roboto17 = TextStyle(
     fontFamily: 'Roboto',
     fontSize: 17,
-    fontWeight: FontWeight.normal,
+    fontWeight: FontWeight.bold,
     height: 0.94,
+    color: Colors.black
   );
 
   static const TextStyle robotoNormal14 = TextStyle(
@@ -41,6 +42,7 @@ class AppFonts {
     fontWeight: FontWeight.normal,
     letterSpacing: 0,
     height: 1.1428571428571428,
+    color: AppColors.white1,
   );
 
   static const TextStyle robotoNormal10 = TextStyle(
@@ -54,8 +56,9 @@ class AppFonts {
   static const TextStyle manropeNormal16 = TextStyle(
     fontFamily: 'Manrope',
     fontSize: 16,
-    fontWeight: FontWeight.normal,
+    fontWeight: FontWeight.bold,
     letterSpacing: -0.30000001192092896,
     height: 1,
+    color: AppColors.white1,
   );
 }
