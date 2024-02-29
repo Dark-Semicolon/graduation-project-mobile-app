@@ -16,13 +16,14 @@ class LoginRequest {
 // login_response_model.dart
 class LoginResponse {
   final String token;
+  final String userName; // You can include other user-related information in the response
 
-  LoginResponse({required this.token});
+  LoginResponse({required this.token, required this.userName});
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) {
     return LoginResponse(
       token: json['token'],
-
+      userName: json['userName'],
     );
   }
 }

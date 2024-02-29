@@ -1,14 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
-
-
+import '../../API/models/login_model.dart';
+import '../../API/services/login_service.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key});
 
   @override
   Widget build(BuildContext context) {
+    final TextEditingController emailController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
+
+    void _login() async {
+      final String email = emailController.text.trim();
+      final String password = passwordController.text.trim();
+
+      try {
+        final response = await ApiService().login(
+            LoginRequest(email: email, password: password));
+        GoRouter.of(context).go('/HomePage');
+      } catch (e) {
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Login failed. Please try again (غللللط).'),
+          ),
+        );
+      }
+    }
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -48,93 +68,62 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 25),
-                  const TextField(
+                  TextField(
+                    controller: emailController,
                     decoration: InputDecoration(
-                      labelText: 'Enter your name',
-                      hintText: 'John Doe',
-                      hintStyle: TextStyle(color: Colors.black),
-                      // Set hint text color
-                      prefixIcon:
-                          Icon(Icons.person_2_outlined, color: Colors.black),
+                      labelText: 'Enter your email',
+                      hintText: 'john@example.com',
+                      prefixIcon: Icon(Icons.email),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(20)),
-                        borderSide:
-                            BorderSide(color: Colors.black), // Set border color
                       ),
                     ),
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      color: Colors.black,
-                    ),
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.done,
                   ),
-                  const SizedBox(height: 10),
-                  const TextField(
+                  SizedBox(height: 10),
+                  TextField(
+                    controller: passwordController,
                     decoration: InputDecoration(
                       labelText: 'Enter your Password',
-                      hintText: '@123',
-                      hintStyle: TextStyle(color: Colors.black),
-                      // Set hint text color
-                      prefixIcon:
-                          Icon(Icons.lock_open_outlined, color: Colors.black),
+                      hintText: 'Password',
+                      prefixIcon: Icon(Icons.lock),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                        borderSide:
-                            BorderSide(color: Colors.red), // Set border color
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
                       ),
                     ),
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      color: Colors.black,
-                    ),
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.done,
+                    obscureText: true,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       TextButton(
-                        onPressed: () {},
-                        child: const Text(
-                          'Forgot Password ?',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14,
-                            fontFamily: 'Outfit',
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
+                        onPressed: () {
+
+                        },
+                        child: const Text('Forgot Password ?'),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 10),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: 55,
-                    child: ElevatedButton(
-                      onPressed: () {
-
-                        GoRouter.of(context).push('/HomePage');
-                      },
-                      child: Text(
-                        'Login',
-                        style: TextStyle(
-                          fontSize: 22,
-                          fontFamily: 'Outfit',
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.blue,
-                        shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(15), // Rounded border
-                        ),
+                  SizedBox(height: 10),
+                  ElevatedButton(
+                    onPressed: _login,
+                    child: Text(
+                      'Login',
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontFamily: 'Outfit',
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.blue,
+                      shape: RoundedRectangleBorder(
+                        borderRadius:
+                        BorderRadius.circular(15), // Rounded border
+                      ),
+
                   ),
-                  const SizedBox(height: 60),
+            ),
+                  SizedBox(height: 60),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -143,24 +132,16 @@ class LoginPage extends StatelessWidget {
                         height: 1,
                         color: Colors.black,
                       ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        child: const Text(
-                          'Or Sign Up With',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14,
-                            fontFamily: 'Outfit',
-                            fontWeight: FontWeight.w400,
-                          ),
+                      SizedBox(width: 10),
+                      Text(
+                        'Or Sign Up With',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontFamily: 'Outfit',
+                          fontWeight: FontWeight.w400,
                         ),
                       ),
-                      SizedBox(
-                        width: 10,
-                      ),
+                      SizedBox(width: 10),
                       Container(
                         width: 100,
                         height: 1,
@@ -168,7 +149,7 @@ class LoginPage extends StatelessWidget {
                       )
                     ],
                   ),
-                  const SizedBox(height: 20),
+                  SizedBox(height: 20),
                 ],
               ),
             )
@@ -179,10 +160,8 @@ class LoginPage extends StatelessWidget {
   }
 }
 
-// widget
-
 class TopImagInLogin extends StatelessWidget {
-  const TopImagInLogin({super.key});
+  const TopImagInLogin({Key? key});
 
   @override
   Widget build(BuildContext context) {
@@ -193,8 +172,8 @@ class TopImagInLogin extends StatelessWidget {
           'assets/images/top_login_scene.png',
           fit: BoxFit.fill,
         ),
-        const Padding(
-          padding: EdgeInsets.all(26.0),
+        Padding(
+          padding: const EdgeInsets.all(26.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -203,9 +182,10 @@ class TopImagInLogin extends StatelessWidget {
               Text(
                 'Login Page',
                 style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black),
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
               ),
               SizedBox(height: 5),
               Text(

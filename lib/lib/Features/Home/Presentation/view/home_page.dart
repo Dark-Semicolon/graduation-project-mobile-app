@@ -1,8 +1,9 @@
 import 'package:eductionsystem/lib/Features/Home/Presentation/view/widgets/progress_overView__scroll_view.dart';
 import 'package:eductionsystem/lib/Features/Home/Presentation/view/widgets/schedule_view.dart';
 import 'package:flutter/material.dart';
-
+import 'package:go_router/go_router.dart';
 import '../../../Splash/Persentation/widgets/Nav_bar.dart';
+
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -19,11 +20,13 @@ class HomePage extends StatelessWidget {
             backgroundColor: Colors.blueAccent,
           ),
         ),
-        body: const Column(
+        body:  Column(
           children: [
             ProgressOverViewScrollView(),
             SizedBox(height: 20,),
             ScheduleView(),
+            SizedBox(height: 20,),
+            ElevatedButton(onPressed: (){GoRouter.of(context).push('/LoginPage');}, child: Text('logout'))
           ],
         ),
         bottomNavigationBar: CustomBottomNavBar(
