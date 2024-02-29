@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+
+
+
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key});
 
@@ -111,6 +114,7 @@ class LoginPage extends StatelessWidget {
                     height: 55,
                     child: ElevatedButton(
                       onPressed: () {
+
                         GoRouter.of(context).push('/HomePage');
                       },
                       child: Text(

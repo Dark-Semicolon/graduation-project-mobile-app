@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'Core/AppRouter.dart';
 
 void main() async {

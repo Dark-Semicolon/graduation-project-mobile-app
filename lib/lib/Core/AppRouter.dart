@@ -33,11 +33,11 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: '/LoginPage',
-        builder: (context, state) => const LoginPage(),
+        builder: (context, state) =>  LoginPage(),
       ),
       GoRoute(
         path: '/HomePage',
-        builder: (context, state) => const HomePage(),
+        builder: (context, state) =>  HomePage(),
       ),
 
       //   GoRoute(
