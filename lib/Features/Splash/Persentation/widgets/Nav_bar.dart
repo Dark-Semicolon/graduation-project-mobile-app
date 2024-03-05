@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../Constants/const.dart';
 
@@ -45,15 +46,28 @@ class CustomBottomNavBar extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              buildIconButton(
-                icon: SvgPicture.asset(
-                  "assets/icons/Shop Icon.svg",
-                  color: MenuState.home == selectedMenu
-                      ? kPrimaryColor
-                      : inActiveIconColor,
-                ),
-                label: "Home",
-                isSelected: MenuState.home == selectedMenu,
+              Column(
+                children: [
+                  IconButton(
+                    icon: SvgPicture.asset(
+                      "assets/icons/Shop Icon.svg",
+                      color: MenuState.home == selectedMenu
+                          ? kPrimaryColor
+                          : inActiveIconColor,
+                    ),
+                    onPressed: () {
+                      GoRouter.of(context).push('/HomePage');
+                    },
+                  ),
+                  Text(
+                    "Account",
+                    style: TextStyle(
+                      color: MenuState.home == selectedMenu
+                          ? kPrimaryColor
+                          : inActiveIconColor,
+                    ),
+                  ),
+                ],
               ),
               buildIconButton(
                 icon: SvgPicture.asset(
@@ -75,16 +89,30 @@ class CustomBottomNavBar extends StatelessWidget {
                 label: "Assessments",
                 isSelected: MenuState.assessments == selectedMenu,
               ),
-              buildIconButton(
-                icon: SvgPicture.asset(
-                  "assets/icons/User Icon.svg",
-                  color: MenuState.account == selectedMenu
-                      ? kPrimaryColor
-                      : inActiveIconColor,
-                ),
-                label: "Account",
-                isSelected: MenuState.account == selectedMenu,
-              ),
+              Column(
+                children: [
+                  IconButton(
+                    icon: SvgPicture.asset(
+                      "assets/icons/User Icon.svg",
+                      color: MenuState.account == selectedMenu
+                          ? kPrimaryColor
+                          : inActiveIconColor,
+                    ),
+                    onPressed: () {
+                      GoRouter.of(context).push('/ProfilePage');
+                    },
+                  ),
+                  Text(
+                    "Account",
+                    style: TextStyle(
+                      color: MenuState.account == selectedMenu
+                          ? kPrimaryColor
+                          : inActiveIconColor,
+                    ),
+                  ),
+                ],
+              )
+
             ],
           ),
         ),

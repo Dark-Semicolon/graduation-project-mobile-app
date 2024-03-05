@@ -1,5 +1,5 @@
+import 'package:eductionsystem/Features/profile/Profile_view.dart';
 import 'package:go_router/go_router.dart';
-
 import '../API/TestScreens.dart';
 import '../Features/Home/Presentation/view/home_page.dart';
 import '../Features/Login/login_page.dart';
@@ -34,15 +34,19 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: '/LoginPage',
-        builder: (context, state) => LoginPage(),
+        builder: (context, state) => const LoginPage(),
       ),
       GoRoute(
         path: '/HomePage',
-        builder: (context, state) => HomePage(),
+        builder: (context, state) => const HomePage(),
       ),
       GoRoute(
         path: '/DisplayUserData',
-        builder: (context, state) => DisplayUserData(),
+        builder: (context, state) => const DisplayUserData(),
+      ),
+      GoRoute(
+        path: '/ProfilePage',
+        builder: (context, state) => const ProfileView(),
       ),
 
       //   GoRoute(
