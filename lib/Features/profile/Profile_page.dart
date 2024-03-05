@@ -97,6 +97,7 @@ class _ProfileUserData extends State<ProfilePage> {
                   ),
 
                 ],
+
               )
             : const CircularProgressIndicator(),
       ),
