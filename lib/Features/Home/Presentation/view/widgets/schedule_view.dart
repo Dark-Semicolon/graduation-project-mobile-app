@@ -1,4 +1,4 @@
-import 'package:eductionsystem/lib/Features/Home/Presentation/view/widgets/schedule.dart';
+import 'package:eductionsystem/Features/Home/Presentation/view/widgets/schedule.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../Constants/FontsConst.dart';
@@ -11,7 +11,7 @@ class ScheduleView extends StatelessWidget {
     return const Column(
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

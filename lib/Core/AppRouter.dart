@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 
+import '../API/TestScreens.dart';
 import '../Features/Home/Presentation/view/home_page.dart';
 import '../Features/Login/login_page.dart';
 import '../Features/Splash/AppPreiew/Page1.dart';
@@ -33,11 +34,15 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: '/LoginPage',
-        builder: (context, state) =>  LoginPage(),
+        builder: (context, state) => LoginPage(),
       ),
       GoRoute(
         path: '/HomePage',
-        builder: (context, state) =>  HomePage(),
+        builder: (context, state) => HomePage(),
+      ),
+      GoRoute(
+        path: '/DisplayUserData',
+        builder: (context, state) => DisplayUserData(),
       ),
 
       //   GoRoute(

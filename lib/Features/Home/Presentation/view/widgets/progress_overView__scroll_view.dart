@@ -1,4 +1,4 @@
-import 'package:eductionsystem/lib/Features/Home/Presentation/view/widgets/progress_overview.dart';
+import 'package:eductionsystem/Features/Home/Presentation/view/widgets/progress_overview.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../Constants/FontsConst.dart';

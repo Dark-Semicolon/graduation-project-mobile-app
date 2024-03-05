@@ -49,7 +49,7 @@ class Page2 extends StatelessWidget {
                     GoRouter.of(context).push('/LoginPage');
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.blue,
+                    backgroundColor: Colors.blue,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
@@ -68,7 +68,7 @@ class Page2 extends StatelessWidget {
                     GoRouter.of(context).push('/Page3');
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.blue,
+                    backgroundColor: Colors.blue,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),

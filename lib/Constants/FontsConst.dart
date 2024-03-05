@@ -1,5 +1,6 @@
-import 'package:eductionsystem/lib/Constants/ColorsConst.dart';
 import 'package:flutter/material.dart';
+
+import 'ColorsConst.dart';
 
 class AppFonts {
   static const TextStyle sfProText15 = TextStyle(
@@ -16,7 +17,6 @@ class AppFonts {
     fontWeight: FontWeight.normal,
     letterSpacing: 0.3,
     color: AppColors.white1,
-
   );
 
   static const TextStyle manrope18 = TextStyle(
@@ -25,16 +25,14 @@ class AppFonts {
     fontWeight: FontWeight.bold,
     letterSpacing: 0.3,
     color: AppColors.white1,
-
   );
 
   static const TextStyle roboto17 = TextStyle(
-    fontFamily: 'Roboto',
-    fontSize: 17,
-    fontWeight: FontWeight.bold,
-    height: 0.94,
-    color: Colors.black
-  );
+      fontFamily: 'Roboto',
+      fontSize: 17,
+      fontWeight: FontWeight.bold,
+      height: 0.94,
+      color: Colors.black);
 
   static const TextStyle robotoNormal14 = TextStyle(
     fontFamily: 'Roboto',

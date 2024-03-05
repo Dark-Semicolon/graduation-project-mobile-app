@@ -20,7 +20,7 @@ class StartButton extends StatelessWidget {
               GoRouter.of(context).push('/Page2');
             },
             style: ElevatedButton.styleFrom(
-              primary: kPrimaryColor,
+              backgroundColor: kPrimaryColor,
               shadowColor: Colors.black,
               elevation: 5,
               shape: RoundedRectangleBorder(

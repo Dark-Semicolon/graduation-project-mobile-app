@@ -1,7 +1,7 @@
-import 'package:eductionsystem/lib/Constants/FontsConst.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../Constants/ColorsConst.dart';
+import '../../../../../Constants/FontsConst.dart';
 
 class Schedule extends StatelessWidget {
   const Schedule({

@@ -1,9 +1,9 @@
-import 'package:eductionsystem/lib/Constants/ColorsConst.dart';
-import 'package:eductionsystem/lib/Constants/FontsConst.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
+import '../../../../../Constants/ColorsConst.dart';
+import '../../../../../Constants/FontsConst.dart';
 import '../../../../../Constants/Icons.dart';
 
 class ProgressOverView extends StatelessWidget {
