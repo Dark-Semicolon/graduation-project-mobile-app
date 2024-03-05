@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-
 import 'Models/user_data.dart';
 import 'Services/auth_service.dart';
 import 'Token/token_manager.dart';
 
+
 class DisplayUserData extends StatefulWidget {
   const DisplayUserData({super.key});
-
   @override
   _DisplayUserDataState createState() => _DisplayUserDataState();
 }

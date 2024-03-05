@@ -1,3 +1,4 @@
+import 'package:eductionsystem/Features/profile/Profile_page.dart';
 import 'package:eductionsystem/Features/profile/Profile_view.dart';
 import 'package:go_router/go_router.dart';
 import '../API/TestScreens.dart';
@@ -46,7 +47,7 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: '/ProfilePage',
-        builder: (context, state) => const ProfileView(),
+        builder: (context, state) => const ProfilePage(),
       ),
 
       //   GoRoute(
