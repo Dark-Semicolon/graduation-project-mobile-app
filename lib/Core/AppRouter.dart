@@ -1,5 +1,4 @@
 import 'package:eductionsystem/Features/profile/Profile_page.dart';
-import 'package:eductionsystem/Features/profile/Profile_view.dart';
 import 'package:go_router/go_router.dart';
 import '../API/TestScreens.dart';
 import '../Features/Home/Presentation/view/home_page.dart';
@@ -9,6 +8,7 @@ import '../Features/Splash/AppPreiew/Page2.dart';
 import '../Features/Splash/AppPreiew/Page3.dart';
 import '../Features/Splash/AppPreiew/Page4.dart';
 import '../Features/Splash/Persentation/splash_view.dart';
+import '../Features/assignment/AssignmentPage.dart';
 
 abstract class AppRouter {
   static final router = GoRouter(
@@ -48,6 +48,10 @@ abstract class AppRouter {
       GoRoute(
         path: '/ProfilePage',
         builder: (context, state) => const ProfilePage(),
+      ),
+      GoRoute(
+        path: '/AssignmentsPage',
+        builder: (context, state) => const AssignmentsView(),
       ),
 
       //   GoRoute(

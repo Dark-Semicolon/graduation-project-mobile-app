@@ -79,15 +79,28 @@ class CustomBottomNavBar extends StatelessWidget {
                 label: "Courses",
                 isSelected: MenuState.courses == selectedMenu,
               ),
-              buildIconButton(
-                icon: SvgPicture.asset(
-                  "assets/icons/Parcel.svg",
-                  color: MenuState.assessments == selectedMenu
-                      ? kPrimaryColor
-                      : inActiveIconColor,
-                ),
-                label: "Assessments",
-                isSelected: MenuState.assessments == selectedMenu,
+              Column(
+                children: [
+                  IconButton(
+                    icon: SvgPicture.asset(
+                      "assets/icons/Parcel.svg",
+                      color: MenuState.account == selectedMenu
+                          ? kPrimaryColor
+                          : inActiveIconColor,
+                    ),
+                    onPressed: () {
+                      GoRouter.of(context).push('/AssignmentsPage');
+                    },
+                  ),
+                  Text(
+                    "Assignments",
+                    style: TextStyle(
+                      color: MenuState.account == selectedMenu
+                          ? kPrimaryColor
+                          : inActiveIconColor,
+                    ),
+                  ),
+                ],
               ),
               Column(
                 children: [
@@ -145,3 +158,6 @@ class CustomBottomNavBar extends StatelessWidget {
 }
 
 enum MenuState { home, courses, assessments, account }
+
+
+
