@@ -18,7 +18,7 @@ class TaskProgressWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Container(
-        height: 140,
+        height: 120,
         padding: const EdgeInsets.all(8.0),
         decoration: BoxDecoration(
           color: Colors.blue,
@@ -37,14 +37,33 @@ class TaskProgressWidget extends StatelessWidget {
             ),
             const SizedBox(height: 5,),
             Row(
-              children: [ const SizedBox(width: 6,),
-                Text('$completedTasks/$totalTasks Task',
-                    style: const TextStyle(
-                        fontSize: 20,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w400)),
+              children: [
+                Expanded(
+                  child: Row(
+                    children: [
+                      const SizedBox(width: 6),
+                      Text(
+                        '$completedTasks/$totalTasks Task',
+                        style: const TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Text(
+                  '${(progress * 100).toInt()}%',
+                  style: const TextStyle(
+                    fontSize: 26,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ],
             ),
+
             const SizedBox(height: 5,),
 
             Padding(
@@ -64,10 +83,7 @@ class TaskProgressWidget extends StatelessWidget {
 
             ),
             const SizedBox(height: 4,),
-            Text('${(progress * 100).toInt()}%',
-                style: const TextStyle(
-                  fontSize: 26,
-                    color: Colors.white, fontWeight: FontWeight.bold))
+
           ],
         ),
       ),

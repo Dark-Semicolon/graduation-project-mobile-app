@@ -84,7 +84,7 @@ class CustomBottomNavBar extends StatelessWidget {
                   IconButton(
                     icon: SvgPicture.asset(
                       "assets/icons/Parcel.svg",
-                      color: MenuState.account == selectedMenu
+                      color: MenuState.assessments == selectedMenu
                           ? kPrimaryColor
                           : inActiveIconColor,
                     ),
@@ -95,7 +95,7 @@ class CustomBottomNavBar extends StatelessWidget {
                   Text(
                     "Assignments",
                     style: TextStyle(
-                      color: MenuState.account == selectedMenu
+                      color: MenuState.assessments == selectedMenu
                           ? kPrimaryColor
                           : inActiveIconColor,
                     ),
