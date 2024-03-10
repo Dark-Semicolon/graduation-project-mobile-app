@@ -16,7 +16,7 @@ class AssignmentsView extends StatelessWidget {
       const Column(
         children: [
           SizedBox(height: 100,),
-          TaskProgressWidget(completedTasks: 6, totalTasks:12),
+          TaskProgressWidget(completedTasks: 8, totalTasks:20),
         ],
       ),
 
