@@ -95,6 +95,13 @@ class _ProfileUserData extends State<ProfilePage> {
                     child:
                     ProfileList(),
                   ),
+                  Column(mainAxisAlignment :MainAxisAlignment.end,
+                    children: [Row(mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text('ID: ${userData!.id}' ,style: const TextStyle(fontSize: 14),),SizedBox(width:6,)
+                      ],
+                    ),
+                      ],)
 
                 ],
 
