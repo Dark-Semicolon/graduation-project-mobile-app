@@ -11,7 +11,6 @@ class AssignmentsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: CupertinoColors.white,
-
       body:
       const Column(
         children: [
