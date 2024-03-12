@@ -56,13 +56,12 @@ abstract class AppRouter {
             Task('Math 1 assignment 1', false, '2 days'),
             Task('Math 1 assignment 2', true),
             Task('Math 1 assignment 3', false, '5 days'),
-            Task('Math 1 assignment 1', false, '2 days'),
-
 
           ],
           numberOfTasks: 3,
         ),
       ),
+
 
       //   GoRoute(
       //       path: '/searchPage',
