@@ -1,12 +1,21 @@
+import 'package:eductionsystem/Features/assignment/widgets/TaskComplete.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import '../../Constants/FontsConst.dart';
 import '../Splash/Persentation/widgets/Nav_bar.dart';
 import 'package:eductionsystem/Features/assignment/widgets/TaskProgress.dart';
 
+
 class AssignmentsView extends StatelessWidget {
-  const AssignmentsView({Key? key});
+  final List<Task> tasks;
+  final int numberOfTasks;
+
+  const AssignmentsView({
+    Key? key,
+    required this.tasks,
+    required this.numberOfTasks,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +43,20 @@ class AssignmentsView extends StatelessWidget {
           },
         ),
       ),
-      body: const Column(
+      body: Column(
         children: [
-          SizedBox(height: 10,),
-          TaskProgressWidget(completedTasks: 8, totalTasks:20),
+          SizedBox(height: 10),
+          TaskProgressWidget(completedTasks: tasks.where((task) => task.isCompleted).length, totalTasks: numberOfTasks),
+          SizedBox(height: 30),
+          Text(
+            'Lecture’s Tasks',
+            style: AppFonts.manrope18.copyWith(fontSize: 20, color: Colors.black),
+          ),
+          Column(
+            children: tasks
+                .map((task) => TaskItem(task.title, task.isCompleted, task.dueIn))
+                .toList(),
+          ),
         ],
       ),
       bottomNavigationBar: CustomBottomNavBar(
@@ -45,4 +64,12 @@ class AssignmentsView extends StatelessWidget {
       ),
     );
   }
+}
+
+class Task {
+  final String title;
+  final bool isCompleted;
+  final String? dueIn;
+
+  Task(this.title, this.isCompleted, [this.dueIn]);
 }

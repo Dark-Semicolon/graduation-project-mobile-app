@@ -51,7 +51,17 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: '/AssignmentsPage',
-        builder: (context, state) => const AssignmentsView(),
+        builder: (context, state) => AssignmentsView(
+          tasks: [
+            Task('Math 1 assignment 1', false, '2 days'),
+            Task('Math 1 assignment 2', true),
+            Task('Math 1 assignment 3', false, '5 days'),
+            Task('Math 1 assignment 1', false, '2 days'),
+
+
+          ],
+          numberOfTasks: 3,
+        ),
       ),
 
       //   GoRoute(
