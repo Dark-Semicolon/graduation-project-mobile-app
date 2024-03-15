@@ -21,12 +21,13 @@ class CacheManager {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.get(key);
   }
-
+ 
   static Future<bool> deleteFromCache(String key) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return await prefs.remove(key);
   }
 }
+
 // Example usage
 // void main() async {
 //   WidgetsFlutterBinding.ensureInitialized();
