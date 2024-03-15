@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'Core/AppRouter.dart';
 
 void main() async {
-  runApp(const eductionsystem());
+  runApp(const EducationSystem());
 }
 
-class eductionsystem extends StatelessWidget {
-  const eductionsystem({Key? key}) : super(key: key);
+class EducationSystem extends StatelessWidget {
+  const EducationSystem({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

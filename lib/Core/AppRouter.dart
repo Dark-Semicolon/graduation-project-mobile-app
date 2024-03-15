@@ -7,7 +7,6 @@ import '../Features/Splash/AppPreiew/Page1.dart';
 import '../Features/Splash/AppPreiew/Page2.dart';
 import '../Features/Splash/AppPreiew/Page3.dart';
 import '../Features/Splash/AppPreiew/Page4.dart';
-import '../Features/Splash/Persentation/splash_view.dart';
 import '../Features/assignment/AssignmentPage.dart';
 
 abstract class AppRouter {
@@ -15,7 +14,7 @@ abstract class AppRouter {
     routes: [
       GoRoute(
         path: '/',
-        builder: (context, state) => const SplashView(),
+        builder: (context, state) => const HomePage(),
       ),
       GoRoute(
         path: '/Page1',
