@@ -23,7 +23,7 @@ class _DisplayUserDataState extends State<DisplayUserData> {
   }
 
   Future<void> _fetchUserData() async {
-    final token = TokenManager.getToken();
+    final token = await TokenManager.getToken();
     if (token != null) {
       final userData = await authRepository.fetchUserData(token);
       setState(() {

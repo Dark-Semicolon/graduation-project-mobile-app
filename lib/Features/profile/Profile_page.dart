@@ -26,7 +26,7 @@ class _ProfileUserData extends State<ProfilePage> {
   }
 
   Future<void> _fetchUserData1() async {
-    final token = TokenManager.getToken();
+    final token = await TokenManager.getToken();
     if (token != null) {
       final userData = await authRepository.fetchUserData(token);
       setState(() {
