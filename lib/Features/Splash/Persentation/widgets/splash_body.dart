@@ -35,7 +35,7 @@ class _SplashViewbodyState extends State<SplashViewbody>
         //Get.to(()=>const homePage(),                           ((((هرجع اعدلها تاني بعدين))))
         //transition: Transition.leftToRight,
         //duration: kTranstionDuration);
-        GoRouter.of(context).push('/Page1');
+        GoRouter.of(context).push('/OnBoarding');
       },
     );
   }
