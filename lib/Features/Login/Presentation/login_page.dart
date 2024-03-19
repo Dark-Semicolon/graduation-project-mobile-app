@@ -1,10 +1,8 @@
+import 'package:eductionsystem/Features/Login/Presentation/view/widgets/form_field_custom.dart';
 import 'package:eductionsystem/Features/Login/Presentation/view/widgets/login_upper_part.dart';
 import 'package:flutter/material.dart';
 
-import '../../../API/Models/auth_data.dart';
-import '../../../API/Services/auth_service.dart';
-import '../../../API/Token/token_manager.dart';
-import '../../Home/Presentation/view/home_page.dart';
+import '../Utils/auth_functions.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -19,41 +17,6 @@ class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String? loginMessage;
 
-  final authRepository =
-      AuthRepository(authApi: AuthApi(baseUrl: 'http://10.0.2.2:8000'));
-
-  Future<void> _loginUser() async {
-    if (_formKey.currentState!.validate()) {
-      final authData = AuthDataModel(
-        email: _emailController.text.trim(),
-        password: _passwordController.text.trim(),
-        deviceName: 'Oppo',
-      );
-      final token = await authRepository.loginUser(authData);
-
-      if (token != null) {
-        setState(() {
-          loginMessage = 'Login successful!';
-        });
-        TokenManager.setToken(token); // Save token to TokenManager
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const HomePage(),
-          ),
-        );
-      } else {
-        setState(() {
-          loginMessage = 'Login failed!';
-        });
-      }
-    }
-  }
-
-  void _forgotPassword() {
-    // Logic for forgot password
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const TopImagInLogin(),
+            const TopImageInLogin(),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Form(
@@ -96,57 +59,62 @@ class _LoginPageState extends State<LoginPage> {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 25),
-                    TextFormField(
+                    const SizedBox(height: 30),
+                    CustomTextField(
                       controller: _emailController,
-                      decoration: const InputDecoration(
-                        labelText: 'Enter your email',
-                        hintText: 'john@example.com',
-                        prefixIcon: Icon(Icons.email),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your email';
-                        }
-                        return null;
-                      },
+                      labelText: 'Enter your email',
+                      hintText: 'Enter Your Email',
+                      prefixIcon: Icons.email,
+                      keyboardType: TextInputType.emailAddress,
+                      errorMessage:
+                          'Please enter a valid email address', // Specify error message
                     ),
-                    const SizedBox(height: 10),
-                    TextFormField(
+                    const SizedBox(height: 30),
+                    CustomTextField(
                       controller: _passwordController,
-                      decoration: const InputDecoration(
-                        labelText: 'Enter your Password',
-                        hintText: 'Password',
-                        prefixIcon: Icon(Icons.lock),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                        ),
-                      ),
+                      labelText: 'Enter your Password',
+                      hintText: 'Password',
+                      prefixIcon: Icons.lock,
                       obscureText: true,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your password';
-                        }
-                        return null;
-                      },
+                      errorMessage:
+                          'Please enter your password', // Specify error message
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         TextButton(
-                          onPressed: _forgotPassword,
-                          child: const Text('Forgot Password ?'),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const ForgotPasswordPage(), // Navigate to forgot password page
+                              ),
+                            );
+                          },
+                          child: const Text(
+                            'Forgot Password ?',
+                            style: TextStyle(color: Colors.blueAccent),
+                          ),
                         ),
                       ],
                     ),
                     const SizedBox(height: 10),
                     ElevatedButton(
-                      onPressed: _loginUser,
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => LoginUserPage(
+                                email: _emailController.text.trim(),
+                                password: _passwordController.text
+                                    .trim()), // Navigate to login user page
+                          ),
+                        );
+                      },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
+                        fixedSize: const Size(335, 55),
+                        backgroundColor: Colors.blueAccent,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),
                         ),
@@ -154,36 +122,26 @@ class _LoginPageState extends State<LoginPage> {
                       child: const Text(
                         'Login',
                         style: TextStyle(
-                          fontSize: 22,
-                          fontFamily: 'Outfit',
-                          fontWeight: FontWeight.w700,
-                        ),
+                            fontSize: 22,
+                            fontFamily: 'Outfit',
+                            fontWeight: FontWeight.normal,
+                            color: Colors.white),
                       ),
                     ),
                     const SizedBox(height: 60),
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
-                          width: 100,
-                          height: 1,
-                          color: Colors.black,
-                        ),
-                        const SizedBox(width: 10),
-                        const Text(
-                          'Or Sign Up With',
+                        SizedBox(width: 10),
+                        Text(
+                          "If you don't have an account please go to students Affairs",
                           style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 12,
                             fontFamily: 'Outfit',
                             fontWeight: FontWeight.w400,
                           ),
                         ),
-                        const SizedBox(width: 10),
-                        Container(
-                          width: 100,
-                          height: 1,
-                          color: Colors.black,
-                        )
+                        SizedBox(width: 10),
                       ],
                     ),
                     const SizedBox(height: 20),
@@ -197,4 +155,3 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-
