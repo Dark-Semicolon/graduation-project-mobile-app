@@ -108,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                             builder: (context) => LoginUserPage(
                                 email: _emailController.text.trim(),
                                 password: _passwordController.text
-                                    .trim()), // Navigate to login user page
+                                    .trim()), 
                           ),
                         );
                       },

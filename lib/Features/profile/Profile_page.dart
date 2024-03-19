@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../API/Models/user_data.dart';
-import '../../API/Services/auth_service.dart';
-import '../../API/Token/token_manager.dart';
+import '../../Data/API/Models/user_data.dart';
+import '../../Data/API/Services/auth_service.dart';
+import '../../Data/API/Token/token_manager.dart';
 import '../Splash/Persentation/widgets/Nav_bar.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -92,19 +92,26 @@ class _ProfileUserData extends State<ProfilePage> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(12.0),
-                    child:
-                    ProfileList(),
+                    child: ProfileList(),
                   ),
-                  Column(mainAxisAlignment :MainAxisAlignment.end,
-                    children: [Row(mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text('ID: ${userData!.id}' ,style: const TextStyle(fontSize: 14),),SizedBox(width:6,)
-                      ],
-                    ),
-                      ],)
-
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            'ID: ${userData!.id}',
+                            style: const TextStyle(fontSize: 14),
+                          ),
+                          SizedBox(
+                            width: 6,
+                          )
+                        ],
+                      ),
+                    ],
+                  )
                 ],
-
               )
             : const CircularProgressIndicator(),
       ),
@@ -115,8 +122,6 @@ class _ProfileUserData extends State<ProfilePage> {
   }
 }
 
-
-
 class ProfileList extends StatelessWidget {
   const ProfileList({super.key});
 
@@ -124,62 +129,61 @@ class ProfileList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-
         ListTile(
           leading: SvgPicture.asset(
             "assets/icons/User Icon.svg",
-            color: Colors.blueAccent,),
+            color: Colors.blueAccent,
+          ),
           title: Text("Edit Your Account"),
           trailing: Icon(Icons.arrow_forward_ios),
           onTap: () {},
         ),
-
         ListTile(
           leading: SvgPicture.asset(
             "assets/icons/Bell.svg",
-            color: Colors.blueAccent,),
+            color: Colors.blueAccent,
+          ),
           title: Text("Notifications"),
           trailing: Icon(Icons.arrow_forward_ios),
           onTap: () {},
         ),
-
         ListTile(
           leading: SvgPicture.asset(
             "assets/icons/Phone.svg",
-            color: Colors.blueAccent,),
+            color: Colors.blueAccent,
+          ),
           title: Text("Dark Mode"),
           trailing: Icon(Icons.arrow_forward_ios),
           onTap: () {},
         ),
-
         ListTile(
           leading: SvgPicture.asset(
             "assets/icons/Flash Icon.svg",
-            color: Colors.blueAccent,),
+            color: Colors.blueAccent,
+          ),
           title: Text("Terms & Conditions"),
           trailing: Icon(Icons.arrow_forward_ios),
           onTap: () {},
         ),
-
         ListTile(
           leading: SvgPicture.asset(
             "assets/icons/Settings.svg",
-            color: Colors.blueAccent,),
+            color: Colors.blueAccent,
+          ),
           title: Text("Help Center"),
           trailing: Icon(Icons.arrow_forward_ios),
           onTap: () {},
         ),
-
         ListTile(
           leading: SvgPicture.asset(
             "assets/icons/Log out.svg",
-            color: Colors.blueAccent,),
+            color: Colors.blueAccent,
+          ),
           title: Text("Logout"),
           trailing: Icon(Icons.arrow_forward_ios),
           onTap: () {},
         ),
-
       ],
     );
   }
-}   //list
+} //list

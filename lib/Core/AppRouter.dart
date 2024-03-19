@@ -2,17 +2,22 @@ import 'package:eductionsystem/Features/Splash/Persentation/splash_view.dart';
 import 'package:eductionsystem/Features/profile/Profile_page.dart';
 import 'package:go_router/go_router.dart';
 
-import '../API/TestScreens.dart';
+import '../Data/API/TestScreens.dart';
 import '../Features/Home/Presentation/view/home_page.dart';
 import '../Features/Login/Presentation/login_page.dart';
 import '../Features/Splash/AppPreiew/on_boarding.dart';
 import '../Features/assignment/AssignmentPage.dart';
+import '../dev_routes.dart';
 
 abstract class AppRouter {
   static final router = GoRouter(
     routes: [
       GoRoute(
         path: '/',
+        builder: (context, state) => const DeveloperRoutesScreen(),
+      ),
+      GoRoute(
+        path: '/SplashView',
         builder: (context, state) => const SplashView(),
       ),
       GoRoute(
