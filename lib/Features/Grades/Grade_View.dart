@@ -1,3 +1,4 @@
+import 'package:eductionsystem/Features/Grades/Widgets/Subject_Score.dart';
 import 'package:eductionsystem/Features/Grades/Widgets/Total_Grade_Widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -32,15 +33,36 @@ class GradesPage extends StatelessWidget {
           },
         ),
       ),
-      body:  Padding(
+      body: Padding(
         padding: const EdgeInsets.all(12.0),
-        child: Column(children: [
-          const SizedBox(height: 5,),
-          TotalGPAWidget(),
-
-
-
-        ],),
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 5,
+            ),
+            TotalGPAWidget(),
+            SizedBox(
+              height: 14,
+            ),
+            Row(
+              children: [
+                Text(
+                  ' Your grades',
+                  style: TextStyle(
+                      fontFamily: 'jost',
+                      fontSize: 28,
+                      color: Colors.blueAccent),
+                )
+              ],
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            const SliverToBoxAdapter(
+              child: SubjectIteams(),
+            ),
+          ],
+        ),
       ),
     );
   }
