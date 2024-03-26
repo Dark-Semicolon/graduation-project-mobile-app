@@ -29,17 +29,17 @@ class HomePage extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // ElevatedButton(
-              //   onPressed: () {
-              //     GoRouter.of(context).push('/LoginPage');
-              //   },
-              //   child: const Text('log'),
-              // ),
               ElevatedButton(
                 onPressed: () {
                   GoRouter.of(context).push('/DisplayUserData');
                 },
                 child: const Text('User Data'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  GoRouter.of(context).push('/GradesPage');
+                },
+                child: const Text('Geades Page'),
               ),
             ],
           ),

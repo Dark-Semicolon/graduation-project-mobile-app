@@ -1,8 +1,10 @@
+import 'package:eductionsystem/Features/Grades/Widgets/Total_Grade_Widget.dart';
 import 'package:eductionsystem/Features/Splash/Persentation/splash_view.dart';
 import 'package:eductionsystem/Features/profile/Profile_page.dart';
 import 'package:go_router/go_router.dart';
 
 import '../Data/API/TestScreens.dart';
+import '../Features/Grades/Grade_View.dart';
 import '../Features/Home/Presentation/view/home_page.dart';
 import '../Features/Login/Presentation/login_page.dart';
 import '../Features/Splash/AppPreiew/on_boarding.dart';
@@ -40,6 +42,10 @@ abstract class AppRouter {
       GoRoute(
         path: '/ProfilePage',
         builder: (context, state) => const ProfilePage(),
+      ),
+      GoRoute(
+        path: '/GradesPage',
+        builder: (context, state) => const GradesPage(),
       ),
       GoRoute(
         path: '/AssignmentsPage',

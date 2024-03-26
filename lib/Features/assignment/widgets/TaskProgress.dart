@@ -18,7 +18,6 @@ class TaskProgressWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Container(
-        height: 120,
         padding: const EdgeInsets.all(8.0),
         decoration: BoxDecoration(
           color: Colors.blue,
@@ -31,7 +30,7 @@ class TaskProgressWidget extends StatelessWidget {
                 Text('Task',
                     style: TextStyle(
                         fontSize: 24,
-                        color: Colors.white,
+                        color: Colors.white, fontFamily: 'jost',
                         fontWeight: FontWeight.bold)),
               ],
             ),
@@ -44,7 +43,7 @@ class TaskProgressWidget extends StatelessWidget {
                       const SizedBox(width: 6),
                       Text(
                         '$completedTasks/$totalTasks Task',
-                        style: const TextStyle(
+                        style: const TextStyle(fontFamily: 'jost',
                           fontSize: 20,
                           color: Colors.white,
                           fontWeight: FontWeight.w400,
@@ -55,7 +54,7 @@ class TaskProgressWidget extends StatelessWidget {
                 ),
                 Text(
                   '${(progress * 100).toInt()}%',
-                  style: const TextStyle(
+                  style: const TextStyle(fontFamily: 'jost',
                     fontSize: 26,
                     color: Colors.white,
                     fontWeight: FontWeight.bold,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../Data/API/Models/user_data.dart';
 import '../../Data/API/Services/auth_service.dart';
@@ -47,22 +48,22 @@ class _ProfileUserData extends State<ProfilePage> {
                     height: 100,
                   ),
                   Container(
-                    width: 170, // Adjust size as needed
+                    width: 170,
                     height: 170,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: Colors.blue, // Border color
-                        width: 3, // Border width
+                        color: Colors.blue,
+                        width: 3,
                       ),
                     ),
                     child: CircleAvatar(
                       radius: 48,
-                      // Radius of the inner circle image
+
                       backgroundColor: Colors.grey[300],
-                      // Background color of the inner circle
+
                       backgroundImage: NetworkImage(
-                          '${userData!.image}'), // Provide your image URL here
+                          '${userData!.image}'),
                     ),
                   ),
                   //image
@@ -149,12 +150,12 @@ class ProfileList extends StatelessWidget {
         ),
         ListTile(
           leading: SvgPicture.asset(
-            "assets/icons/Phone.svg",
+            "assets/icons/Star Icon.svg",
             color: Colors.blueAccent,
           ),
-          title: Text("Dark Mode"),
+          title: Text("My Grades"),
           trailing: Icon(Icons.arrow_forward_ios),
-          onTap: () {},
+          onTap: () {GoRouter.of(context).push('/GradesPage');},
         ),
         ListTile(
           leading: SvgPicture.asset(

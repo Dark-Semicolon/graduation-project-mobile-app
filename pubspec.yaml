@@ -101,6 +101,9 @@ flutter:
         - asset: assets/fonts/GT Sectra Fine Regular.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
-  #
+    - family: Jost
+      fonts:
+        - asset: assets/fonts/Jost-VariableFont_wght.ttf
+
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
