@@ -1,6 +1,5 @@
-import 'package:eductionsystem/Features/Grades/Widgets/Total_Grade_Widget.dart';
 import 'package:eductionsystem/Features/Splash/Persentation/splash_view.dart';
-import 'package:eductionsystem/Features/profile/Profile_page.dart';
+import 'package:eductionsystem/Features/profile/profile_page.dart';
 import 'package:go_router/go_router.dart';
 
 import '../Data/API/TestScreens.dart';

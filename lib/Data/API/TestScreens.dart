@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+
 import 'Models/user_data.dart';
 import 'Services/auth_service.dart';
 import 'Token/token_manager.dart';
 
-
 class DisplayUserData extends StatefulWidget {
-  const DisplayUserData({super.key});
+  const DisplayUserData({Key? key}) : super(key: key);
+
   @override
   _DisplayUserDataState createState() => _DisplayUserDataState();
 }
@@ -25,9 +26,9 @@ class _DisplayUserDataState extends State<DisplayUserData> {
   Future<void> _fetchUserData() async {
     final token = await TokenManager.getToken();
     if (token != null) {
-      final userData = await authRepository.fetchUserData(token);
+      final fetchedUserData = await authRepository.fetchUserData(token);
       setState(() {
-        this.userData = userData;
+        userData = fetchedUserData;
       });
     }
   }
@@ -41,15 +42,15 @@ class _DisplayUserDataState extends State<DisplayUserData> {
       body: Center(
         child: userData != null
             ? Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('ID: ${userData!.id}'),
-                  Text('Name: ${userData!.name}'),
-                  Text('Email: ${userData!.email}'),
-                  Text('Status: ${userData!.status}'),
-                  Text('Grade: ${userData!.grade}'),
-                ],
-              )
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('ID: ${userData!.data!.id}'),
+            Text('Name: ${userData!.data!.attributes!.name}'),
+            Text('Email: ${userData!.data!.attributes!.email}'),
+            Text('Status: ${userData!.data!.attributes!.status}'),
+            Text('Grade: ${userData!.data!.attributes!.grade}'),
+          ],
+        )
             : const CircularProgressIndicator(),
       ),
     );

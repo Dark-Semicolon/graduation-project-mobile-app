@@ -107,8 +107,7 @@ class _LoginPageState extends State<LoginPage> {
                           MaterialPageRoute(
                             builder: (context) => LoginUserPage(
                                 email: _emailController.text.trim(),
-                                password: _passwordController.text
-                                    .trim()), 
+                                password: _passwordController.text.trim()),
                           ),
                         );
                       },

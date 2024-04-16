@@ -5,7 +5,7 @@ import 'Features/Login/Presentation/login_page.dart';
 import 'Features/Splash/AppPreiew/on_boarding.dart';
 import 'Features/Splash/Persentation/splash_view.dart';
 import 'Features/assignment/AssignmentPage.dart';
-import 'Features/profile/Profile_page.dart';
+import 'Features/profile/profile_page.dart';
 
 class DeveloperRoutesScreen extends StatelessWidget {
   const DeveloperRoutesScreen({super.key});
@@ -18,7 +18,9 @@ class DeveloperRoutesScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 30,),
+            const SizedBox(
+              height: 30,
+            ),
             const Text(
               'Developer Routes',
               style: TextStyle(
@@ -33,6 +35,7 @@ class DeveloperRoutesScreen extends StatelessWidget {
               crossAxisSpacing: 16.0,
               mainAxisSpacing: 16.0,
               children: [
+
                 RouteButton(
                   label: 'Start App Normally',
                   onPressed: () {
@@ -105,7 +108,7 @@ class DeveloperRoutesScreen extends StatelessWidget {
                     );
                   },
                 ),
-                // Add more RouteButton widgets for additional screens
+
               ],
             ),
           ],
@@ -129,6 +132,7 @@ class RouteButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ButtonStyle(
+        fixedSize:const MaterialStatePropertyAll(Size(50,50)),
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),

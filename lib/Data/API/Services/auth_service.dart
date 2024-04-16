@@ -11,7 +11,7 @@ class AuthApi {
   AuthApi({required this.baseUrl});
 
   Future<String?> loginUser(AuthDataModel authData) async {
-    final url = Uri.parse('$baseUrl/api/v1/login');
+    final url = Uri.parse('$baseUrl/api/v1/student/login');
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
@@ -26,7 +26,7 @@ class AuthApi {
   }
 
   Future<UserDataModel?> fetchUserData(String token) async {
-    final url = Uri.parse('$baseUrl/api/v1/user');
+    final url = Uri.parse('$baseUrl/api/v1/student/user');
     final response = await http.get(
       url,
       headers: {'Authorization': 'Bearer $token'},
