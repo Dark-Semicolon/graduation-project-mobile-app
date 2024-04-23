@@ -102,14 +102,17 @@ class _LoginPageState extends State<LoginPage> {
                     const SizedBox(height: 10),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => LoginUserPage(
-                                email: _emailController.text.trim(),
-                                password: _passwordController.text.trim()),
-                          ),
-                        );
+                        if (_formKey.currentState!.validate()) {
+                          // Only navigate if the form is valid
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LoginUserPage(
+                                  email: _emailController.text.trim(),
+                                  password: _passwordController.text.trim()),
+                            ),
+                          );
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         fixedSize: const Size(335, 55),

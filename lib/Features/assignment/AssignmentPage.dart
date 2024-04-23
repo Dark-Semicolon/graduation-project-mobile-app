@@ -1,11 +1,11 @@
 import 'package:eductionsystem/Features/assignment/widgets/TaskComplete.dart';
+import 'package:eductionsystem/Features/assignment/widgets/TaskProgress.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import '../../Constants/FontsConst.dart';
-import '../Splash/Persentation/widgets/Nav_bar.dart';
-import 'package:eductionsystem/Features/assignment/widgets/TaskProgress.dart';
 
+import '../../Constants/FontsConst.dart';
+import '../../Core/GloabalWidgets/nav_bar.dart';
 
 class AssignmentsView extends StatelessWidget {
   final List<Task> tasks;
@@ -46,15 +46,19 @@ class AssignmentsView extends StatelessWidget {
       body: Column(
         children: [
           SizedBox(height: 10),
-          TaskProgressWidget(completedTasks: tasks.where((task) => task.isCompleted).length, totalTasks: numberOfTasks),
+          TaskProgressWidget(
+              completedTasks: tasks.where((task) => task.isCompleted).length,
+              totalTasks: numberOfTasks),
           SizedBox(height: 30),
           Text(
             'Lecture’s Tasks',
-            style: AppFonts.manrope18.copyWith(fontSize: 20, color: Colors.black),
+            style:
+                AppFonts.manrope18.copyWith(fontSize: 20, color: Colors.black),
           ),
           Column(
             children: tasks
-                .map((task) => TaskItem(task.title, task.isCompleted, task.dueIn))
+                .map((task) =>
+                    TaskItem(task.title, task.isCompleted, task.dueIn))
                 .toList(),
           ),
         ],

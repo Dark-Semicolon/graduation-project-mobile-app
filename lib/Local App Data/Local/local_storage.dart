@@ -20,6 +20,17 @@ class HiveBoxManager {
     await box.delete(key);
   }
 }
+
+
+
+
+// await HiveBoxManager.addToBox('Status', 'onBoardingStatus', true);
+
+
+
+
+
+
 // Example usage
 // void main() async {
 //   WidgetsFlutterBinding.ensureInitialized();

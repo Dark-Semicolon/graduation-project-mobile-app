@@ -40,16 +40,14 @@ class CustomTextField extends StatelessWidget {
       obscureText: obscureText,
       keyboardType: keyboardType,
       validator: (value) {
+        if (value == null || value.isEmpty) {
+          return errorMessage; // Return the specified error message if the field is empty
+        }
         if (validator != null) {
           // If a custom validator is provided, use it
           return validator!(value);
-        } else {
-          // If no custom validator is provided, use a default validator
-          if (value == null || value.isEmpty) {
-            return errorMessage; // Return the specified error message
-          }
-          return null;
         }
+        return null; // Return null if validation succeeds
       },
     );
   }

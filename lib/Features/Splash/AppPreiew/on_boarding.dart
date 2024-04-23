@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_onboarding_slider/flutter_onboarding_slider.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../Local App Data/Local/local_storage.dart';
+
 class OnBoarding extends StatelessWidget {
   final Color kDarkBlueColor = const Color(0xFF4E74F9);
 
@@ -10,7 +12,8 @@ class OnBoarding extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OnBoardingSlider(
-      onFinish: () {
+      onFinish: () async {
+        await HiveBoxManager.addToBox('Status', 'onBoardingStatus', true);
         GoRouter.of(context).push('/LoginPage');
       },
       hasSkip: true,

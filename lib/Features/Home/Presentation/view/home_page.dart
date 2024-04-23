@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../Splash/Persentation/widgets/Nav_bar.dart';
+import '../../../../Core/GloabalWidgets/nav_bar.dart';
 import 'widgets/progress_overView__scroll_view.dart';
 import 'widgets/schedule_view.dart';
 

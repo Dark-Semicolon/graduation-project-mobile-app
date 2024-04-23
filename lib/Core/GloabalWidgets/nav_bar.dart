@@ -36,7 +36,7 @@ class CustomBottomNavBar extends StatelessWidget {
             BoxShadow(
               offset: const Offset(3, 5),
               blurRadius: 20,
-              spreadRadius:5,
+              spreadRadius: 5,
               color: const Color(0xFF000000).withOpacity(0.33),
             ),
           ],
@@ -125,7 +125,6 @@ class CustomBottomNavBar extends StatelessWidget {
                   ),
                 ],
               )
-
             ],
           ),
         ),
@@ -158,6 +157,3 @@ class CustomBottomNavBar extends StatelessWidget {
 }
 
 enum MenuState { home, courses, assessments, account }
-
-
-

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../Core/GloabalWidgets/nav_bar.dart';
 import '../../Data/API/Models/user_data.dart';
 import '../../Data/API/Services/auth_service.dart';
 import '../../Data/API/Token/token_manager.dart';
-import '../Splash/Persentation/widgets/Nav_bar.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -15,10 +15,10 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  final AuthRepository authRepository = AuthRepository(
+  final AuthRepository _authRepository = AuthRepository(
     authApi: AuthApi(baseUrl: 'http://10.0.2.2:8000'),
   );
-  UserDataModel? userData;
+  UserDataModel? _userData;
 
   @override
   void initState() {
@@ -27,12 +27,17 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Future<void> _fetchUserData() async {
-    final token = await TokenManager.getToken();
-    if (token != null) {
-      final userData = await authRepository.fetchUserData(token);
-      setState(() {
-        this.userData = userData;
-      });
+    try {
+      final token = await TokenManager.getToken();
+      if (token != null) {
+        final userData = await _authRepository.fetchUserData(token);
+        setState(() {
+          _userData = userData;
+        });
+      }
+    } catch (error) {
+      // Handle errors here (e.g., display error message to the user)
+      print('Error fetching user data: $error');
     }
   }
 
@@ -41,43 +46,43 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
-        child: userData != null
+        child: _userData != null
             ? Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CircleAvatar(
-                    radius: 48,
-                    backgroundColor: Colors.grey[300],
-                    backgroundImage:
-                        NetworkImage(userData!.data!.attributes!.image ?? ''),
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    userData!.data!.attributes!.name ?? '',
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w900,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    userData!.data!.attributes!.email ?? '',
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w900,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  const ProfileList(),
-                  const SizedBox(height: 16),
-                  Text(
-                    'ID: ${userData!.data!.id}',
-                    style: const TextStyle(fontSize: 14),
-                  ),
-                ],
-              )
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CircleAvatar(
+              radius: 48,
+              backgroundColor: Colors.grey[300],
+              backgroundImage:
+              NetworkImage(_userData!.data!.attributes!.image ?? ''),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              _userData!.data!.attributes!.name ?? '',
+              style: const TextStyle(
+                fontSize: 24,
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.w900,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              _userData!.data!.attributes!.email ?? '',
+              style: const TextStyle(
+                fontSize: 18,
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.w900,
+              ),
+            ),
+            const SizedBox(height: 16),
+            const ProfileListView(),
+            const SizedBox(height: 16),
+            Text(
+              'ID: ${_userData!.data!.id}',
+              style: const TextStyle(fontSize: 14),
+            ),
+          ],
+        )
             : const CircularProgressIndicator(),
       ),
       bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.account),
@@ -85,8 +90,8 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 }
 
-class ProfileList extends StatelessWidget {
-  const ProfileList({Key? key}) : super(key: key);
+class ProfileListView extends StatelessWidget {
+  const ProfileListView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
