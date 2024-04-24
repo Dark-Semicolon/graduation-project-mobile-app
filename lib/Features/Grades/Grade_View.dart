@@ -55,12 +55,7 @@ class GradesPage extends StatelessWidget {
                 )
               ],
             ),
-            SizedBox(
-              height: 8,
-            ),
-            const SliverToBoxAdapter(
-              child: SubjectIteams(),
-            ),
+            SubjectScore(),
           ],
         ),
       ),

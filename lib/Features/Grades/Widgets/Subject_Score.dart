@@ -25,24 +25,24 @@ class SubjectScore extends StatelessWidget {
 
 
 
-
-class SubjectIteams extends StatelessWidget {
-  const SubjectIteams({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-
-      padding: EdgeInsets.zero,
-      itemCount: 3,
-      itemBuilder: (context, index) {
-        return  Padding(
-          padding: EdgeInsets.symmetric(vertical: 0),
-          child: SubjectScore(),
-        );
-      },
-    );
-  }
-}
+//
+// class SubjectIteams extends StatelessWidget {
+//   const SubjectIteams({Key? key}) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return ListView.builder(
+//       shrinkWrap: true,
+//       physics: const NeverScrollableScrollPhysics(),
+//
+//       padding: EdgeInsets.zero,
+//       itemCount: 3,
+//       itemBuilder: (context, index) {
+//         return  Padding(
+//           padding: EdgeInsets.symmetric(vertical: 0),
+//           child: SubjectScore(),
+//         );
+//       },
+//     );
+//   }
+// }
