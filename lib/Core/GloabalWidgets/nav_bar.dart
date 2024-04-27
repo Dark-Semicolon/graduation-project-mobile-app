@@ -60,7 +60,7 @@ class CustomBottomNavBar extends StatelessWidget {
                     },
                   ),
                   Text(
-                    "Account",
+                    "Home",
                     style: TextStyle(
                       color: MenuState.home == selectedMenu
                           ? kPrimaryColor

@@ -4,6 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../Core/GloabalWidgets/nav_bar.dart';
+import 'Widgets/Select_year_widget.dart';
+
 class GradesPage extends StatelessWidget {
   const GradesPage({super.key});
 
@@ -37,9 +40,9 @@ class GradesPage extends StatelessWidget {
         padding: const EdgeInsets.all(12.0),
         child: Column(
           children: [
-            const SizedBox(
-              height: 5,
-            ),
+
+            Select_year_container(),
+            SizedBox(height: 20,),
             TotalGPAWidget(),
             SizedBox(
               height: 14,
@@ -58,6 +61,9 @@ class GradesPage extends StatelessWidget {
             SubjectScore(),
           ],
         ),
+      ),
+      bottomNavigationBar: CustomBottomNavBar(
+        selectedMenu: MenuState.account,
       ),
     );
   }
