@@ -18,7 +18,7 @@ class GradesPage extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
         title: const Text(
-          'My Grades',
+          'MyGrades',
           style: TextStyle(color: Colors.black),
         ),
         leading: IconButton(
