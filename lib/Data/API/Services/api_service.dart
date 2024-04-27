@@ -11,7 +11,9 @@ final String _baseUrl='http://10.0.2.2:8000/api/v1/student';
 
 Future<void> get()async{
       Uri url= Uri.parse("$_baseUrl/academicYears/1/semesters/1/courseGrades");
-     http.Response response = await http.get(url);
+     http.Response response = await http.get(url,headers: {
+       "Authorization":"Bearer 1|1G5vhBuuyBFWP0HVssjOatUcmkKfWTeVkjD9GSc63bcd111c"
+     });
       // debugPrint('Response -- 999 ---${response.body}');
      if(response.statusCode==200){
        debugPrint('Response -- 999 ---${response.body}');
