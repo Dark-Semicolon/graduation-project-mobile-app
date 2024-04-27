@@ -1,0 +1,17 @@
+class ApiService{
+
+
+
+
+
+  get(){
+
+
+
+  }
+
+
+
+
+
+}

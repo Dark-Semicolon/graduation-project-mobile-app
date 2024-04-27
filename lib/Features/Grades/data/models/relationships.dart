@@ -6,5 +6,9 @@ class Relationships{
 
   Relationships({required this.courseInstance});
 
+  factory Relationships.fromJson(json){
+    return Relationships(courseInstance: CourseInstance.fromJson(CourseInstance.fromJson(json['courseInstance'])) );
+  }
+
 
 }
