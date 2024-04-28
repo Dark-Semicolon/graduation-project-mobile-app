@@ -25,7 +25,10 @@ abstract class AppRouter {
         path: '/OnBoarding',
         builder: (context, state) => const OnBoarding(),
       ),
-
+      GoRoute(
+        path: '/DisplayUserData',
+        builder: (context, state) => const DisplayUserData(),
+      ),
       GoRoute(
         path: '/LoginPage',
         builder: (context, state) => const LoginPage(),
@@ -33,10 +36,6 @@ abstract class AppRouter {
       GoRoute(
         path: '/HomePage',
         builder: (context, state) => const HomePage(),
-      ),
-      GoRoute(
-        path: '/DisplayUserData',
-        builder: (context, state) => const DisplayUserData(),
       ),
       GoRoute(
         path: '/ProfilePage',
