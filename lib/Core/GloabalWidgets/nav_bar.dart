@@ -22,6 +22,7 @@ class CustomBottomNavBar extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(0.0),
       child: Container(
+
         height: 100,
         padding: const EdgeInsets.symmetric(vertical: 12),
         decoration: BoxDecoration(
@@ -32,14 +33,15 @@ class CustomBottomNavBar extends StatelessWidget {
             //   bottomLeft: Radius.circular(br),
             //   bottomRight: Radius.circular(br),
           ),
-          boxShadow: [
-            BoxShadow(
-              offset: const Offset(3, 5),
-              blurRadius: 20,
-              spreadRadius: 5,
-              color: const Color(0xFF000000).withOpacity(0.33),
-            ),
-          ],
+
+          // boxShadow: [
+          //   BoxShadow(
+          //     offset: const Offset(3, 5),
+          //     blurRadius: 20,
+          //     spreadRadius: 5,
+          //     color: const Color(0xFF000000).withOpacity(0.33),
+          //   ),
+          // ],
         ),
         child: SafeArea(
           top: false,

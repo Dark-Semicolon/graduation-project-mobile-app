@@ -103,7 +103,6 @@ class _LoginPageState extends State<LoginPage> {
                     ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
-                          // Only navigate if the form is valid
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -115,6 +114,7 @@ class _LoginPageState extends State<LoginPage> {
                         }
                       },
                       style: ElevatedButton.styleFrom(
+
                         fixedSize: const Size(335, 55),
                         backgroundColor: Colors.blueAccent,
                         shape: RoundedRectangleBorder(

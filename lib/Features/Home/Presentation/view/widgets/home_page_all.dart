@@ -40,6 +40,7 @@ class HomePageAll extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
+
                               'Username',
                               style: AppFonts.manrope18,
                             ),

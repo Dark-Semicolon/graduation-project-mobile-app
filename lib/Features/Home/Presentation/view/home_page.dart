@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../../Core/GloabalWidgets/nav_bar.dart';
 import 'widgets/progress_overView__scroll_view.dart';
@@ -20,28 +19,15 @@ class HomePage extends StatelessWidget {
           backgroundColor: Colors.blueAccent,
         ),
       ),
-      body: Column(
+      body:  const Column(
         children: [
-          const ProgressOverViewScrollView(),
-          const SizedBox(height: 20),
-          const ScheduleView(),
-          const SizedBox(height: 20),
+          ProgressOverViewScrollView(),
+          SizedBox(height: 20),
+          ScheduleView(),
+          SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  GoRouter.of(context).push('/DisplayUserData');
-                },
-                child: const Text('User Data'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  GoRouter.of(context).push('/GradesPage');
-                },
-                child: const Text('Geades Page'),
-              ),
-            ],
+            children: [],
           ),
         ],
       ),
@@ -51,3 +37,18 @@ class HomePage extends StatelessWidget {
     );
   }
 }
+
+
+
+// ElevatedButton(
+// onPressed: () {
+// GoRouter.of(context).push('/DisplayUserData');
+// },
+// child: const Text('User Data'),
+// ),
+// ElevatedButton(
+// onPressed: () {
+// GoRouter.of(context).push('/GradesPage');
+// },
+// child: const Text('Geades Page'),
+// ),

@@ -2,7 +2,6 @@ import 'package:eductionsystem/Features/Splash/Persentation/splash_view.dart';
 import 'package:eductionsystem/Features/profile/profile_page.dart';
 import 'package:go_router/go_router.dart';
 
-import '../Data/API/TestScreens.dart';
 import '../Features/Grades/Grade_View.dart';
 import '../Features/Home/Presentation/view/home_page.dart';
 import '../Features/Login/Presentation/login_page.dart';
@@ -15,20 +14,16 @@ abstract class AppRouter {
     routes: [
       GoRoute(
         path: '/',
-        builder: (context, state) => const DeveloperRoutesScreen(),
-      ),
-      GoRoute(
-        path: '/SplashView',
         builder: (context, state) => const SplashView(),
       ),
       GoRoute(
         path: '/OnBoarding',
         builder: (context, state) => const OnBoarding(),
       ),
-      GoRoute(
-        path: '/DisplayUserData',
-        builder: (context, state) => const DisplayUserData(),
-      ),
+      // GoRoute(
+      //   path: '/DisplayUserData',
+      //   builder: (context, state) => const DisplayUserData(),
+      // ),
       GoRoute(
         path: '/LoginPage',
         builder: (context, state) => const LoginPage(),

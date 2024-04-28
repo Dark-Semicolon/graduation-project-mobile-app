@@ -1,4 +1,3 @@
-import 'package:eductionsystem/Data/API/Services/api_service.dart';
 import 'package:flutter/material.dart';
 import 'Core/AppRouter.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -6,7 +5,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   runApp(const EducationSystem());
-  await ApiService().get();
+  // await ApiService().get();
 }
 
 class EducationSystem extends StatelessWidget {

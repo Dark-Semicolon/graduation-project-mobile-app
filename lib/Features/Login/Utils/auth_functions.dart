@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../Data/API/Const/end_points.dart';
 import '../../../Data/API/Models/auth_data.dart';
 import '../../../Data/API/Services/auth_service.dart';
 import '../../../Data/API/Token/token_manager.dart';
@@ -21,7 +22,7 @@ class _LoginUserPageState extends State<LoginUserPage> {
   late String _password;
 
   final authRepository =
-      AuthRepository(authApi: AuthApi(baseUrl: 'http://10.0.2.2:8000'));
+      AuthRepository(authApi: AuthApi(baseUrl: ApiConstants.baseUrl));
 
   @override
   void initState() {

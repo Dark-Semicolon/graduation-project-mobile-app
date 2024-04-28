@@ -1,5 +1,6 @@
 import 'package:eductionsystem/Features/Home/Presentation/view/widgets/progress_overview.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../../Constants/FontsConst.dart';
 import 'home_page_all.dart';
@@ -9,14 +10,14 @@ class ProgressOverViewScrollView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       children: [
-        HomePageAll(),
+        const HomePageAll(),
         Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
+            const Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Text(
                 "Progress OverView",
@@ -26,29 +27,29 @@ class ProgressOverViewScrollView extends StatelessWidget {
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Padding(
-                padding: EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(10.0),
                 child: Row(
                   children: [
                     ProgressOverView(
-                      title: 'Custom Title',
+                      title: 'Grades',
                       color: Colors.blue,
                       percentage: 0.5,
                       svgAssetPath: 'assets/notification_bill.svg',
+                      onPressed: () {
+                        GoRouter.of(context).go('/GradesPage');
+                      },
                     ),
                     ProgressOverView(
-                      title: 'Custom Title',
+                      title: 'Assignments',
                       color: Colors.blue,
                       percentage: 0.5,
                       svgAssetPath: 'assets/notification_bill.svg',
+                      onPressed: () {
+                        GoRouter.of(context).go('/AssignmentsPage');
+                      },
                     ),
-                    ProgressOverView(
-                      title: 'Custom Title',
-                      color: Colors.blue,
-                      percentage: 0.5,
-                      svgAssetPath: 'assets/notification_bill.svg',
-                    ),
-                    ProgressOverView(
-                      title: 'Custom Title',
+                    const ProgressOverView(
+                      title: 'Courses',
                       color: Colors.blue,
                       percentage: 0.5,
                       svgAssetPath: 'assets/notification_bill.svg',

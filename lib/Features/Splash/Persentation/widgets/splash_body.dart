@@ -1,3 +1,4 @@
+import 'package:eductionsystem/Data/API/Token/token_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -35,9 +36,14 @@ class _SplashViewbodyState extends State<SplashViewbody>
       const Duration(seconds: 2),
       () async {
         bool onBoardingStatus = await HiveBoxManager.readFromBox('Status', 'onBoardingStatus');
-
-        GoRouter.of(context).push(onBoardingStatus ? '/LoginPage' : '/OnBoarding');
-
+        final token = await TokenManager.getToken();
+        if(token == null) {
+          GoRouter.of(context).push(
+              onBoardingStatus ? '/LoginPage' : '/OnBoarding');
+        }
+        else{
+          GoRouter.of(context).push('/HomePage');
+        }
       },
     );
   }
