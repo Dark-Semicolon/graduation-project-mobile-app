@@ -35,15 +35,19 @@ class _SplashViewbodyState extends State<SplashViewbody>
     Future.delayed(
       const Duration(seconds: 2),
       () async {
-        bool onBoardingStatus = await HiveBoxManager.readFromBox('Status', 'onBoardingStatus');
-        final token = await TokenManager.getToken();
-        if(token == null) {
-          GoRouter.of(context).push(
-              onBoardingStatus ? '/LoginPage' : '/OnBoarding');
-        }
-        else{
-          GoRouter.of(context).push('/HomePage');
-        }
+        GoRouter.of(context).push('/LoginPage');
+
+        // bool onBoardingStatus =
+        //     await HiveBoxManager.readFromBox('Status', 'onBoardingStatus');
+        // final token = await TokenManager.getToken();
+        // GoRouter.of(context).push('/LoginPage');
+        // if(token == null) {
+        //   GoRouter.of(context).push(
+        //       onBoardingStatus ? '/LoginPage' : '/OnBoarding');
+        // }
+        // else{
+        //   GoRouter.of(context).push('/HomePage');
+        // }
       },
     );
   }

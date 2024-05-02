@@ -7,7 +7,6 @@ import '../Features/Home/Presentation/view/home_page.dart';
 import '../Features/Login/Presentation/login_page.dart';
 import '../Features/Splash/AppPreiew/on_boarding.dart';
 import '../Features/assignment/AssignmentPage.dart';
-import '../dev_routes.dart';
 
 abstract class AppRouter {
   static final router = GoRouter(

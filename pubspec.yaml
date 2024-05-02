@@ -32,7 +32,7 @@ dependencies:
   go_router: ^7.0.0
   font_awesome_flutter: ^10.4.0
   http: 1.1.0
-  device_info_plus: ^9.1.2
+  device_info_plus: ^10.1.0
 
   flutter:
     sdk: flutter
@@ -46,6 +46,7 @@ dependencies:
   shared_preferences: ^2.2.2
   hive: ^2.2.3
   hive_flutter: ^1.1.0
+  package_info_plus: ^8.0.0
 
 dev_dependencies:
   flutter_test:

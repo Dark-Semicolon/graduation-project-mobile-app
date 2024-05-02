@@ -15,7 +15,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State {
   final AuthRepository _authRepository = AuthRepository(
-    authApi: AuthApi(baseUrl:'http://10.0.2.2:8000'),
+    authApi: AuthApi(baseUrl: 'http://10.0.2.2:8000'),
   );
   UserDataModel? _userData;
 

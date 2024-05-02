@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../Core/Device Info/device_info_test.dart';
 
 class ProfileListView extends StatelessWidget {
   const ProfileListView({Key? key}) : super(key: key);
@@ -56,7 +57,14 @@ class ProfileListView extends StatelessWidget {
           ),
           title: const Text("Help Center"),
           trailing: const Icon(Icons.arrow_forward_ios),
-          onTap: () {},
+          onTap: () async {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const DeviceInfoPage(),
+              ),
+            );
+          },
         ),
         ListTile(
           leading: SvgPicture.asset(
