@@ -48,11 +48,14 @@ class ProgressOverViewScrollView extends StatelessWidget {
                         GoRouter.of(context).go('/AssignmentsPage');
                       },
                     ),
-                    const ProgressOverView(
+                    ProgressOverView(
                       title: 'Courses',
                       color: Colors.blue,
                       percentage: 0.5,
                       svgAssetPath: 'assets/notification_bill.svg',
+                      onPressed: () {
+                        GoRouter.of(context).go('/CoursesScreen');
+                      },
                     ),
                   ],
                 ),
