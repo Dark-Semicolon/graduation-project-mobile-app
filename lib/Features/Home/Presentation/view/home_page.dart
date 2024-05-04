@@ -19,7 +19,7 @@ class HomePage extends StatelessWidget {
           backgroundColor: Colors.blueAccent,
         ),
       ),
-      body:  const Column(
+      body: const Column(
         children: [
           ProgressOverViewScrollView(),
           SizedBox(height: 20),
@@ -37,8 +37,6 @@ class HomePage extends StatelessWidget {
     );
   }
 }
-
-
 
 // ElevatedButton(
 // onPressed: () {

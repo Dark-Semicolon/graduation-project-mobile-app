@@ -17,7 +17,7 @@ class CoursesScreen extends StatelessWidget {
           SizedBox(height: 20),
           CoursesScreenUpperPart(),
           CoursesList(),
-          CourseMinMax(),
+          CourseMinMax()
         ],
       ),
       bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.courses),

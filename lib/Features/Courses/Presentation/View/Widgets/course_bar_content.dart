@@ -4,7 +4,9 @@ import '../../../../../Constants/FontsConst.dart';
 
 class CourseBarContent extends StatelessWidget {
   const CourseBarContent(
-      {super.key, this.courseName = 'Course Name', this.creditHours = '3 hours'});
+      {super.key,
+      this.courseName = 'Course Name',
+      this.creditHours = '3 hours'});
 
   final String? courseName;
 
@@ -13,7 +15,7 @@ class CourseBarContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:  const EdgeInsets.only(left: 15, right: 20, bottom: 10, top: 10),
+      padding: const EdgeInsets.only(left: 15, right: 20, bottom: 10, top: 10),
       child: Row(
         children: [
           Center(
@@ -30,7 +32,7 @@ class CourseBarContent extends StatelessWidget {
               ),
             ),
           ),
-           const Padding(
+          const Padding(
             padding: EdgeInsets.all(8.0),
             child: Icon(
               Icons.add_circle_outline_outlined,
