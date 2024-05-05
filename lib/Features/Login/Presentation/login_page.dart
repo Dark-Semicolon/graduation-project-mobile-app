@@ -84,13 +84,13 @@ class _LoginPageState extends State<LoginPage> {
                       children: [
                         TextButton(
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    const ForgotPasswordPage(), // Navigate to forgot password page
-                              ),
-                            );
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //     builder: (context) =>
+                            //          ForgotPasswordPage(), // Navigate to forgot password page
+                            //   ),
+                            // );
                           },
                           child: const Text(
                             'Forgot Password ?',
@@ -106,7 +106,7 @@ class _LoginPageState extends State<LoginPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => LoginUserPage(
+                              builder: (context) => LoginUserProcess(
                                   email: _emailController.text.trim(),
                                   password: _passwordController.text.trim()),
                             ),
@@ -114,7 +114,6 @@ class _LoginPageState extends State<LoginPage> {
                         }
                       },
                       style: ElevatedButton.styleFrom(
-
                         fixedSize: const Size(335, 55),
                         backgroundColor: Colors.blueAccent,
                         shape: RoundedRectangleBorder(

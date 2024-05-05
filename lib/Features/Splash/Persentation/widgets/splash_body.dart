@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../Core/AssetsData.dart';
+import '../../../../Data/API/Token/token_manager.dart';
 
 class SplashViewbody extends StatefulWidget {
   const SplashViewbody({super.key});
@@ -33,19 +34,12 @@ class _SplashViewbodyState extends State<SplashViewbody>
     Future.delayed(
       const Duration(seconds: 2),
       () async {
-        GoRouter.of(context).push('/LoginPage');
-
-        // bool onBoardingStatus =
-        //     await HiveBoxManager.readFromBox('Status', 'onBoardingStatus');
-        // final token = await TokenManager.getToken();
-        // GoRouter.of(context).push('/LoginPage');
-        // if(token == null) {
-        //   GoRouter.of(context).push(
-        //       onBoardingStatus ? '/LoginPage' : '/OnBoarding');
-        // }
-        // else{
-        //   GoRouter.of(context).push('/HomePage');
-        // }
+        final token = await TokenManager.getToken();
+        if (token == null) {
+          GoRouter.of(context).push('/LoginPage');
+        } else {
+          GoRouter.of(context).push('/HomePage');
+        }
       },
     );
   }

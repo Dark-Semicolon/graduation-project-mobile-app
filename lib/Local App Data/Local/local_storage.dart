@@ -5,7 +5,8 @@ class HiveBoxManager {
     return await Hive.openBox(boxName);
   }
 
-  static Future<void> addToBox(String boxName, String key, dynamic value) async {
+  static Future<void> addToBox(
+      String boxName, String key, dynamic value) async {
     final box = await _getBox(boxName);
     await box.put(key, value);
   }
@@ -21,15 +22,7 @@ class HiveBoxManager {
   }
 }
 
-
-
-
 // await HiveBoxManager.addToBox('Status', 'onBoardingStatus', true);
-
-
-
-
-
 
 // Example usage
 // void main() async {

@@ -1,22 +1,24 @@
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:hive/hive.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
 import '../../../Data/API/Const/end_points.dart';
 import '../../../Data/API/Models/auth_data.dart';
 import '../../../Data/API/Services/auth_service.dart';
 import '../../../Data/API/Token/token_manager.dart';
 
-class LoginUserPage extends StatefulWidget {
+class LoginUserProcess extends StatefulWidget {
   final String email;
   final String password;
 
-  const LoginUserPage({super.key, required this.email, required this.password});
+  const LoginUserProcess(
+      {super.key, required this.email, required this.password});
 
   @override
-  _LoginUserPageState createState() => _LoginUserPageState();
+  _LoginUserProcessState createState() => _LoginUserProcessState();
 }
 
-class _LoginUserPageState extends State<LoginUserPage> {
+class _LoginUserProcessState extends State<LoginUserProcess> {
   late String _email;
   late String _password;
 
@@ -47,6 +49,15 @@ class _LoginUserPageState extends State<LoginUserPage> {
     }
   }
 
+  Future<void> _logoutUser() async {
+    final token = await TokenManager.getToken();
+    if (token != null) {
+      await authRepository.logoutUser(token);
+      TokenManager.deleteToken();
+      GoRouter.of(context).push('/Login');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
@@ -57,31 +68,3 @@ class _LoginUserPageState extends State<LoginUserPage> {
   }
 }
 
-class ForgotPasswordPage extends StatelessWidget {
-  const ForgotPasswordPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Forgot Password'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              'Forgot your password?',
-              style: TextStyle(fontSize: 20),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {},
-              child: const Text('Reset Password'),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}

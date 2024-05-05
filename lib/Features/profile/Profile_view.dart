@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../Core/Device Info/device_info_test.dart';
+import '../../Data/API/Token/token_manager.dart';
 
 class ProfileListView extends StatelessWidget {
   const ProfileListView({super.key});
@@ -73,7 +74,9 @@ class ProfileListView extends StatelessWidget {
           ),
           title: const Text("Logout"),
           trailing: const Icon(Icons.arrow_forward_ios),
-          onTap: () {},
+          onTap: () async {
+            await TokenManager.logoutUser(context);
+          },
         ),
       ],
     );

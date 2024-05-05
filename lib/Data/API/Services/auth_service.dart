@@ -1,7 +1,5 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
-
 import '../Models/auth_data.dart';
 import '../Models/user_data.dart';
 
@@ -22,6 +20,18 @@ class AuthApi {
       return response.body; // Returning token as a plain string
     } else {
       return null;
+    }
+  }
+
+  Future<void> logoutUser(String token) async {
+    final url = Uri.parse('$baseUrl/logout');
+    final response = await http.post(
+      url,
+      headers: {'Authorization': 'Bearer $token'},
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to logout');
     }
   }
 
@@ -48,6 +58,10 @@ class AuthRepository {
 
   Future<String?> loginUser(AuthDataModel authData) async {
     return await authApi.loginUser(authData);
+  }
+
+  Future<void> logoutUser(String token) async {
+    return await authApi.logoutUser(token);
   }
 
   Future<UserDataModel?> fetchUserData(String token) async {
