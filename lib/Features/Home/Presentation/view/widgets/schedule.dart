@@ -5,12 +5,12 @@ import '../../../../../Constants/FontsConst.dart';
 
 class Schedule extends StatelessWidget {
   const Schedule({
-    Key? key,
+    super.key,
     this.courseName = 'Course Name',
     this.endTime = 9.5,
     this.hallName = 'c22',
     this.startTime = 11,
-  }) : super(key: key);
+  });
 
   final num startTime;
   final num endTime;
@@ -42,7 +42,7 @@ class Schedule extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 5),
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
                         child: Text(
                           '${startTime.toStringAsFixed(0)}:00',
                           style: AppFonts.robotoNormal14,

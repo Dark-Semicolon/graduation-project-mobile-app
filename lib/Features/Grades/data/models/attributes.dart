@@ -1,4 +1,3 @@
-import 'package:eductionsystem/Data/API/Models/user_data.dart';
 
 class Attributes{
   final int courseGrade;

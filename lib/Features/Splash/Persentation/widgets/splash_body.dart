@@ -1,12 +1,10 @@
-import 'package:eductionsystem/Data/API/Token/token_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../Core/AssetsData.dart';
-import '../../../../Local App Data/Local/local_storage.dart';
 
 class SplashViewbody extends StatefulWidget {
-  const SplashViewbody({Key? key}) : super(key: key);
+  const SplashViewbody({super.key});
 
   @override
   State<SplashViewbody> createState() => _SplashViewbodyState();

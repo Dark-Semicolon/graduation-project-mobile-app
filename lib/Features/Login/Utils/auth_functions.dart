@@ -10,8 +10,7 @@ class LoginUserPage extends StatefulWidget {
   final String email;
   final String password;
 
-  const LoginUserPage({Key? key, required this.email, required this.password})
-      : super(key: key);
+  const LoginUserPage({super.key, required this.email, required this.password});
 
   @override
   _LoginUserPageState createState() => _LoginUserPageState();
@@ -59,7 +58,7 @@ class _LoginUserPageState extends State<LoginUserPage> {
 }
 
 class ForgotPasswordPage extends StatelessWidget {
-  const ForgotPasswordPage({Key? key}) : super(key: key);
+  const ForgotPasswordPage({super.key});
 
   @override
   Widget build(BuildContext context) {

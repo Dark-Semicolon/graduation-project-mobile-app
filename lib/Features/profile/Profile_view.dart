@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../Core/Device Info/device_info_test.dart';
 
 class ProfileListView extends StatelessWidget {
-  const ProfileListView({Key? key}) : super(key: key);
+  const ProfileListView({super.key});
 
   @override
   Widget build(BuildContext context) {

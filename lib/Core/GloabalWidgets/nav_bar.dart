@@ -6,9 +6,9 @@ import '../../../../Constants/const.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
   CustomBottomNavBar({
-    Key? key,
+    super.key,
     required this.selectedMenu,
-  }) : super(key: key);
+  });
 
   final MenuState selectedMenu;
 

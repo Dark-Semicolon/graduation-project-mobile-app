@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class DeviceInfoPage extends StatelessWidget {
-  const DeviceInfoPage({Key? key}) : super(key: key);
+  const DeviceInfoPage({super.key});
 
   @override
   Widget build(BuildContext context) {

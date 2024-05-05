@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(TotalGPAWidget());
+void main() => runApp(const TotalGPAWidget());
 
 class TotalGPAWidget extends StatelessWidget {
+  const TotalGPAWidget({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(color: Colors.grey, blurRadius: 7),
           ],
         ),
@@ -52,11 +54,11 @@ class TotalGPAWidget extends StatelessWidget {
                     child: Container(
                       width: 50,
                       height: 50,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: Colors.blue,
                         shape: BoxShape.circle,
                       ),
-                      child: Center(
+                      child: const Center(
                         child: Icon(
                           Icons.download_rounded,
                           color: Colors.white,
@@ -66,12 +68,12 @@ class TotalGPAWidget extends StatelessWidget {
                   )
                 ],
               ),
-              SizedBox(height: 6,),
-              Divider(),
-              SizedBox(
+              const SizedBox(height: 6,),
+              const Divider(),
+              const SizedBox(
                 height: 6,
               ),
-              Row(
+              const Row(
                 children: [
                   Column(
                     children: [

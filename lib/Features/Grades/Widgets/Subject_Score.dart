@@ -1,7 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SubjectScore extends StatelessWidget {
+  const SubjectScore({super.key});
+
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class SubjectScore extends StatelessWidget {
           borderRadius: BorderRadius.circular(40),
 
         ),
-        child: ListTile(
+        child: const ListTile(
           title: Text('Math',style: TextStyle(fontSize: 24,fontFamily: 'jost',color: Colors.white),),
 
             trailing : Text('A+',style: TextStyle(fontSize: 24,fontFamily: 'jost',color: Colors.white),)

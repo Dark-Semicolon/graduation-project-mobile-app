@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TaskProgressWidget extends StatelessWidget {
@@ -6,10 +5,10 @@ class TaskProgressWidget extends StatelessWidget {
   final int totalTasks;
 
   const TaskProgressWidget({
-    Key? key,
+    super.key,
     required this.completedTasks,
     required this.totalTasks,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

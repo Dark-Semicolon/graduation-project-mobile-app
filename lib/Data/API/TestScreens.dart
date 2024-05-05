@@ -5,7 +5,7 @@ import 'Services/auth_service.dart';
 import 'Token/token_manager.dart';
 
 class DisplayUserData extends StatefulWidget {
-  const DisplayUserData({Key? key}) : super(key: key);
+  const DisplayUserData({super.key});
 
   @override
   _DisplayUserDataState createState() => _DisplayUserDataState();

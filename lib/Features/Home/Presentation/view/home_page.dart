@@ -5,7 +5,7 @@ import 'widgets/progress_overView__scroll_view.dart';
 import 'widgets/schedule_view.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key});
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {

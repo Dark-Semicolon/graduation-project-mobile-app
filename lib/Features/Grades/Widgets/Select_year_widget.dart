@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 
 class SelectYear extends StatefulWidget {
-  const SelectYear({Key? key}) : super(key: key);
+  const SelectYear({super.key});
 
   @override
   _SelectYear createState() => _SelectYear();
@@ -77,7 +77,7 @@ class Select_year_container extends StatelessWidget {
               ),
             ),
 
-            child: SelectYear()
+            child: const SelectYear()
         ),
       ],
     );

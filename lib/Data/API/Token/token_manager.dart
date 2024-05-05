@@ -1,7 +1,7 @@
 import 'package:hive/hive.dart';
 
 class TokenManager {
-  static final String _boxName = 'tokenBox';
+  static const String _boxName = 'tokenBox';
 
   static Future<void> setToken(String token) async {
     final box = await _getBox();

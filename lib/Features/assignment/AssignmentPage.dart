@@ -12,10 +12,10 @@ class AssignmentsView extends StatelessWidget {
   final int numberOfTasks;
 
   const AssignmentsView({
-    Key? key,
+    super.key,
     required this.tasks,
     required this.numberOfTasks,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -45,11 +45,11 @@ class AssignmentsView extends StatelessWidget {
       ),
       body: Column(
         children: [
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           TaskProgressWidget(
               completedTasks: tasks.where((task) => task.isCompleted).length,
               totalTasks: numberOfTasks),
-          SizedBox(height: 30),
+          const SizedBox(height: 30),
           Text(
             'Lecture’s Tasks',
             style:

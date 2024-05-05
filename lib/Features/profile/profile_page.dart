@@ -7,7 +7,7 @@ import '../../Data/API/Token/token_manager.dart';
 import 'Profile_view.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+  const ProfilePage({super.key});
 
   @override
   _ProfilePageState createState() => _ProfilePageState();

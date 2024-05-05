@@ -49,7 +49,7 @@ class Attributes {
   String? image;
   String? name;
   String? email;
-  Null? emailVerifiedAt;
+  Null emailVerifiedAt;
   int? status;
   int? grade;
   String? createdAt;

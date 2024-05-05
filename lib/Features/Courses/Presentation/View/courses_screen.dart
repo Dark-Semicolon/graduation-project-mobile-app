@@ -6,7 +6,7 @@ import 'Widgets/courses_minmax.dart';
 import 'Widgets/courses_upper_part.dart';
 
 class CoursesScreen extends StatelessWidget {
-  const CoursesScreen({Key? key}) : super(key: key);
+  const CoursesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

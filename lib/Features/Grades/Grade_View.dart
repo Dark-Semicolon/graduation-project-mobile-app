@@ -36,8 +36,8 @@ class GradesPage extends StatelessWidget {
           },
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(12.0),
+      body: const Padding(
+        padding: EdgeInsets.all(12.0),
         child: Column(
           children: [
 

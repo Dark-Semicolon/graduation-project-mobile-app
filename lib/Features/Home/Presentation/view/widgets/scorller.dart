@@ -5,7 +5,7 @@ class Scroller extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 55,
       height: 4,
       child: Stack(
@@ -17,7 +17,7 @@ class Scroller extends StatelessWidget {
               width: 25,
               height: 4,
               decoration: ShapeDecoration(
-                color: Color(0xFF4E74F9),
+                color: const Color(0xFF4E74F9),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -31,7 +31,7 @@ class Scroller extends StatelessWidget {
               width: 10,
               height: 4,
               decoration: ShapeDecoration(
-                color: Color(0xFF4E74F9),
+                color: const Color(0xFF4E74F9),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
@@ -45,7 +45,7 @@ class Scroller extends StatelessWidget {
               width: 10,
               height: 4,
               decoration: ShapeDecoration(
-                color: Color(0xFF4E74F9),
+                color: const Color(0xFF4E74F9),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),

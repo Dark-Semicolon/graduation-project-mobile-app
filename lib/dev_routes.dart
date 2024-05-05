@@ -123,10 +123,10 @@ class RouteButton extends StatelessWidget {
   final VoidCallback onPressed;
 
   const RouteButton({
-    Key? key,
+    super.key,
     required this.label,
     required this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

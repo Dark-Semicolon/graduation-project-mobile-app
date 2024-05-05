@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../../Constants/const.dart';
 
 class StartButton extends StatelessWidget {
-  const StartButton({Key? key}) : super(key: key);
+  const StartButton({super.key});
 
   @override
   Widget build(BuildContext context) {

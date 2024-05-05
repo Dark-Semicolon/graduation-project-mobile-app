@@ -8,13 +8,13 @@ import '../../../../../Constants/Icons.dart';
 
 class ProgressOverView extends StatelessWidget {
   const ProgressOverView({
-    Key? key,
+    super.key,
     this.title = 'Title',
     this.color = Colors.blue,
     this.percentage = 0.3,
     required this.svgAssetPath,
     this.onPressed,
-  }) : super(key: key);
+  });
 
   final num percentage;
   final Color color;

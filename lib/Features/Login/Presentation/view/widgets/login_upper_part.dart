@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class TopImageInLogin extends StatelessWidget {
-  const TopImageInLogin({Key? key}) : super(key: key);
+  const TopImageInLogin({super.key});
 
   @override
   Widget build(BuildContext context) {
