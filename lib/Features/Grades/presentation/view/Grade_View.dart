@@ -1,15 +1,31 @@
-import 'package:eductionsystem/Features/Grades/Widgets/Subject_Score.dart';
-import 'package:eductionsystem/Features/Grades/Widgets/Total_Grade_Widget.dart';
+
+import 'package:eductionsystem/Features/Grades/presentation/view/Widgets/Select_year_widget.dart';
+import 'package:eductionsystem/Features/Grades/presentation/view/grade_view_body.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../Core/GloabalWidgets/nav_bar.dart';
-import 'Widgets/Select_year_widget.dart';
+import '../../../../Core/GloabalWidgets/nav_bar.dart';
+import '../manger/Couser_Grade_Cubit/course_grade_cubit.dart';
+import 'Widgets/Subject_Score.dart';
+import 'Widgets/Total_Grade_Widget.dart';
 
-class GradesPage extends StatelessWidget {
+class GradesPage extends StatefulWidget {
   const GradesPage({super.key});
 
+  @override
+  State<GradesPage> createState() => _GradesPageState();
+}
+
+class _GradesPageState extends State<GradesPage> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    BlocProvider.of<CourseGradeCubit>(context).fetchStudentCoursesGrade();
+
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,32 +52,7 @@ class GradesPage extends StatelessWidget {
           },
         ),
       ),
-      body: const Padding(
-        padding: EdgeInsets.all(12.0),
-        child: Column(
-          children: [
-
-            Select_year_container(),
-            SizedBox(height: 20,),
-            TotalGPAWidget(),
-            SizedBox(
-              height: 14,
-            ),
-            Row(
-              children: [
-                Text(
-                  ' Your grades',
-                  style: TextStyle(
-                      fontFamily: 'jost',
-                      fontSize: 28,
-                      color: Colors.blueAccent),
-                )
-              ],
-            ),
-            SubjectScore(),
-          ],
-        ),
-      ),
+      body:const GradeViewBody(),
       bottomNavigationBar: CustomBottomNavBar(
         selectedMenu: MenuState.account,
       ),

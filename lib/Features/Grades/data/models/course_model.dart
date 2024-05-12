@@ -16,9 +16,10 @@ class CourseModel {
 
   factory CourseModel.fromJson(json) {
     return CourseModel(
-        type: json['type'],
-        id: json['id'],
-        attributes: Attributes.fromJson(json['attributes']),
-        relationships: Relationships.fromJson(json['relationships']));
+      type: json['type'],
+      id: json['id'],
+      attributes: Attributes.fromJson(json['attributes']),
+      relationships: Relationships.fromJson(json['relationships']  ),
+    );
   }
 }

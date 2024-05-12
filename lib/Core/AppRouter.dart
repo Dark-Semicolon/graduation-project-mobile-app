@@ -3,7 +3,7 @@ import 'package:eductionsystem/Features/profile/profile_page.dart';
 import 'package:go_router/go_router.dart';
 
 import '../Features/Courses/Presentation/View/courses_screen.dart';
-import '../Features/Grades/Grade_View.dart';
+import '../Features/Grades/presentation/view/Grade_View.dart';
 import '../Features/Home/Presentation/view/home_page.dart';
 import '../Features/Login/Presentation/login_page.dart';
 import '../Features/Splash/AppPreiew/on_boarding.dart';

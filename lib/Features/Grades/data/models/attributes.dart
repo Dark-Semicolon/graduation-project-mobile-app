@@ -1,4 +1,3 @@
-
 class Attributes{
   final int courseGrade;
   final int courseInstanceId;
