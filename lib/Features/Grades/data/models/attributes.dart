@@ -5,7 +5,9 @@ class Attributes{
   Attributes({required this.courseGrade, required this.courseInstanceId});
 
   factory Attributes.fromJson(json){
-    return Attributes(courseGrade: json['courseGrade'], courseInstanceId: json['courseInstanceId']);
+    return Attributes(
+        courseGrade: json['courseGrade'],
+        courseInstanceId: json['courseInstanceId']);
   }
 
 }
