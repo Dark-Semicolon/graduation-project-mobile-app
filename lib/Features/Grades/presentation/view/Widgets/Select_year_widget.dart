@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-
-
 class SelectYear extends StatefulWidget {
   const SelectYear({super.key});
 
@@ -10,7 +8,6 @@ class SelectYear extends StatefulWidget {
 }
 
 class _SelectYear extends State<SelectYear> {
-
 // Initial Selected Value
   String dropdownvalue = '2024';
 
@@ -22,37 +19,35 @@ class _SelectYear extends State<SelectYear> {
     '2023',
     '2024',
   ];
+
   @override
   Widget build(BuildContext context) {
-    return  Container(
-
+    return Container(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15 ),
+        padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                DropdownButton(
-                  value: dropdownvalue,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            DropdownButton(
+              value: dropdownvalue,
 
-                  icon: const Icon(Icons.keyboard_arrow_down),
+              icon: const Icon(Icons.keyboard_arrow_down),
 
-                  items: items.map((String items) {
-                    return DropdownMenuItem(
-                      value: items,
-                      child: Text(items),
-                    );
-                  }).toList(),
-                  // After selecting the desired option,it will
-                  // change button value to selected value
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      dropdownvalue = newValue!;
-                    });
-                  },
-                ),
-              ],
-
-
+              items: items.map((String items) {
+                return DropdownMenuItem(
+                  value: items,
+                  child: Text(items),
+                );
+              }).toList(),
+              // After selecting the desired option,it will
+              // change button value to selected value
+              onChanged: (String? newValue) {
+                setState(() {
+                  dropdownvalue = newValue!;
+                });
+              },
+            ),
+          ],
         ),
       ),
     );
@@ -65,20 +60,17 @@ class Select_year_container extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20), // Adjust the radius as needed
+              borderRadius: BorderRadius.circular(20),
               border: Border.all(
                 color: Colors.blue,
                 width: 2,
               ),
             ),
-
-            child: const SelectYear()
-        ),
+            child: const SelectYear()),
       ],
     );
   }
