@@ -1,4 +1,3 @@
-
 import 'package:eductionsystem/Constants/const.dart';
 import 'package:eductionsystem/Features/Grades/presentation/view/Widgets/Select_year_widget.dart';
 import 'package:eductionsystem/Features/Grades/presentation/view/Widgets/Total_Grade_Widget.dart';
@@ -6,9 +5,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-
 import '../manger/Couser_Grade_Cubit/course_grade_cubit.dart';
 import '../manger/Couser_Grade_Cubit/course_grade_states.dart';
+import 'Widgets/Select_Semester.dart';
 import 'Widgets/Subject_Score.dart';
 
 class GradeViewBody extends StatelessWidget {
@@ -20,7 +19,15 @@ class GradeViewBody extends StatelessWidget {
       padding: const EdgeInsets.all(12.0),
       child: Column(
         children: [
-          const Select_year_container(),
+          Row( mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              const Select_Semester_container(),
+              SizedBox(width: 10,),
+              const Select_year_container(),
+            ],
+          ),
+
+
           const SizedBox(height: 20,),
           TotalGPAWidget(),
           const SizedBox(
