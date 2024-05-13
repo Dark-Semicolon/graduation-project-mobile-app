@@ -35,6 +35,8 @@ dependencies:
   device_info_plus: ^10.1.0
   flutter_bloc: ^8.1.5
   loading_animation_widget: ^1.2.1
+  screenshot: ^2.3.0
+
 
   flutter:
     sdk: flutter

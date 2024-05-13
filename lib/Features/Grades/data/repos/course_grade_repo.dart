@@ -10,7 +10,7 @@ class CourseGradeRepo {
       "Authorization": ApiConstants.testToken,
     };
     Map<String, dynamic> queryParams = {
-      "include": ['courseInstance.course', 'courseInstance.professor'],
+      "include": ['courseInstance.course,courseInstance.professor'],
     };
     var data = await ApiService.get(
         endPoint: ApiConstants.courseGradesEndPoint,

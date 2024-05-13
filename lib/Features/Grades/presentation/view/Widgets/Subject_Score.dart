@@ -22,7 +22,7 @@ class SubjectScore extends StatelessWidget {
 
           ),
           child: ListTile(
-              title:  Text(courseModel.relationships.courseInstance.courseInstanceRelationships.professor.professorAttributes.name ,style: const TextStyle(fontSize: 24,fontFamily: 'jost',color: Colors.white),),
+              title:  Text(courseModel.relationships.courseInstance.courseInstanceRelationships.course!.courseAttributes!.name ,style: const TextStyle(fontSize: 24,fontFamily: 'jost',color: Colors.white),),
 
               trailing : Text(CourseGradeRepo.generateUserGrade(gradeValue: courseModel.attributes.courseGrade).toString(),style: const TextStyle(fontSize: 24,fontFamily: 'jost',color: Colors.white),)
           ),
@@ -30,26 +30,3 @@ class SubjectScore extends StatelessWidget {
   }
 }
 
-
-
-//
-// class SubjectIteams extends StatelessWidget {
-//   const SubjectIteams({Key? key}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return ListView.builder(
-//       shrinkWrap: true,
-//       physics: const NeverScrollableScrollPhysics(),
-//
-//       padding: EdgeInsets.zero,
-//       itemCount: 3,
-//       itemBuilder: (context, index) {
-//         return  Padding(
-//           padding: EdgeInsets.symmetric(vertical: 0),
-//           child: SubjectScore(),
-//         );
-//       },
-//     );
-//   }
-// }

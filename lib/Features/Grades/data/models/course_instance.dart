@@ -37,14 +37,14 @@ class CourseInstanceAttributes {
 }
 
 class CourseInstanceRelationships {
-  final Course? course;
+  final Course course;
   final Professor professor;
-
+ 
   CourseInstanceRelationships({required this.course, required this.professor});
 
   factory CourseInstanceRelationships.fromJson(json) {
     return CourseInstanceRelationships(
-        course: json['course'] == null ? null : Course.fromJson(json['course']),
+        course : Course.fromJson(json['course']),
         professor: Professor.fromJson(json['professor']
         )
     );
