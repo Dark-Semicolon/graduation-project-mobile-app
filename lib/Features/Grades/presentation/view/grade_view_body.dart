@@ -1,4 +1,6 @@
 import 'package:eductionsystem/Constants/const.dart';
+import 'package:eductionsystem/Features/Grades/presentation/manger/Academic_Semester_Cubit/academic_semester_cubit.dart';
+import 'package:eductionsystem/Features/Grades/presentation/manger/Academic_Semester_Cubit/academic_semseter_states.dart';
 import 'package:eductionsystem/Features/Grades/presentation/view/Widgets/Select_year_widget.dart';
 import 'package:eductionsystem/Features/Grades/presentation/view/Widgets/Total_Grade_Widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,17 +21,33 @@ class GradeViewBody extends StatelessWidget {
       padding: const EdgeInsets.all(12.0),
       child: Column(
         children: [
-          Row( mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              const Select_Semester_container(),
-              SizedBox(width: 10,),
-              const Select_year_container(),
-            ],
-          ),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   children: [
+          //     // const Select_Semester_container(),
+          //     // // SizedBox(width: 10,),
+          //     const Select_year_container(),
+          //   ],
+          // ),
+
+          const Select_year_container(),
+          const SizedBox(height: 10,),
+          BlocBuilder<AcademicSemsterCubit,AcademicSemseterStates>(
+
+            builder: (context, state) {
+            if(state is LoadingAcademicSemseterState){
+              return Center(child: SizedBox(child: CircularProgressIndicator(),height: 20,width: 20,),);
+            }
+            if(state is SuccessAcademicSemseterState){
+              return Select_Semester_container();
+            }
+            return SizedBox();
+
+          },),
 
 
           const SizedBox(height: 20,),
-          TotalGPAWidget(),
+          const TotalGPAWidget(),
           const SizedBox(
             height: 14,
           ),

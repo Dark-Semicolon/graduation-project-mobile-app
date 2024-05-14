@@ -1,9 +1,11 @@
+import 'package:eductionsystem/Features/Grades/presentation/manger/Academic_Semester_Cubit/academic_semester_cubit.dart';
 import 'package:eductionsystem/Features/Grades/presentation/manger/Couser_Grade_Cubit/course_grade_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'Core/AppRouter.dart';
+import 'Features/Grades/presentation/manger/Academic_Year_Cubit/academic_year_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,6 +23,12 @@ class EducationSystem extends StatelessWidget {
       providers: [
         BlocProvider(
           create: (context) => CourseGradeCubit(),
+        ),
+        BlocProvider(
+          create: (context) => AcademicYearCubit(),
+        ),
+        BlocProvider(
+          create: (context) => AcademicSemsterCubit(),
         ),
       ],
       child: MaterialApp.router(
