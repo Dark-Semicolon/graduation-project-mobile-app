@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../Core/GloabalWidgets/nav_bar.dart';
 import '../manger/Couser_Grade_Cubit/course_grade_cubit.dart';
@@ -48,7 +49,10 @@ class _GradesPageState extends State<GradesPage> {
             ),
           ),
           onPressed: () {
-            Navigator.pop(context);
+            // Navigator.pop(context);
+            GoRouter.of(context).push("/HomePage");
+            GoRouter.of(context).pop();
+
           },
         ),
       ),
