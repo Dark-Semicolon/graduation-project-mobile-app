@@ -14,7 +14,7 @@ class SplashViewbody extends StatefulWidget {
 class _SplashViewbodyState extends State<SplashViewbody>
     with SingleTickerProviderStateMixin {
   late AnimationController animationController;
-  late Animation<double> fadeAnimation; // Change to double for fade animation
+  late Animation<double> fadeAnimation;
 
   @override
   void initState() {
@@ -25,15 +25,13 @@ class _SplashViewbodyState extends State<SplashViewbody>
       duration: const Duration(seconds: 2),
     );
 
-    // AnimationController for fade animation
-    fadeAnimation =
-        Tween<double>(begin: 0.0, end: 1.0).animate(animationController);
+    fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(animationController);
 
     animationController.forward();
 
     Future.delayed(
       const Duration(seconds: 2),
-      () async {
+          () async {
         final token = await TokenManager.getToken();
         if (token == null) {
           GoRouter.of(context).push('/LoginPage');
@@ -46,8 +44,8 @@ class _SplashViewbodyState extends State<SplashViewbody>
 
   @override
   void dispose() {
+    animationController.dispose(); // Dispose of the AnimationController
     super.dispose();
-    animationController.dispose();
   }
 
   @override
@@ -57,9 +55,7 @@ class _SplashViewbodyState extends State<SplashViewbody>
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Image.asset(AssetsData.logo),
-        const SizedBox(
-          height: 8,
-        ),
+        const SizedBox(height: 8),
         AnimatedBuilder(
           animation: fadeAnimation,
           builder: (context, _) {
@@ -71,7 +67,6 @@ class _SplashViewbodyState extends State<SplashViewbody>
                     'Eduaction',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      //fontFamily: kFont,
                       fontWeight: FontWeight.bold,
                       fontSize: 44,
                       color: Colors.white,
@@ -81,7 +76,6 @@ class _SplashViewbodyState extends State<SplashViewbody>
                     'System',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      //fontFamily: 'Montserrat',
                       fontWeight: FontWeight.bold,
                       fontSize: 44,
                       color: Colors.white,

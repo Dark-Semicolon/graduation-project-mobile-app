@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'Core/AppRouter.dart';
-import 'Data/API/Services/api_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,7 +19,9 @@ class EducationSystem extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => CourseGradeCubit(),),
+        BlocProvider(
+          create: (context) => CourseGradeCubit(),
+        ),
       ],
       child: MaterialApp.router(
         routerConfig: AppRouter.router,
