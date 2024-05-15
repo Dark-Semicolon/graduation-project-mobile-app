@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class CoursesList extends StatelessWidget {
   const CoursesList({super.key});
 
@@ -10,7 +9,7 @@ class CoursesList extends StatelessWidget {
       scrollDirection: Axis.vertical,
       itemCount: 1,
       itemBuilder: (context, index) {
-        /*return *//*const CourseBar();*/
+        /*return */ /*const CourseBar();*/
       },
     );
   }

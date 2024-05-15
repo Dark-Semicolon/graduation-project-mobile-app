@@ -28,7 +28,8 @@ class _ExpandableSectionListState extends State<ExpandableSectionList> {
 
   Future<void> _fetchSectionData() async {
     ApiService apiService = ApiService();
-    AvailableCourses availableCourses = await apiService.fetchAvailableCourses();
+    AvailableCourses availableCourses =
+        await apiService.fetchAvailableCourses();
 
     setState(() {
       _sectionData = availableCourses.data!.map((courseData) {
@@ -43,7 +44,6 @@ class _ExpandableSectionListState extends State<ExpandableSectionList> {
       }).toList();
     });
   }
-
 
   @override
   void initState() {
