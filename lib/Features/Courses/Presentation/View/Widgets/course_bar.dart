@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../Data/Models/availble_courses.dart';
+import '../../../Data/Models/course_selection.dart';
 import '../../../Data/Services/get_availble_courses_services.dart';
+import '../../../Riverpod/river_state.dart';
 
 class SectionData {
   final String title;
@@ -15,21 +18,37 @@ class SectionData {
   });
 }
 
-class ExpandableSectionList extends StatefulWidget {
-  const ExpandableSectionList({super.key});
+class CoursesList extends ConsumerStatefulWidget {
+  const CoursesList({super.key});
 
   @override
-  _ExpandableSectionListState createState() => _ExpandableSectionListState();
+  _CoursesListState createState() => _CoursesListState();
 }
 
-class _ExpandableSectionListState extends State<ExpandableSectionList> {
+class _CoursesListState extends ConsumerState<CoursesList> {
   late int _expandedIndex;
   late List<SectionData> _sectionData;
+
+  @override
+  void initState() {
+    super.initState();
+    _expandedIndex = -1;
+    _sectionData = [];
+    _fetchSectionData();
+  }
 
   Future<void> _fetchSectionData() async {
     ApiService apiService = ApiService();
     AvailableCourses availableCourses =
         await apiService.fetchAvailableCourses();
+
+    // Fetch min and max credits from the course selection API
+    CourseSelection courseSelection = await apiService.fetchCourseSelection();
+    int minCredits = courseSelection.data!.attributes!.minCreditHours!;
+    int maxCredits = courseSelection.data!.attributes!.maxCreditHours!;
+
+    // Update the provider with min and max credits
+    ref.read(courseProvider.notifier).setMinMaxCredits(minCredits, maxCredits);
 
     setState(() {
       _sectionData = availableCourses.data!.map((courseData) {
@@ -38,19 +57,11 @@ class _ExpandableSectionListState extends State<ExpandableSectionList> {
           description: 'Description: ${courseData.attributes!.description!}\n'
               'Credit Hours: ${courseData.attributes!.creditHours!}',
           buttonAction: () {
-            print('Button action for ${courseData.attributes!.name!}');
+            ref.read(courseProvider.notifier).addCourse(courseData);
           },
         );
       }).toList();
     });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _expandedIndex = -1;
-    _sectionData = [];
-    _fetchSectionData();
   }
 
   @override
@@ -64,7 +75,7 @@ class _ExpandableSectionListState extends State<ExpandableSectionList> {
               physics: const NeverScrollableScrollPhysics(),
               itemCount: _sectionData.length,
               itemBuilder: (context, index) {
-                return ExpandableSection(
+                return CoursesExpandableSection(
                   sectionData: _sectionData[index],
                   index: index,
                   isExpanded: _expandedIndex == index,
@@ -83,13 +94,13 @@ class _ExpandableSectionListState extends State<ExpandableSectionList> {
   }
 }
 
-class ExpandableSection extends StatelessWidget {
+class CoursesExpandableSection extends StatelessWidget {
   final SectionData sectionData;
   final int index;
   final bool isExpanded;
   final VoidCallback onTap;
 
-  const ExpandableSection({
+  const CoursesExpandableSection({
     super.key,
     required this.sectionData,
     required this.index,

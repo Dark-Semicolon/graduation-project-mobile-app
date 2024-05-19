@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../../Constants/Icons.dart';
 import '../../../Data/Models/course_selection.dart';
 import '../../../Data/Services/get_availble_courses_services.dart';
-import 'package:intl/intl.dart';
 
 DateTime dateTime = DateTime.parse('2024-03-26 02:08:00');
 String formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
@@ -90,7 +90,7 @@ class _CoursesScreenUpperPartState extends State<CoursesScreenUpperPart> {
                               'Enrollments end on ${DateFormat('yyyy-MM-dd').format(DateTime.parse(snapshot.data!.data!.attributes!.endAt!))}',
                               textAlign: TextAlign.center,
                               style: const TextStyle(
-                                fontSize: 15 ,
+                                fontSize: 15,
                                 color: Colors.white,
                               ),
                             ),

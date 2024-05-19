@@ -2,6 +2,7 @@ import 'package:eductionsystem/Features/Grades/presentation/manger/Academic_Seme
 import 'package:eductionsystem/Features/Grades/presentation/manger/Couser_Grade_Cubit/course_grade_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'Core/AppRouter.dart';
@@ -10,8 +11,7 @@ import 'Features/Grades/presentation/manger/Academic_Year_Cubit/academic_year_cu
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-  runApp(const EducationSystem());
-  // await ApiService().get();
+  runApp(const ProviderScope(child: EducationSystem()));  // await ApiService().get();
 }
 
 class EducationSystem extends StatelessWidget {

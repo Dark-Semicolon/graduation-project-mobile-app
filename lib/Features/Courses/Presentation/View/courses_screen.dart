@@ -10,15 +10,12 @@ class CoursesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(80),
-        child: CoursesScreenUpperPart(), // Wrap with PreferredSize
-      ),
       backgroundColor: Colors.white,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          ExpandableSectionList(),
+          CoursesScreenUpperPart(),
+          CoursesList(),
           CourseMinMax(),
         ],
       ),
