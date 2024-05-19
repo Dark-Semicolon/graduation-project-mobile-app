@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../Core/GloabalWidgets/nav_bar.dart';
 import 'Widgets/course_bar.dart';
 import 'Widgets/courses_minmax.dart';
 import 'Widgets/courses_upper_part.dart';
@@ -9,9 +10,9 @@ class CoursesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return  Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
+      body: const Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           CoursesScreenUpperPart(),
@@ -19,7 +20,7 @@ class CoursesScreen extends StatelessWidget {
           CourseMinMax(),
         ],
       ),
-      // bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.courses),
+      bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.courses),
     );
   }
 }

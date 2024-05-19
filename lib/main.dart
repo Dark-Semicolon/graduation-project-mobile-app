@@ -12,7 +12,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   runApp(const ProviderScope(child: EducationSystem()));  // await ApiService().get();
-}
+} 
 
 class EducationSystem extends StatelessWidget {
   const EducationSystem({super.key});

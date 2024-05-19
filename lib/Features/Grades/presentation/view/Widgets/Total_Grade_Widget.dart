@@ -89,7 +89,7 @@ class TotalGPAWidget extends StatelessWidget {
                       Row(
                         children: [Icon(Icons.trending_up_outlined),SizedBox(width: 4,), Text('Total Scores',style: TextStyle(fontFamily: 'Jost',fontSize:16,fontWeight: FontWeight.bold),)],
                       ),SizedBox(height: 4,),
-                      Text('1500',style: TextStyle(fontFamily: 'Jost',fontSize: 24,color: Colors.black87),)
+                      Text('1500',style: TextStyle(fontFamily: 'Jost',fontSize: 24,color: Colors.blueAccent),)
                     ],
                   ),
                   Spacer(),
