@@ -1,17 +1,25 @@
-import 'package:eductionsystem/Data/API/Services/api_constant.dart';
 import 'package:eductionsystem/Data/API/Services/api_service.dart';
 import 'package:eductionsystem/Features/Grades/data/models/academic_semester_model.dart';
 import 'package:eductionsystem/Features/Grades/data/models/academic_year_model.dart';
 import 'package:eductionsystem/Features/Grades/data/models/course_model.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+
+import '../../../../Data/API/Token/token_manager.dart';
 
 class CourseGradeRepo {
   static Future<List<CourseModel>> fetchUserGrades(
       {required int yearId, required int semesterId}) async {
     List<CourseModel> coursesList = [];
+    String? token = await TokenManager.getToken();
+    if (token == null) {
+      // Handle the case where token is null
+      debugPrint('Token is null');
+      return coursesList;
+    }
     Map<String, String> headers = {
-      "Authorization": "Bearer ${ApiConstants.testToken}",
+      "Authorization": "Bearer $token",
       "Accept": "application/json",
     };
     Map<String, dynamic> queryParams = {
@@ -44,8 +52,14 @@ class CourseGradeRepo {
 
   static Future<List<AcademicYearModel>> fetchAcademicYear() async {
     List<AcademicYearModel> academicYears = [];
+    String? token = await TokenManager.getToken();
+    if (token == null) {
+      // Handle the case where token is null
+      debugPrint('Token is null');
+      return academicYears;
+    }
     Map<String, String> headers = {
-      "Authorization": "Bearer ${ApiConstants.testToken}",
+      "Authorization": "Bearer $token",
       "Accept": "application/json",
     };
     try {
@@ -75,8 +89,14 @@ class CourseGradeRepo {
   static Future<List<AcademicSemesterModel>> fetchAcademicSemester(
       {required int id}) async {
     List<AcademicSemesterModel> academicSemesterList = [];
+    String? token = await TokenManager.getToken();
+    if (token == null) {
+      // Handle the case where token is null
+      debugPrint('Token is null');
+      return academicSemesterList;
+    }
     Map<String, String> headers = {
-      "Authorization": "Bearer ${ApiConstants.testToken}",
+      "Authorization": "Bearer $token",
       "Accept": "application/json",
     };
     try {

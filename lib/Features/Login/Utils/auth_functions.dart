@@ -21,7 +21,7 @@ class _LoginUserProcessState extends State<LoginUserProcess> {
   late String _password;
 
   final authRepository =
-      AuthRepository(authApi: AuthApi(baseUrl: ApiConstants.baseUrl));
+      AuthRepository(authApi: AuthApi(baseUrl: MainApiConstants.baseUrl));
 
   @override
   void initState() {

@@ -8,10 +8,10 @@ import '../Models/availble_courses.dart';
 import '../Models/course_selection.dart';
 
 class ApiService {
-  static const String _baseUrl = ApiConstants.baseUrl;
+  static const String _baseUrl = MainApiConstants.baseUrl;
   static const String _availableCoursesEndpoint =
-      ApiConstants.courseSelectionAvailableCourses;
-  static const String _courseSelectionEndpoint = ApiConstants.courseSelection;
+      MainApiConstants.courseSelectionAvailableCourses;
+  static const String _courseSelectionEndpoint = MainApiConstants.courseSelection;
 
   Future<AvailableCourses> fetchAvailableCourses() async {
     final response = await http.get(
