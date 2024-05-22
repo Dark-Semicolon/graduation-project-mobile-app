@@ -34,10 +34,10 @@ class _ProfilePageState extends State {
           _userData = userData;
         });
       } else {
-        // Token not found in local storage, handle accordingly (e.g., prompt user to log in)
+
       }
     } catch (error) {
-      // Handle errors here (e.g., display error message to the user)
+
       print('Error fetching user data: $error');
     }
   }
@@ -79,7 +79,7 @@ class _ProfilePageState extends State {
                   const ProfileListView(),
                   const SizedBox(height: 16),
                   Text(
-                    'ID: ${_userData!.data!.id}',
+                    ' GPA : ${_userData!.data!.gpa}',
                     style: const TextStyle(fontSize: 14),
                   ),
                 ],

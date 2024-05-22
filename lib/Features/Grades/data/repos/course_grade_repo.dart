@@ -4,126 +4,136 @@ import 'package:eductionsystem/Features/Grades/data/models/academic_semester_mod
 import 'package:eductionsystem/Features/Grades/data/models/academic_year_model.dart';
 import 'package:eductionsystem/Features/Grades/data/models/course_model.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:http/http.dart' as http;
 
 class CourseGradeRepo {
-  static Future<List<CourseModel>> fetchUserGrades({required int yearId,required int semesterId}) async {
+  static Future<List<CourseModel>> fetchUserGrades(
+      {required int yearId, required int semesterId}) async {
     List<CourseModel> coursesList = [];
     Map<String, String> headers = {
-      "Authorization": ApiConstants.testToken,
+      "Authorization": "Bearer ${ApiConstants.testToken}",
+      "Accept": "application/json",
     };
     Map<String, dynamic> queryParams = {
       "include": ['courseInstance.course,courseInstance.professor'],
     };
-    var data = await ApiService.get(
-        endPoint: '/academicYears/${yearId}/semesters/${semesterId}/courseGrades',
+    try {
+      var data = await ApiService.get(
+        endPoint: '/academicYears/$yearId/semesters/$semesterId/courseGrades',
         headers: headers,
-        queryParams: queryParams);
-    for (var course in data['data']) {
-      coursesList.add(CourseModel.fromJson(course));
+        queryParams: queryParams,
+      );
+      if (data != null && data['data'] != null) {
+        for (var course in data['data']) {
+          coursesList.add(CourseModel.fromJson(course));
+        }
+      } else {
+        debugPrint('Unexpected response format: $data');
+      }
+    } catch (e) {
+      debugPrint('Error fetching user grades: $e');
+      if (e is http.Response) {
+        debugPrint('Response status: ${e.statusCode}');
+        debugPrint('Response headers: ${e.headers}');
+        debugPrint('Response body: ${e.body}');
+      }
     }
-    ;
     debugPrint("CourseGradeList => ${coursesList.length}");
     return coursesList;
   }
+
   static Future<List<AcademicYearModel>> fetchAcademicYear() async {
     List<AcademicYearModel> academicYears = [];
     Map<String, String> headers = {
-      "Authorization": ApiConstants.testToken,
+      "Authorization": "Bearer ${ApiConstants.testToken}",
+      "Accept": "application/json",
     };
-    var data = await ApiService.get(
+    try {
+      var data = await ApiService.get(
         endPoint: '/academicYears',
         headers: headers,
-        );
-    for (var academicYear in data['data']) {
-      academicYears.add(AcademicYearModel.fromJson(academicYear));
+      );
+      if (data != null && data['data'] != null) {
+        for (var academicYear in data['data']) {
+          academicYears.add(AcademicYearModel.fromJson(academicYear));
+        }
+      } else {
+        debugPrint('Unexpected response format: $data');
+      }
+    } catch (e) {
+      debugPrint('Error fetching academic years: $e');
+      if (e is http.Response) {
+        debugPrint('Response status: ${e.statusCode}');
+        debugPrint('Response headers: ${e.headers}');
+        debugPrint('Response body: ${e.body}');
+      }
     }
-
-    debugPrint("CourseGradeList => ${academicYears.length}");
+    debugPrint("AcademicYearsList => ${academicYears.length}");
     return academicYears;
   }
-  static Future<List<AcademicSemesterModel>> fetchAcademicSemester({required int id}) async {
+
+  static Future<List<AcademicSemesterModel>> fetchAcademicSemester(
+      {required int id}) async {
     List<AcademicSemesterModel> academicSemesterList = [];
     Map<String, String> headers = {
-      "Authorization": ApiConstants.testToken,
+      "Authorization": "Bearer ${ApiConstants.testToken}",
+      "Accept": "application/json",
     };
-    var data = await ApiService.get(
-        endPoint: '/academicYears/${id}/semesters',
+    try {
+      var data = await ApiService.get(
+        endPoint: '/academicYears/$id/semesters',
         headers: headers,
-        );
-    for (var academicSemester in data['data']) {
-      academicSemesterList.add(AcademicSemesterModel.fromJson(academicSemester));
+      );
+      if (data != null && data['data'] != null) {
+        for (var academicSemester in data['data']) {
+          academicSemesterList
+              .add(AcademicSemesterModel.fromJson(academicSemester));
+        }
+      } else {
+        debugPrint('Unexpected response format: $data');
+      }
+    } catch (e) {
+      debugPrint('Error fetching academic semesters: $e');
+      if (e is http.Response) {
+        debugPrint('Response status: ${e.statusCode}');
+        debugPrint('Response headers: ${e.headers}');
+        debugPrint('Response body: ${e.body}');
+      }
     }
-
-    debugPrint("CourseGradeList => ${academicSemesterList.length}");
+    debugPrint("AcademicSemesterList => ${academicSemesterList.length}");
     return academicSemesterList;
   }
 
-
-  static generateUserGrade({int? gradeValue}) {
+  static String generateUserGrade({int? gradeValue}) {
     switch (gradeValue) {
       case 0:
         return 'F';
       case 1:
         return 'D-';
-
       case 2:
         return 'D';
-
       case 3:
         return 'D+';
-
       case 4:
         return 'C-';
-
       case 5:
         return 'C';
-
       case 6:
         return 'C+';
-
       case 7:
         return 'B-';
-
       case 8:
         return 'B';
-
       case 9:
         return 'B+';
-
       case 10:
         return 'A-';
-
       case 11:
         return 'A';
-
       case 12:
         return 'A+';
+      default:
+        return '';
     }
   }
-
-
-
-// static Future<List<String>> fectchData()async{
-//   List<AcademicYearModel> data= await fetchAcademicYear();
-//   List<String> data2 = [];
-//   List<String> additionalList=[
-//
-//     '2000',
-//     '2000',
-//   ];
-//   if(data.length <=3){
-//     for(var year in data){
-//       data2.add(year.academicSemesterAttributes.name);
-//     }
-//     data2.add('2000');
-//     data2.add('200');
-//     data2.add('20450');
-//     data2.add('2050');
-//   }
-//   print(data2.length);
-//   print(data2);
-//   return data2;
-//
-// }
-
 }

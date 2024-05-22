@@ -28,7 +28,7 @@ class TotalGPAWidget extends StatelessWidget {
                   const Column(
                     children: [
                       Text(
-                        'Total Grades',
+                        'Semester GPA',
                         style: TextStyle(
                           color: Colors.black45,
                           fontSize: 18,
@@ -40,7 +40,7 @@ class TotalGPAWidget extends StatelessWidget {
                         height: 4,
                       ),
                       Text(
-                        '3.2 GPA',
+                        '3.2          ',
                         style: TextStyle(
                           fontSize: 24,
                           fontFamily: 'Jost',
@@ -68,7 +68,9 @@ class TotalGPAWidget extends StatelessWidget {
                   )
                 ],
               ),
-              const SizedBox(height: 6,),
+              const SizedBox(
+                height: 6,
+              ),
               const Divider(),
               const SizedBox(
                 height: 6,
@@ -78,27 +80,90 @@ class TotalGPAWidget extends StatelessWidget {
                   Column(
                     children: [
                       Row(
-                        children: [Icon(Icons.folder_outlined),SizedBox(width: 4,), Text('Courses',style: TextStyle(fontFamily: 'Jost',fontSize:16,fontWeight: FontWeight.bold),)],
-                      ), SizedBox(height: 4,),
-                      Text('6',style: TextStyle(fontFamily: 'Jost',fontSize: 24,color: Colors.blueAccent),)
+                        children: [
+                          Icon(Icons.folder_outlined),
+                          SizedBox(
+                            width: 4,
+                          ),
+                          Text(
+                            'Courses',
+                            style: TextStyle(
+                                fontFamily: 'Jost',
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold),
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 4,
+                      ),
+                      Text(
+                        '6',
+                        style: TextStyle(
+                            fontFamily: 'Jost',
+                            fontSize: 24,
+                            color: Colors.blueAccent),
+                      )
                     ],
                   ),
                   Spacer(),
                   Column(
                     children: [
                       Row(
-                        children: [Icon(Icons.trending_up_outlined),SizedBox(width: 4,), Text('Total Scores',style: TextStyle(fontFamily: 'Jost',fontSize:16,fontWeight: FontWeight.bold),)],
-                      ),SizedBox(height: 4,),
-                      Text('1500',style: TextStyle(fontFamily: 'Jost',fontSize: 24,color: Colors.blueAccent),)
+                        children: [
+                          Icon(Icons.trending_up_outlined),
+                          SizedBox(
+                            width: 4,
+                          ),
+                          Text(
+                            'Total Scores',
+                            style: TextStyle(
+                                fontFamily: 'Jost',
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold),
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 4,
+                      ),
+                      Text(
+                        '1500',
+                        style: TextStyle(
+                            fontFamily: 'Jost',
+                            fontSize: 24,
+                            color: Colors.black87),
+                      )
                     ],
                   ),
                   Spacer(),
                   Column(
                     children: [
                       Row(
-                        children: [Icon(Icons.person_2_outlined),SizedBox(width: 4,), Text('Your Score',style: TextStyle(fontFamily: 'Jost',fontSize:16,fontWeight: FontWeight.bold),)],
-                      ),SizedBox(height: 4,),
-                      Text('1420',style: TextStyle(fontFamily: 'Jost',fontSize: 24,color: Colors.blueAccent),)
+                        children: [
+                          Icon(Icons.person_2_outlined),
+                          SizedBox(
+                            width: 4,
+                          ),
+                          Text(
+                            'Total GPA',
+                            style: TextStyle(
+                                fontFamily: 'Jost',
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold),
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        height: 4,
+                      ),
+                      Text(
+                        '1420',
+                        style: TextStyle(
+                            fontFamily: 'Jost',
+                            fontSize: 24,
+                            color: Colors.blueAccent),
+                      )
                     ],
                   ),
                 ],

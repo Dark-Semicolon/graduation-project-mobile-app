@@ -11,8 +11,8 @@ import 'Features/Grades/presentation/manger/Academic_Year_Cubit/academic_year_cu
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-  runApp(const ProviderScope(child: EducationSystem()));  // await ApiService().get();
-} 
+  runApp(const ProviderScope(child: EducationSystem()));
+}
 
 class EducationSystem extends StatelessWidget {
   const EducationSystem({super.key});

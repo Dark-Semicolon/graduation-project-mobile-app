@@ -21,14 +21,7 @@ class GradeViewBody extends StatelessWidget {
       padding: const EdgeInsets.all(12.0),
       child: Column(
         children: [
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: [
-          //     // const Select_Semester_container(),
-          //     // // SizedBox(width: 10,),
-          //     const Select_year_container(),
-          //   ],
-          // ),
+
 
           const Select_year_container(),
           const SizedBox(height: 10,),
