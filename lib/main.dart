@@ -14,18 +14,6 @@ void main() async {
   runApp(const ProviderScope(child: EducationSystem()));
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
 class EducationSystem extends StatelessWidget {
   const EducationSystem({super.key});
 
