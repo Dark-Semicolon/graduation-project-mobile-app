@@ -25,6 +25,7 @@ void main() async {
 
 
 
+
 class EducationSystem extends StatelessWidget {
   const EducationSystem({super.key});
 
