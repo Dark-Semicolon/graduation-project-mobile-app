@@ -1,3 +1,4 @@
+import 'package:eductionsystem/Features/Grades/GPA/GPACubit.dart';
 import 'package:eductionsystem/Features/Grades/presentation/manger/Academic_Semester_Cubit/academic_semester_cubit.dart';
 import 'package:eductionsystem/Features/Grades/presentation/manger/Couser_Grade_Cubit/course_grade_cubit.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +30,9 @@ class EducationSystem extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => AcademicSemsterCubit(),
+        ),
+        BlocProvider(
+          create: (context) => GPACubit(),
         ),
       ],
       child: MaterialApp.router(

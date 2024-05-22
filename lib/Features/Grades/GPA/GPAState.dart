@@ -1,0 +1,20 @@
+import 'package:bloc/bloc.dart';
+import 'package:meta/meta.dart';
+
+// Define the state
+@immutable
+abstract class GPAState {}
+
+class InitialGPAState extends GPAState {}
+
+class YearGPAState extends GPAState {
+  final double yearGPA;
+
+  YearGPAState(this.yearGPA);
+}
+
+class SemesterGPAState extends GPAState {
+  final double semesterGPA;
+
+  SemesterGPAState(this.semesterGPA);
+}

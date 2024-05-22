@@ -56,8 +56,12 @@ class CourseGradeRepo {
     if (token == null) {
       // Handle the case where token is null
       debugPrint('Token is null');
+
       return academicYears;
     }
+    Map<String, dynamic> queryParams = {
+      "load": ['gpa'],                    ///////////
+    };
     Map<String, String> headers = {
       "Authorization": "Bearer $token",
       "Accept": "application/json",
@@ -66,6 +70,8 @@ class CourseGradeRepo {
       var data = await ApiService.get(
         endPoint: '/academicYears',
         headers: headers,
+        queryParams: queryParams              ////////////
+
       );
       if (data != null && data['data'] != null) {
         for (var academicYear in data['data']) {
@@ -95,6 +101,12 @@ class CourseGradeRepo {
       debugPrint('Token is null');
       return academicSemesterList;
     }
+
+    Map<String, dynamic> queryParams = {
+    "load": ['gpa'],  /////////////
+
+    };
+
     Map<String, String> headers = {
       "Authorization": "Bearer $token",
       "Accept": "application/json",
@@ -103,6 +115,7 @@ class CourseGradeRepo {
       var data = await ApiService.get(
         endPoint: '/academicYears/$id/semesters',
         headers: headers,
+          queryParams: queryParams ,     //////////////////
       );
       if (data != null && data['data'] != null) {
         for (var academicSemester in data['data']) {
