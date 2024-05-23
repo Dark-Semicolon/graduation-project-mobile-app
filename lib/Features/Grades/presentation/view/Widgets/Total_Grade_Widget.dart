@@ -1,3 +1,4 @@
+import 'package:eductionsystem/Features/Grades/presentation/view/Widgets/All_Year_GPA.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../GPA/GPACubit.dart';
@@ -157,14 +158,7 @@ class TotalGPAWidget extends StatelessWidget {
                             ],
                           ),
                           SizedBox(height: 4),
-                          Text(
-                            '1420',
-                            style: TextStyle(
-                              fontFamily: 'Jost',
-                              fontSize: 24,
-                              color: Colors.blueAccent,
-                            ),
-                          ),
+                          AllYearGpa()
                         ],
                       ),
                     ],
