@@ -22,7 +22,7 @@ class _CoursesScreenUpperPartState extends State<CoursesScreenUpperPart> {
   @override
   void initState() {
     super.initState();
-    _courseSelection = ApiService().fetchCourseSelection();
+    _courseSelection = CoursesApiService().fetchCourseSelection();
   }
 
   @override

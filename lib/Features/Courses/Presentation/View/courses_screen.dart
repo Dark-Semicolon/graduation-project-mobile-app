@@ -10,9 +10,9 @@ class CoursesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
+      body: const Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           CoursesScreenUpperPart(),
@@ -20,7 +20,7 @@ class CoursesScreen extends StatelessWidget {
           CourseMinMax(),
         ],
       ),
-       bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.courses),
+      bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.courses),
     );
   }
 }

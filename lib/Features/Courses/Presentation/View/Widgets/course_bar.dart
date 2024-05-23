@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../../../Data/Models/availble_courses.dart';
 import '../../../Data/Models/course_selection.dart';
 import '../../../Data/Services/get_availble_courses_services.dart';
@@ -38,9 +37,8 @@ class _CoursesListState extends ConsumerState<CoursesList> {
   }
 
   Future<void> _fetchSectionData() async {
-    ApiService apiService = ApiService();
-    AvailableCourses availableCourses =
-        await apiService.fetchAvailableCourses();
+    CoursesApiService apiService = CoursesApiService();
+    AvailableCourses availableCourses = await apiService.fetchAvailableCourses();
 
     // Fetch min and max credits from the course selection API
     CourseSelection courseSelection = await apiService.fetchCourseSelection();
@@ -57,11 +55,60 @@ class _CoursesListState extends ConsumerState<CoursesList> {
           description: 'Description: ${courseData.attributes!.description!}\n'
               'Credit Hours: ${courseData.attributes!.creditHours!}',
           buttonAction: () {
-            ref.read(courseProvider.notifier).addCourse(courseData);
+            _showAddCourseDialog(context, courseData);
           },
         );
       }).toList();
     });
+  }
+
+  void _showAddCourseDialog(BuildContext context, courseData) {
+    final courseNotifier = ref.read(courseProvider.notifier);
+    if (!courseNotifier.canAddCourse(courseData)) {
+      _showMaxCreditsExceededDialog(context);
+      return;
+    }
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Add Course'),
+          content: Text('Are you sure you want to add the course "${courseData.attributes!.name!}"?'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                courseNotifier.addCourse(courseData);
+                Navigator.of(context).pop();
+              },
+              child: const Text('Add'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showMaxCreditsExceededDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Error'),
+          content: const Text('Adding this course exceeds the maximum credit hours.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -163,7 +210,7 @@ class CoursesExpandableSection extends StatelessWidget {
                 const SizedBox(height: 10),
                 ElevatedButton(
                   onPressed: sectionData.buttonAction,
-                  child: const Text('Button'),
+                  child: const Text('Add Course'),
                 ),
               ],
             ),
