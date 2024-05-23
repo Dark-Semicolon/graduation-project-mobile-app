@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../Core/GloabalWidgets/nav_bar.dart';
 import '../../Data/API/Models/user_data.dart';
-import '../../Data/API/Services/auth_service.dart';
+import '../../Data/API/Services/api_service.dart';
+import '../../Data/API/Services/auth_service.dart'; // Import this file
 import '../../Data/API/Token/token_manager.dart';
 import 'Profile_view.dart';
 
@@ -13,7 +14,7 @@ class ProfilePage extends StatefulWidget {
   _ProfilePageState createState() => _ProfilePageState();
 }
 
-class _ProfilePageState extends State {
+class _ProfilePageState extends State<ProfilePage> {
   final AuthRepository _authRepository = AuthRepository(
     authApi: AuthApi(baseUrl: 'http://10.0.2.2:8000'),
   );
@@ -30,14 +31,18 @@ class _ProfilePageState extends State {
       final token = await TokenManager.getToken();
       if (token != null) {
         final userData = await _authRepository.fetchUserData(token);
-        setState(() {
-          _userData = userData;
-        });
+        if (userData != null) {
+          print('Fetched user data: ${userData.toJson()}'); // Debug statement
+          setState(() {
+            _userData = userData;
+          });
+        } else {
+          print('User data is null');
+        }
       } else {
-
+        print('Token is null');
       }
     } catch (error) {
-
       print('Error fetching user data: $error');
     }
   }
@@ -49,41 +54,40 @@ class _ProfilePageState extends State {
       body: Center(
         child: _userData != null
             ? Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CircleAvatar(
-                    radius: 48,
-                    backgroundColor: Colors.grey[300],
-                    backgroundImage:
-                        NetworkImage(_userData!.data!.attributes!.image ?? ''),
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    _userData!.data!.attributes!.name ?? '',
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w900,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    _userData!.data!.attributes!.email ?? '',
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontFamily: 'Montserrat',
-                      fontWeight: FontWeight.w900,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  const ProfileListView(),
-                  const SizedBox(height: 16),
-                  Text(
-                    ' GPA : ${_userData!.data!.gpa}',
-                    style: const TextStyle(fontSize: 14),
-                  ),
-                ],
-              )
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CircleAvatar(
+              radius: 48,
+              backgroundColor: Colors.grey[300],
+              backgroundImage: NetworkImage(_userData!.data!.attributes!.image ?? ''),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              _userData!.data!.attributes!.name ?? '',
+              style: const TextStyle(
+                fontSize: 24,
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.w900,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              _userData!.data!.attributes!.email ?? '',
+              style: const TextStyle(
+                fontSize: 18,
+                fontFamily: 'Montserrat',
+                fontWeight: FontWeight.w900,
+              ),
+            ),
+            const SizedBox(height: 16),
+            const ProfileListView(),
+            const SizedBox(height: 16),
+            Text(
+              'GPA: ${_userData!.data!.gpa ?? '0.00'}',
+              style: const TextStyle(fontSize: 14),
+            ),
+          ],
+        )
             : const CircularProgressIndicator(),
       ),
       bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.account),
