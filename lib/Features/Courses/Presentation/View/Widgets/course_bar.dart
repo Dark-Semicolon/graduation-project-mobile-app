@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../Data/Models/availble_courses.dart';
 import '../../../Data/Models/course_selection.dart';
 import '../../../Data/Services/get_availble_courses_services.dart';
@@ -38,7 +39,8 @@ class _CoursesListState extends ConsumerState<CoursesList> {
 
   Future<void> _fetchSectionData() async {
     CoursesApiService apiService = CoursesApiService();
-    AvailableCourses availableCourses = await apiService.fetchAvailableCourses();
+    AvailableCourses availableCourses =
+        await apiService.fetchAvailableCourses();
 
     // Fetch min and max credits from the course selection API
     CourseSelection courseSelection = await apiService.fetchCourseSelection();
@@ -68,13 +70,18 @@ class _CoursesListState extends ConsumerState<CoursesList> {
       _showMaxCreditsExceededDialog(context);
       return;
     }
+    if (courseNotifier.state.selectedCourseIds.contains(courseData.id)) {
+      _showAlreadyAddedDialog(context);
+      return;
+    }
 
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Add Course'),
-          content: Text('Are you sure you want to add the course "${courseData.attributes!.name!}"?'),
+          content: Text(
+              'Are you sure you want to add the course "${courseData.attributes!.name!}"?'),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
@@ -98,8 +105,27 @@ class _CoursesListState extends ConsumerState<CoursesList> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Error'),
-          content: const Text('Adding this course exceeds the maximum credit hours.'),
+          title: const Text('Maximum Credit Hours Exceeded'),
+          content: const Text(
+              'You cannot add more courses as it exceeds the maximum credit hours.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showAlreadyAddedDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Course Already Added'),
+          content: const Text('This course has already been added.'),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),

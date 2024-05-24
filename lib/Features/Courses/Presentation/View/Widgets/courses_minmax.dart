@@ -55,9 +55,10 @@ class CourseMinMax extends ConsumerWidget {
           ),
           const SizedBox(height: 20),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               final courseNotifier = ref.read(courseProvider.notifier);
               if (courseNotifier.isMinCreditHoursReached()) {
+                await courseNotifier.saveSelectedCourses();
                 Navigator.of(context).push(
                   MaterialPageRoute(
                       builder: (context) => const SelectedCoursesScreen()),
