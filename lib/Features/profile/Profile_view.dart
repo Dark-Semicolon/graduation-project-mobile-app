@@ -33,7 +33,7 @@ class ProfileListView extends StatelessWidget {
         ),
         ListTile(
           leading: SvgPicture.asset(
-            "assets/icons/Star Icon.svg",
+            "assets/icons/Check mark rounde.svg",
             colorFilter: const ColorFilter.mode(iconColor, BlendMode.srcIn),
           ),
           title: const Text("My Grades"),
