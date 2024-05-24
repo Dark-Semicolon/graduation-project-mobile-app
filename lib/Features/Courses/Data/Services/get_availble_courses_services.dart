@@ -7,7 +7,7 @@ import '../../../../Data/API/Token/token_manager.dart';
 import '../Models/availble_courses.dart';
 import '../Models/course_selection.dart';
 
-class ApiService {
+class CoursesApiService {
   static const String _baseUrl = MainApiConstants.baseUrl;
   static const String _availableCoursesEndpoint =
       MainApiConstants.courseSelectionAvailableCourses;

@@ -38,7 +38,7 @@ class _CoursesListState extends ConsumerState<CoursesList> {
   }
 
   Future<void> _fetchSectionData() async {
-    ApiService apiService = ApiService();
+    CoursesApiService apiService = CoursesApiService();
     AvailableCourses availableCourses =
         await apiService.fetchAvailableCourses();
 
@@ -57,11 +57,84 @@ class _CoursesListState extends ConsumerState<CoursesList> {
           description: 'Description: ${courseData.attributes!.description!}\n'
               'Credit Hours: ${courseData.attributes!.creditHours!}',
           buttonAction: () {
-            ref.read(courseProvider.notifier).addCourse(courseData);
+            _showAddCourseDialog(context, courseData);
           },
         );
       }).toList();
     });
+  }
+
+  void _showAddCourseDialog(BuildContext context, courseData) {
+    final courseNotifier = ref.read(courseProvider.notifier);
+    if (!courseNotifier.canAddCourse(courseData)) {
+      _showMaxCreditsExceededDialog(context);
+      return;
+    }
+    if (courseNotifier.state.selectedCourseIds.contains(courseData.id)) {
+      _showAlreadyAddedDialog(context);
+      return;
+    }
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Add Course'),
+          content: Text(
+              'Are you sure you want to add the course "${courseData.attributes!.name!}"?'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                courseNotifier.addCourse(courseData);
+                Navigator.of(context).pop();
+              },
+              child: const Text('Add'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showMaxCreditsExceededDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Maximum Credit Hours Exceeded'),
+          content: const Text(
+              'You cannot add more courses as it exceeds the maximum credit hours.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showAlreadyAddedDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Course Already Added'),
+          content: const Text('This course has already been added.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -163,7 +236,7 @@ class CoursesExpandableSection extends StatelessWidget {
                 const SizedBox(height: 10),
                 ElevatedButton(
                   onPressed: sectionData.buttonAction,
-                  child: const Text('Button'),
+                  child: const Text('Add Course'),
                 ),
               ],
             ),
