@@ -59,8 +59,9 @@ class _ProfilePageState extends State<ProfilePage> {
             CircleAvatar(
               radius: 48,
               backgroundColor: Colors.grey[300],
-              backgroundImage: NetworkImage('/storage/${_userData!.data!.attributes!.image ?? ''}'),
+              backgroundImage: NetworkImage('http://10.0.2.2:8000/storage/${_userData!.data!.attributes!.image ?? ''}'),
             ),
+
             const SizedBox(height: 16),
             Text(
               _userData!.data!.attributes!.name ?? '',
