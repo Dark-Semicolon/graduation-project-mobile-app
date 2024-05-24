@@ -6,14 +6,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class CourseGradeCubit extends Cubit<CourseGradeStates> {
   CourseGradeCubit() : super(IntialCourseGradeState());
 
-  fetchStudentCoursesGrade({required int yearId,required int semesterId}) async {
-    emit(LoadingCourseGradeState());
+  // Method to fetch student courses grade
+  fetchStudentCoursesGrade({required int yearId, required int semesterId}) async {
+    emit(LoadingCourseGradeState()); // Emit loading state
     try {
-      List<CourseModel> coursesGradeList =
-          await CourseGradeRepo.fetchUserGrades(yearId: yearId,semesterId:semesterId );
-      emit(SuccessCourseGradeState(coursesGradeList: coursesGradeList));
+      // Fetch student courses grade from repository
+      Map<String, dynamic> result =
+      await CourseGradeRepo.fetchUserGrades(yearId: yearId, semesterId: semesterId);
+      List<CourseModel> coursesGradeList = result['courses']; // Extract the list of CourseModel from the result
+      emit(SuccessCourseGradeState(coursesGradeList: coursesGradeList)); // Emit success state with data
     } on Exception catch (ex) {
-      emit(FailureCourseGradeState(errMsg: ex.toString()));
+      emit(FailureCourseGradeState(errMsg: ex.toString())); // Emit failure state with error message
     }
   }
 }

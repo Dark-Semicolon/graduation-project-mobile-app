@@ -38,7 +38,7 @@ class AuthApi {
   }
 
   Future<UserDataModel?> fetchUserData(String token) async {
-    final url = Uri.parse('$baseUrl/api/v1/student/user?includeGpa=true&load=gpa');
+    final url = Uri.parse('$baseUrl/api/v1/student/user?includeGpa=true&load=gpa,failedCoursesCount');
     final response = await http.get(
       url,
       headers: {'Authorization': 'Bearer $token'},

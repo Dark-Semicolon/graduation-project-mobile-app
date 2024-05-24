@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../GPA/GPACubit.dart';
 import '../../../GPA/GPAState.dart';
+import 'faild_Course_Count.dart';
 
 
 class TotalGPAWidget extends StatelessWidget {
@@ -13,13 +14,13 @@ class TotalGPAWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<GPACubit, GPAState>(
       builder: (context, state) {
-        String gpaText = '';
+        String gpaText = ('');
         if (state is YearGPAState) {
-          gpaText = 'Year GPA: ${state.yearGPA}';
+          gpaText = 'Year GPA : ${state.yearGPA.toString().substring(0,4)}';
         } else if (state is SemesterGPAState) {
-          gpaText = 'Semester GPA: ${state.semesterGPA}';
+          gpaText = 'Semester GPA : ${state.semesterGPA.toString().substring(0,4)}';
         } else {
-          gpaText = 'Please select a year or semester';
+          gpaText = 'Please select a year';
         }
 
         return Center(
@@ -40,45 +41,57 @@ class TotalGPAWidget extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Column(
+                      Column(crossAxisAlignment: CrossAxisAlignment.start ,
                         children: [
-                          Text(
-                            'GPA',
-                            style: TextStyle(
-                              color: Colors.black45,
-                              fontSize: 18,
-                              fontFamily: 'Jost',
-                              fontWeight: FontWeight.bold,
-                            ),
+                          Row(mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                'GPA',
+                                style: TextStyle(
+                                  color: Colors.black45,
+                                  fontSize: 18,
+                                  fontFamily: 'Jost',
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
                           ),
                           SizedBox(height: 4),
-                          Text(
-                            gpaText,
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontFamily: 'Jost',
-                              fontWeight: FontWeight.bold,
+                          Row(
+                            children: [
+                              Text(
+                                gpaText,
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  fontFamily: 'Jost',
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          GestureDetector(
+                            onTap: () {},
+                            child: Container(
+                              width: 50,
+                              height: 50,
+                              decoration: const BoxDecoration(
+                                color: Colors.blue,
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Center(
+                                child: Icon(
+                                  Icons.download_rounded,
+                                  color: Colors.white,
+                                ),
+                              ),
                             ),
                           ),
                         ],
                       ),
-                      // GestureDetector(
-                      //   onTap: () {},
-                      //   child: Container(
-                      //     width: 50,
-                      //     height: 50,
-                      //     decoration: const BoxDecoration(
-                      //       color: Colors.blue,
-                      //       shape: BoxShape.circle,
-                      //     ),
-                      //     child: const Center(
-                      //       child: Icon(
-                      //         Icons.download_rounded,
-                      //         color: Colors.white,
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
                     ],
                   ),
                   SizedBox(height: 6),
@@ -86,7 +99,7 @@ class TotalGPAWidget extends StatelessWidget {
                   SizedBox(height: 6),
                   Row(
                     children: [
-                      Column(
+                      Column(mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Row(
                             children: [
@@ -103,7 +116,7 @@ class TotalGPAWidget extends StatelessWidget {
                             ],
                           ),
                           SizedBox(height: 4),
-                          //CoursesNumber(),
+                          TotalCoursesWidget(),
                         ],
                       ),
                       Spacer(),
@@ -114,7 +127,7 @@ class TotalGPAWidget extends StatelessWidget {
                               Icon(Icons.trending_up_outlined),
                               SizedBox(width: 4),
                               Text(
-                                'Total Scores',
+                                'Failed Courses',
                                 style: TextStyle(
                                   fontFamily: 'Jost',
                                   fontSize: 16,
@@ -124,14 +137,7 @@ class TotalGPAWidget extends StatelessWidget {
                             ],
                           ),
                           SizedBox(height: 4),
-                          Text(
-                            '1500',
-                            style: TextStyle(
-                              fontFamily: 'Jost',
-                              fontSize: 24,
-                              color: Colors.black87,
-                            ),
-                          ),
+                          failedCoursesCount(),
                         ],
                       ),
                       Spacer(),

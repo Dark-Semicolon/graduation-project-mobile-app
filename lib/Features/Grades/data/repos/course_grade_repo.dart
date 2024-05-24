@@ -9,14 +9,18 @@ import 'package:http/http.dart' as http;
 import '../../../../Data/API/Token/token_manager.dart';
 
 class CourseGradeRepo {
-  static Future<List<CourseModel>> fetchUserGrades(
-      {required int yearId, required int semesterId}) async {
+
+  static Future<Map<String, dynamic>> fetchUserGrades({
+    required int yearId,
+    required int semesterId,
+  }) async {
     List<CourseModel> coursesList = [];
+    int total = 0;
     String? token = await TokenManager.getToken();
     if (token == null) {
-      // Handle the case where token is null
+
       debugPrint('Token is null');
-      return coursesList;
+      return {'courses': coursesList, 'total': total};     //5555555
     }
     Map<String, String> headers = {
       "Authorization": "Bearer $token",
@@ -32,6 +36,7 @@ class CourseGradeRepo {
         queryParams: queryParams,
       );
       if (data != null && data['data'] != null) {
+        total = data['meta']['total'] ?? 0;  // Extract total count from meta
         for (var course in data['data']) {
           coursesList.add(CourseModel.fromJson(course));
         }
@@ -47,20 +52,20 @@ class CourseGradeRepo {
       }
     }
     debugPrint("CourseGradeList => ${coursesList.length}");
-    return coursesList;
+    return {'courses': coursesList, 'total': total};
   }
 
+  // Fetch academic years
   static Future<List<AcademicYearModel>> fetchAcademicYear() async {
     List<AcademicYearModel> academicYears = [];
     String? token = await TokenManager.getToken();
     if (token == null) {
       // Handle the case where token is null
       debugPrint('Token is null');
-
       return academicYears;
     }
     Map<String, dynamic> queryParams = {
-      "load": ['gpa'],                    ///////////
+      "load": ['gpa,failedCoursesCount'],
     };
     Map<String, String> headers = {
       "Authorization": "Bearer $token",
@@ -70,8 +75,7 @@ class CourseGradeRepo {
       var data = await ApiService.get(
         endPoint: '/academicYears',
         headers: headers,
-        queryParams: queryParams              ////////////
-
+        queryParams: queryParams,
       );
       if (data != null && data['data'] != null) {
         for (var academicYear in data['data']) {
@@ -92,8 +96,10 @@ class CourseGradeRepo {
     return academicYears;
   }
 
-  static Future<List<AcademicSemesterModel>> fetchAcademicSemester(
-      {required int id}) async {
+  // Fetch academic semesters
+  static Future<List<AcademicSemesterModel>> fetchAcademicSemester({
+    required int id,
+  }) async {
     List<AcademicSemesterModel> academicSemesterList = [];
     String? token = await TokenManager.getToken();
     if (token == null) {
@@ -103,8 +109,7 @@ class CourseGradeRepo {
     }
 
     Map<String, dynamic> queryParams = {
-    "load": ['gpa'],  /////////////
-
+      "load": ['gpa,failedCoursesCount'],
     };
 
     Map<String, String> headers = {
@@ -115,7 +120,7 @@ class CourseGradeRepo {
       var data = await ApiService.get(
         endPoint: '/academicYears/$id/semesters',
         headers: headers,
-          queryParams: queryParams ,     //////////////////
+        queryParams: queryParams,
       );
       if (data != null && data['data'] != null) {
         for (var academicSemester in data['data']) {
@@ -137,6 +142,7 @@ class CourseGradeRepo {
     return academicSemesterList;
   }
 
+  // Generate user grade
   static String generateUserGrade({int? gradeValue}) {
     switch (gradeValue) {
       case 0:

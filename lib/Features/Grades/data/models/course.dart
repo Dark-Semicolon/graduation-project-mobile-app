@@ -1,3 +1,4 @@
+
 class Course {
   final String? type;
   final int id;

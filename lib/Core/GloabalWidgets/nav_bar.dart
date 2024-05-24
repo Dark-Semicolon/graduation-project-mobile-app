@@ -30,18 +30,18 @@ class CustomBottomNavBar extends StatelessWidget {
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(br),
             topRight: Radius.circular(br),
-            //   bottomLeft: Radius.circular(br),
-            //   bottomRight: Radius.circular(br),
+              // bottomLeft: Radius.circular(br),
+              // bottomRight: Radius.circular(br),
           ),
 
-          // boxShadow: [
-          //   BoxShadow(
-          //     offset: const Offset(3, 5),
-          //     blurRadius: 20,
-          //     spreadRadius: 5,
-          //     color: const Color(0xFF000000).withOpacity(0.33),
-          //   ),
-          // ],
+          boxShadow: [
+            BoxShadow(
+              offset: const Offset(3, 5),
+              blurRadius: 20,
+              spreadRadius: 2,
+              color: const Color(0xFF000000).withOpacity(0.24),
+            ),
+          ],
         ),
         child: SafeArea(
           top: false,
@@ -56,6 +56,8 @@ class CustomBottomNavBar extends StatelessWidget {
                       color: MenuState.home == selectedMenu
                           ? kPrimaryColor
                           : inActiveIconColor,
+                      height: 24,
+
                     ),
                     onPressed: () {
                       GoRouter.of(context).push('/HomePage');
@@ -77,10 +79,44 @@ class CustomBottomNavBar extends StatelessWidget {
                   color: MenuState.courses == selectedMenu
                       ? kPrimaryColor
                       : inActiveIconColor,
+                  height: 24,
+
                 ),
                 label: "Courses",
                 isSelected: MenuState.courses == selectedMenu,
               ),
+
+
+
+              Column(
+                children: [
+                  IconButton(
+                    // iconSize: 120.0,
+                    icon: SvgPicture.asset(
+                      "assets/icons/Star Icon.svg",
+                      color: MenuState.Grades == selectedMenu
+                          ? kPrimaryColor
+                          : inActiveIconColor,
+
+                      height: 24,
+                    ),
+                    onPressed: () {
+                      GoRouter.of(context).push('/GradesPage');
+                    },
+                  ),
+                  Text(
+                    "Grades",
+                    style: TextStyle(
+                      color: MenuState.Grades == selectedMenu
+                          ? kPrimaryColor
+                          : inActiveIconColor,
+                    ),
+                  ),
+                ],
+              ),
+
+
+
               Column(
                 children: [
                   IconButton(
@@ -89,6 +125,8 @@ class CustomBottomNavBar extends StatelessWidget {
                       color: MenuState.assessments == selectedMenu
                           ? kPrimaryColor
                           : inActiveIconColor,
+                      height: 24,
+
                     ),
                     onPressed: () {
                       GoRouter.of(context).push('/AssignmentsPage');
@@ -112,6 +150,8 @@ class CustomBottomNavBar extends StatelessWidget {
                       color: MenuState.account == selectedMenu
                           ? kPrimaryColor
                           : inActiveIconColor,
+                      height: 24,
+
                     ),
                     onPressed: () {
                       GoRouter.of(context).push('/ProfilePage');
@@ -158,4 +198,4 @@ class CustomBottomNavBar extends StatelessWidget {
   }
 }
 
-enum MenuState { home, courses, assessments, account }
+enum MenuState { home, courses, assessments, account, Grades }

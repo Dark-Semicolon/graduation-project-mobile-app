@@ -1,16 +1,17 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import '../../../../../Data/API/Models/user_data.dart';
 import '../../../../../Data/API/Services/auth_service.dart';
 import '../../../../../Data/API/Token/token_manager.dart';
 
-class AllYearGpa extends StatefulWidget {
-  const AllYearGpa({super.key});
+class failedCoursesCount extends StatefulWidget {
+  const failedCoursesCount({super.key});
 
   @override
-  _AllYearGpa createState() => _AllYearGpa();
+  _failedCoursesCount createState() => _failedCoursesCount();
 }
 
-class _AllYearGpa extends State<AllYearGpa> {
+class _failedCoursesCount extends State<failedCoursesCount> {
   final AuthRepository _authRepository = AuthRepository(
     authApi: AuthApi(baseUrl: 'http://10.0.2.2:8000'),
   );
@@ -46,8 +47,8 @@ class _AllYearGpa extends State<AllYearGpa> {
   @override
   Widget build(BuildContext context) {
     return Text(
-      '${_userData?.data?.gpa?.toString().substring(0,4) ?? '0.00'}',
-      style: const TextStyle(fontSize: 18),
+      '${_userData?.data?.failedCoursesCount ?? '0'}',
+      style: const TextStyle(fontSize: 18,color: Colors.red),
 
     );
   }

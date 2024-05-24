@@ -21,11 +21,13 @@ class Data {
   int? id;
   Attributes? attributes;
   double? gpa;
+  int? failedCoursesCount ;
 
   Data({this.type, this.id, this.attributes, this.gpa});
 
   Data.fromJson(Map<String, dynamic> json) {
-    gpa = json['gpa']?.toDouble(); // Ensure it's parsed as a double
+    gpa = json['gpa']?.toDouble();
+    failedCoursesCount = json['failedCoursesCount'];
     type = json['type'];
     id = json['id'];
     attributes = json['attributes'] != null ? Attributes.fromJson(json['attributes']) : null;
@@ -34,6 +36,7 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['gpa'] = gpa;
+    data['failedCoursesCount'] = failedCoursesCount ;
     data['type'] = type;
     data['id'] = id;
     if (attributes != null) {
