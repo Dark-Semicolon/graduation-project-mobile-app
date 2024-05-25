@@ -1,8 +1,6 @@
 import 'dart:convert';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
-
 import '../../../../Data/API/Const/end_points.dart';
 import '../../../../Data/API/Token/token_manager.dart';
 import '../Data/Models/availble_courses.dart';
@@ -12,7 +10,7 @@ class CourseState {
   final int totalCreditHours;
   final int minCreditHours;
   final int maxCreditHours;
-  final Map<int, Data> courseDetails;
+  final Map<int, AvailableCoursesData> courseDetails;
 
   CourseState({
     required this.courseDetails,
@@ -27,13 +25,14 @@ class CourseState {
     int? totalCreditHours,
     int? minCreditHours,
     int? maxCreditHours,
+    Map<int, AvailableCoursesData>? courseDetails,
   }) {
     return CourseState(
       selectedCourseIds: selectedCourseIds ?? this.selectedCourseIds,
       totalCreditHours: totalCreditHours ?? this.totalCreditHours,
       minCreditHours: minCreditHours ?? this.minCreditHours,
       maxCreditHours: maxCreditHours ?? this.maxCreditHours,
-      courseDetails: {},
+      courseDetails: courseDetails ?? this.courseDetails,
     );
   }
 }
@@ -41,19 +40,19 @@ class CourseState {
 class CourseNotifier extends StateNotifier<CourseState> {
   CourseNotifier()
       : super(CourseState(
-            selectedCourseIds: [],
-            totalCreditHours: 0,
-            minCreditHours: 0,
-            maxCreditHours: 0,
-            courseDetails: {}));
+      selectedCourseIds: [],
+      totalCreditHours: 0,
+      minCreditHours: 0,
+      maxCreditHours: 0,
+      courseDetails: {}));
 
-  bool canAddCourse(Data courseData) {
+  bool canAddCourse(AvailableCoursesData courseData) {
     final newTotalCreditHours =
         state.totalCreditHours + courseData.attributes!.creditHours!;
     return newTotalCreditHours <= state.maxCreditHours;
   }
 
-  bool addCourse(Data courseData) {
+  bool addCourse(AvailableCoursesData courseData) {
     if (state.selectedCourseIds.contains(courseData.id)) {
       return false; // Indicate that the course is already added
     }
@@ -61,10 +60,14 @@ class CourseNotifier extends StateNotifier<CourseState> {
       return false;
     }
 
+    final updatedCourseDetails = Map<int, AvailableCoursesData>.from(state.courseDetails);
+    updatedCourseDetails[courseData.id!] = courseData;
+
     state = state.copyWith(
       selectedCourseIds: [...state.selectedCourseIds, courseData.id!],
       totalCreditHours:
-          state.totalCreditHours + courseData.attributes!.creditHours!,
+      state.totalCreditHours + courseData.attributes!.creditHours!,
+      courseDetails: updatedCourseDetails,
     );
     return true;
   }
@@ -99,7 +102,7 @@ class CourseNotifier extends StateNotifier<CourseState> {
     }
   }
 
-  Future<List<Data>> fetchEnrolledCourses() async {
+  Future<void> fetchSelectedCourses() async {
     final token = await TokenManager.getToken();
     final response = await http.get(
       Uri.parse(
@@ -111,7 +114,16 @@ class CourseNotifier extends StateNotifier<CourseState> {
 
     if (response.statusCode == 200) {
       final List<dynamic> courseListJson = jsonDecode(response.body)['courses'];
-      return courseListJson.map((json) => Data.fromJson(json)).toList();
+      final courses = courseListJson.map((json) => AvailableCoursesData.fromJson(json)).toList();
+
+      final selectedCourseIds = courses.map((course) => course.id!).toList();
+      final courseDetails = {for (var course in courses) course.id!: course};
+
+      state = state.copyWith(
+        selectedCourseIds: selectedCourseIds,
+        courseDetails: courseDetails,
+        totalCreditHours: courses.fold(0, (sum, course) => sum! + course.attributes!.creditHours!),
+      );
     } else {
       throw Exception('Failed to load enrolled courses');
     }
@@ -119,6 +131,6 @@ class CourseNotifier extends StateNotifier<CourseState> {
 }
 
 final courseProvider =
-    StateNotifierProvider<CourseNotifier, CourseState>((ref) {
+StateNotifierProvider<CourseNotifier, CourseState>((ref) {
   return CourseNotifier();
 });

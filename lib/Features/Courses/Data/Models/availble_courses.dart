@@ -1,13 +1,13 @@
 class AvailableCourses {
-  List<Data>? data;
+  List<AvailableCoursesData>? data;
 
   AvailableCourses({this.data});
 
   AvailableCourses.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <AvailableCoursesData>[];
       json['data'].forEach((v) {
-        data!.add(Data.fromJson(v));
+        data!.add(AvailableCoursesData.fromJson(v));
       });
     }
   }
@@ -21,14 +21,14 @@ class AvailableCourses {
   }
 }
 
-class Data {
+class AvailableCoursesData {
   String? type;
   int? id;
   Attributes? attributes;
 
-  Data({this.type, this.id, this.attributes});
+  AvailableCoursesData({this.type, this.id, this.attributes});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  AvailableCoursesData.fromJson(Map<String, dynamic> json) {
     type = json['type'];
     id = json['id'];
     attributes = json['attributes'] != null

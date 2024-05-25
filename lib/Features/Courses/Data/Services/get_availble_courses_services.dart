@@ -11,7 +11,6 @@ class CoursesApiService {
   static const String _baseUrl = MainApiConstants.baseUrl;
   static const String _availableCoursesEndpoint =
       MainApiConstants.courseSelectionAvailableCourses;
-  static const String _courseSelectionEndpoint = MainApiConstants.courseSelection;
 
   Future<AvailableCourses> fetchAvailableCourses() async {
     final response = await http.get(
@@ -30,7 +29,7 @@ class CoursesApiService {
 
   Future<CourseSelection> fetchCourseSelection() async {
     final response = await http.get(
-      Uri.parse('$_baseUrl$_courseSelectionEndpoint'),
+      Uri.parse('$_baseUrl${MainApiConstants.courseSelection}'),
       headers: {
         'Authorization': 'Bearer ${await TokenManager.getToken()}',
       },

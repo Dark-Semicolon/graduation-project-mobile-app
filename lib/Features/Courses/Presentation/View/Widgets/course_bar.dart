@@ -64,7 +64,8 @@ class _CoursesListState extends ConsumerState<CoursesList> {
     });
   }
 
-  void _showAddCourseDialog(BuildContext context, courseData) {
+  void _showAddCourseDialog(
+      BuildContext context, AvailableCoursesData courseData) {
     final courseNotifier = ref.read(courseProvider.notifier);
     if (!courseNotifier.canAddCourse(courseData)) {
       _showMaxCreditsExceededDialog(context);

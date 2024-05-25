@@ -61,7 +61,7 @@ class CourseMinMax extends ConsumerWidget {
                 await courseNotifier.saveSelectedCourses();
                 Navigator.of(context).push(
                   MaterialPageRoute(
-                      builder: (context) => const SelectedCoursesScreen()),
+                      builder: (context) =>  const SelectedCoursesScreen()),
                 );
               } else {
                 _showMinCreditsNotReachedDialog(context);
