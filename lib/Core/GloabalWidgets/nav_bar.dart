@@ -22,7 +22,6 @@ class CustomBottomNavBar extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(0.0),
       child: Container(
-
         height: 100,
         padding: const EdgeInsets.symmetric(vertical: 12),
         decoration: BoxDecoration(
@@ -30,10 +29,9 @@ class CustomBottomNavBar extends StatelessWidget {
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(br),
             topRight: Radius.circular(br),
-              // bottomLeft: Radius.circular(br),
-              // bottomRight: Radius.circular(br),
+            // bottomLeft: Radius.circular(br),
+            // bottomRight: Radius.circular(br),
           ),
-
           boxShadow: [
             BoxShadow(
               offset: const Offset(3, 5),
@@ -57,7 +55,6 @@ class CustomBottomNavBar extends StatelessWidget {
                           ? kPrimaryColor
                           : inActiveIconColor,
                       height: 24,
-
                     ),
                     onPressed: () {
                       GoRouter.of(context).push('/HomePage');
@@ -80,14 +77,10 @@ class CustomBottomNavBar extends StatelessWidget {
                       ? kPrimaryColor
                       : inActiveIconColor,
                   height: 24,
-
                 ),
                 label: "Courses",
                 isSelected: MenuState.courses == selectedMenu,
               ),
-
-
-
               Column(
                 children: [
                   IconButton(
@@ -97,7 +90,6 @@ class CustomBottomNavBar extends StatelessWidget {
                       color: MenuState.Grades == selectedMenu
                           ? kPrimaryColor
                           : inActiveIconColor,
-
                       height: 24,
                     ),
                     onPressed: () {
@@ -114,9 +106,6 @@ class CustomBottomNavBar extends StatelessWidget {
                   ),
                 ],
               ),
-
-
-
               Column(
                 children: [
                   IconButton(
@@ -126,7 +115,6 @@ class CustomBottomNavBar extends StatelessWidget {
                           ? kPrimaryColor
                           : inActiveIconColor,
                       height: 24,
-
                     ),
                     onPressed: () {
                       GoRouter.of(context).push('/AssignmentsPage');
@@ -151,7 +139,6 @@ class CustomBottomNavBar extends StatelessWidget {
                           ? kPrimaryColor
                           : inActiveIconColor,
                       height: 24,
-
                     ),
                     onPressed: () {
                       GoRouter.of(context).push('/ProfilePage');

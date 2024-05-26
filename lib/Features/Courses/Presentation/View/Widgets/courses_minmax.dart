@@ -58,11 +58,29 @@ class CourseMinMax extends ConsumerWidget {
             onPressed: () async {
               final courseNotifier = ref.read(courseProvider.notifier);
               if (courseNotifier.isMinCreditHoursReached()) {
-                await courseNotifier.saveSelectedCourses();
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                      builder: (context) =>  const SelectedCoursesScreen()),
-                );
+                try {
+                  await courseNotifier.saveSelectedCourses();
+
+                  // Fetch course selection details to get the end date
+                  final courseSelection =
+                      await courseNotifier.fetchCourseSelection();
+                  final endDate =
+                      DateTime.parse(courseSelection.data!.attributes!.endAt!);
+                  final canModify = DateTime.now().isBefore(endDate);
+
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => SelectedCoursesScreen(
+                        endDate: endDate,
+                        canModify: canModify,
+                      ),
+                    ),
+                  );
+                } catch (e) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Failed to save courses: $e')),
+                  );
+                }
               } else {
                 _showMinCreditsNotReachedDialog(context);
               }

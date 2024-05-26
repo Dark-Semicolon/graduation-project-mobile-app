@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../Riverpod/river_state.dart';
-import 'Widgets/course_bar.dart';
 
 class SelectedCoursesScreen extends ConsumerStatefulWidget {
   final DateTime endDate;
@@ -42,11 +42,7 @@ class _SelectedCoursesScreenState extends ConsumerState<SelectedCoursesScreen> {
             IconButton(
               icon: const Icon(Icons.edit),
               onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const CoursesList(),
-                  ),
-                );
+                GoRouter.of(context).go('/CoursesScreen');
               },
             ),
         ],
@@ -77,7 +73,7 @@ class _SelectedCoursesScreenState extends ConsumerState<SelectedCoursesScreen> {
                   return SelectedCourseExpandableSection(
                     title: courseData.attributes!.name!,
                     description:
-                    'Description: ${courseData.attributes!.description!}\n'
+                        'Description: ${courseData.attributes!.description!}\n'
                         'Credit Hours: ${courseData.attributes!.creditHours!}',
                     index: index,
                     isExpanded: _expandedIndex == index,
