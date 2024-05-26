@@ -21,7 +21,7 @@ class Data {
   int? id;
   Attributes? attributes;
   double? gpa;
-  int? failedCoursesCount ;
+  int? failedCoursesCount;
 
   Data({this.type, this.id, this.attributes, this.gpa});
 
@@ -30,13 +30,15 @@ class Data {
     failedCoursesCount = json['failedCoursesCount'];
     type = json['type'];
     id = json['id'];
-    attributes = json['attributes'] != null ? Attributes.fromJson(json['attributes']) : null;
+    attributes = json['attributes'] != null
+        ? Attributes.fromJson(json['attributes'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['gpa'] = gpa;
-    data['failedCoursesCount'] = failedCoursesCount ;
+    data['failedCoursesCount'] = failedCoursesCount;
     data['type'] = type;
     data['id'] = id;
     if (attributes != null) {
@@ -58,13 +60,13 @@ class Attributes {
 
   Attributes(
       {this.image,
-        this.name,
-        this.email,
-        this.emailVerifiedAt,
-        this.status,
-        this.grade,
-        this.createdAt,
-        this.updatedAt});
+      this.name,
+      this.email,
+      this.emailVerifiedAt,
+      this.status,
+      this.grade,
+      this.createdAt,
+      this.updatedAt});
 
   Attributes.fromJson(Map<String, dynamic> json) {
     image = json['image'];

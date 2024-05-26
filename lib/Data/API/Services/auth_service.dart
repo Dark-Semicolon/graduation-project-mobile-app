@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 
 import '../Models/auth_data.dart';
@@ -38,7 +39,8 @@ class AuthApi {
   }
 
   Future<UserDataModel?> fetchUserData(String token) async {
-    final url = Uri.parse('$baseUrl/api/v1/student/user?includeGpa=true&load=gpa,failedCoursesCount');
+    final url = Uri.parse(
+        '$baseUrl/api/v1/student/user?includeGpa=true&load=gpa,failedCoursesCount');
     final response = await http.get(
       url,
       headers: {'Authorization': 'Bearer $token'},

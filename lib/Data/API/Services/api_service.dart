@@ -5,8 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  final String _baseUrl = 'http://10.0.2.2:8000/api/v1/student';
-
   static Future<dynamic> get(
       {required String endPoint,
       Map<String, String>? headers,
@@ -34,7 +32,6 @@ class ApiService {
       throw Exception('There was an Error ::  ${response.statusCode}');
     }
   }
-
 
 // Future<void> get() async {
 //   Uri url = Uri.parse("$_baseUrl/academicYears/1/semesters/1/courseGrades");
