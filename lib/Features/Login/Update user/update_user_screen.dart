@@ -15,10 +15,8 @@ class UpdateUserDataScreen extends ConsumerStatefulWidget {
 class _UpdateUserDataScreenState extends ConsumerState<UpdateUserDataScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _passwordConfirmationController =
-      TextEditingController();
+  final TextEditingController _passwordConfirmationController = TextEditingController();
   bool _isLoading = false;
   String? _errorMessage;
 
@@ -41,21 +39,6 @@ class _UpdateUserDataScreenState extends ConsumerState<UpdateUserDataScreen> {
                 hintText: 'Enter your name',
                 prefixIcon: Icons.person,
                 errorMessage: 'Please enter your name',
-              ),
-              const SizedBox(height: 16),
-              CustomTextField(
-                controller: _emailController,
-                labelText: 'Email',
-                hintText: 'Enter your email',
-                prefixIcon: Icons.email,
-                keyboardType: TextInputType.emailAddress,
-                errorMessage: 'Please enter a valid email',
-                validator: (value) {
-                  if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value!)) {
-                    return 'Please enter a valid email address';
-                  }
-                  return null;
-                },
               ),
               const SizedBox(height: 16),
               CustomTextField(
@@ -85,9 +68,9 @@ class _UpdateUserDataScreenState extends ConsumerState<UpdateUserDataScreen> {
               _isLoading
                   ? const Center(child: CircularProgressIndicator())
                   : ElevatedButton(
-                      onPressed: _updateUserData,
-                      child: const Text('Update'),
-                    ),
+                onPressed: _updateUserData,
+                child: const Text('Update'),
+              ),
               if (_errorMessage != null)
                 Padding(
                   padding: const EdgeInsets.only(top: 16),
@@ -112,10 +95,11 @@ class _UpdateUserDataScreenState extends ConsumerState<UpdateUserDataScreen> {
     });
 
     final PatchUseData data = PatchUseData(
-      name: _nameController.text,
-      email: _emailController.text,
-      password: _passwordController.text,
-      passwordConfirmation: _passwordConfirmationController.text,
+      name: _nameController.text.isNotEmpty ? _nameController.text : null,
+      password: _passwordController.text.isNotEmpty ? _passwordController.text : null,
+      passwordConfirmation: _passwordConfirmationController.text.isNotEmpty
+          ? _passwordConfirmationController.text
+          : null,
     );
 
     try {
