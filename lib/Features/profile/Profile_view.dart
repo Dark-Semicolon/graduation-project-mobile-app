@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../Core/Device Info/device_info_test.dart';
 import '../../Data/API/Token/token_manager.dart';
+import '../Login/Update user/update_user_screen.dart';
 
 class ProfileListView extends StatelessWidget {
   const ProfileListView({super.key});
@@ -50,6 +51,22 @@ class ProfileListView extends StatelessWidget {
           title: const Text("Terms & Conditions"),
           trailing: const Icon(Icons.arrow_forward_ios),
           onTap: () {},
+        ),
+        ListTile(
+          leading: SvgPicture.asset(
+            "assets/icons/Settings.svg",
+            colorFilter: const ColorFilter.mode(iconColor, BlendMode.srcIn),
+          ),
+          title: const Text("update user"),
+          trailing: const Icon(Icons.arrow_forward_ios),
+          onTap: () async {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const UpdateUserDataScreen(),
+              ),
+            );
+          },
         ),
         ListTile(
           leading: SvgPicture.asset(
