@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import '../../../../Data/API/Const/end_points.dart';
 import '../../../../Data/API/Token/token_manager.dart';
 import '../Data/Models/availble_courses.dart';
+import '../Data/Models/course_selection.dart';
 
 class CourseState {
   final List<int> selectedCourseIds;
@@ -13,6 +14,8 @@ class CourseState {
   final int minCreditHours;
   final int maxCreditHours;
   final Map<int, AvailableCoursesData> courseDetails;
+  final bool isLoading;
+  final String? errorMessage;
 
   CourseState({
     required this.courseDetails,
@@ -20,6 +23,8 @@ class CourseState {
     required this.totalCreditHours,
     required this.minCreditHours,
     required this.maxCreditHours,
+    this.isLoading = false,
+    this.errorMessage,
   });
 
   CourseState copyWith({
@@ -28,6 +33,8 @@ class CourseState {
     int? minCreditHours,
     int? maxCreditHours,
     Map<int, AvailableCoursesData>? courseDetails,
+    bool? isLoading,
+    String? errorMessage,
   }) {
     return CourseState(
       selectedCourseIds: selectedCourseIds ?? this.selectedCourseIds,
@@ -35,6 +42,8 @@ class CourseState {
       minCreditHours: minCreditHours ?? this.minCreditHours,
       maxCreditHours: maxCreditHours ?? this.maxCreditHours,
       courseDetails: courseDetails ?? this.courseDetails,
+      isLoading: isLoading ?? this.isLoading,
+      errorMessage: errorMessage,
     );
   }
 }
@@ -86,7 +95,7 @@ class CourseNotifier extends StateNotifier<CourseState> {
     return state.totalCreditHours >= state.minCreditHours;
   }
 
-  Future<void> saveSelectedCourses() async {
+  Future<String> saveSelectedCourses() async {
     final token = await TokenManager.getToken();
     final response = await http.post(
       Uri.parse(
@@ -99,7 +108,7 @@ class CourseNotifier extends StateNotifier<CourseState> {
     );
 
     if (response.statusCode == 200) {
-      print('Courses saved successfully');
+      return 'Courses saved successfully';
     } else {
       throw Exception('Failed to save courses');
     }
@@ -132,6 +141,41 @@ class CourseNotifier extends StateNotifier<CourseState> {
       );
     } else {
       throw Exception('Failed to load enrolled courses');
+    }
+  }
+
+  void removeCourse(int courseId) {
+    final courseData = state.courseDetails[courseId];
+    if (courseData != null) {
+      final updatedCourseDetails =
+          Map<int, AvailableCoursesData>.from(state.courseDetails);
+      updatedCourseDetails.remove(courseId);
+
+      state = state.copyWith(
+        selectedCourseIds:
+            state.selectedCourseIds.where((id) => id != courseId).toList(),
+        totalCreditHours:
+            state.totalCreditHours - courseData.attributes!.creditHours!,
+        courseDetails: updatedCourseDetails,
+      );
+    }
+  }
+
+  Future<CourseSelection> fetchCourseSelection() async {
+    final token = await TokenManager.getToken();
+    final response = await http.get(
+      Uri.parse(
+          '${MainApiConstants.baseUrl}${MainApiConstants.courseSelection}'),
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final courseSelectionJson = jsonDecode(response.body);
+      return CourseSelection.fromJson(courseSelectionJson);
+    } else {
+      throw Exception('Failed to fetch course selection details');
     }
   }
 }

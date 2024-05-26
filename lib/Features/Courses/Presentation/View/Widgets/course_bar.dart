@@ -9,12 +9,12 @@ import '../../../Riverpod/river_state.dart';
 class SectionData {
   final String title;
   final String description;
-  final VoidCallback buttonAction;
+  final AvailableCoursesData courseData;
 
   SectionData({
     required this.title,
     required this.description,
-    required this.buttonAction,
+    required this.courseData,
   });
 }
 
@@ -56,42 +56,39 @@ class _CoursesListState extends ConsumerState<CoursesList> {
           title: courseData.attributes!.name!,
           description: 'Description: ${courseData.attributes!.description!}\n'
               'Credit Hours: ${courseData.attributes!.creditHours!}',
-          buttonAction: () {
-            _showAddCourseDialog(context, courseData);
-          },
+          courseData: courseData,
         );
       }).toList();
     });
   }
 
-  void _showAddCourseDialog(
-      BuildContext context, AvailableCoursesData courseData) {
+  void _toggleCourseEnrollment(AvailableCoursesData courseData) {
     final courseNotifier = ref.read(courseProvider.notifier);
-    if (!courseNotifier.canAddCourse(courseData)) {
-      _showMaxCreditsExceededDialog(context);
-      return;
-    }
     if (courseNotifier.state.selectedCourseIds.contains(courseData.id)) {
-      _showAlreadyAddedDialog(context);
-      return;
+      _showRemoveCourseDialog(courseData.id!);
+    } else {
+      _showAddCourseDialog(courseData);
     }
+  }
 
+  void _showAddCourseDialog(AvailableCoursesData courseData) {
     showDialog(
       context: context,
-      builder: (BuildContext context) {
+      builder: (context) {
         return AlertDialog(
           title: const Text('Add Course'),
-          content: Text(
-              'Are you sure you want to add the course "${courseData.attributes!.name!}"?'),
+          content: const Text('Are you sure you want to add this course?'),
           actions: [
             TextButton(
-              onPressed: () => Navigator.of(context).pop(),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
               child: const Text('Cancel'),
             ),
             TextButton(
               onPressed: () {
-                courseNotifier.addCourse(courseData);
                 Navigator.of(context).pop();
+                _addCourse(courseData);
               },
               child: const Text('Add'),
             ),
@@ -101,18 +98,34 @@ class _CoursesListState extends ConsumerState<CoursesList> {
     );
   }
 
-  void _showMaxCreditsExceededDialog(BuildContext context) {
+  void _addCourse(AvailableCoursesData courseData) {
+    final courseNotifier = ref.read(courseProvider.notifier);
+    if (!courseNotifier.addCourse(courseData)) {
+      _showErrorDialog(
+          'Failed to add course. It may exceed the maximum credit hours.');
+    }
+  }
+
+  void _showRemoveCourseDialog(int courseId) {
     showDialog(
       context: context,
-      builder: (BuildContext context) {
+      builder: (context) {
         return AlertDialog(
-          title: const Text('Maximum Credit Hours Exceeded'),
-          content: const Text(
-              'You cannot add more courses as it exceeds the maximum credit hours.'),
+          title: const Text('Remove Course'),
+          content: const Text('Are you sure you want to remove this course?'),
           actions: [
             TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                _removeCourse(courseId);
+              },
+              child: const Text('Remove'),
             ),
           ],
         );
@@ -120,16 +133,27 @@ class _CoursesListState extends ConsumerState<CoursesList> {
     );
   }
 
-  void _showAlreadyAddedDialog(BuildContext context) {
+  void _removeCourse(int courseId) {
+    final courseNotifier = ref.read(courseProvider.notifier);
+    courseNotifier.removeCourse(courseId);
+    if (!courseNotifier.isMinCreditHoursReached()) {
+      _showErrorDialog(
+          'Failed to remove course. It may fall below the minimum credit hours.');
+    }
+  }
+
+  void _showErrorDialog(String message) {
     showDialog(
       context: context,
-      builder: (BuildContext context) {
+      builder: (context) {
         return AlertDialog(
-          title: const Text('Course Already Added'),
-          content: const Text('This course has already been added.'),
+          title: const Text('Error'),
+          content: Text(message),
           actions: [
             TextButton(
-              onPressed: () => Navigator.of(context).pop(),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
               child: const Text('OK'),
             ),
           ],
@@ -140,6 +164,7 @@ class _CoursesListState extends ConsumerState<CoursesList> {
 
   @override
   Widget build(BuildContext context) {
+    final courseState = ref.watch(courseProvider);
     return Expanded(
       child: SingleChildScrollView(
         child: Column(
@@ -149,15 +174,21 @@ class _CoursesListState extends ConsumerState<CoursesList> {
               physics: const NeverScrollableScrollPhysics(),
               itemCount: _sectionData.length,
               itemBuilder: (context, index) {
+                final sectionData = _sectionData[index];
+                final isSelected = courseState.selectedCourseIds
+                    .contains(sectionData.courseData.id);
                 return CoursesExpandableSection(
-                  sectionData: _sectionData[index],
+                  sectionData: sectionData,
                   index: index,
                   isExpanded: _expandedIndex == index,
+                  isSelected: isSelected,
                   onTap: () {
                     setState(() {
                       _expandedIndex = (_expandedIndex == index) ? -1 : index;
                     });
                   },
+                  buttonAction: () =>
+                      _toggleCourseEnrollment(sectionData.courseData),
                 );
               },
             ),
@@ -172,14 +203,18 @@ class CoursesExpandableSection extends StatelessWidget {
   final SectionData sectionData;
   final int index;
   final bool isExpanded;
+  final bool isSelected;
   final VoidCallback onTap;
+  final VoidCallback buttonAction;
 
   const CoursesExpandableSection({
     super.key,
     required this.sectionData,
     required this.index,
     required this.isExpanded,
+    required this.isSelected,
     required this.onTap,
+    required this.buttonAction,
   });
 
   @override
@@ -193,7 +228,7 @@ class CoursesExpandableSection extends StatelessWidget {
             padding: const EdgeInsets.all(7.0),
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: isSelected ? Colors.green : Colors.blue,
                 borderRadius: BorderRadius.circular(12.0),
               ),
               padding: const EdgeInsets.all(16.0),
@@ -236,8 +271,8 @@ class CoursesExpandableSection extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 ElevatedButton(
-                  onPressed: sectionData.buttonAction,
-                  child: const Text('Add Course'),
+                  onPressed: buttonAction,
+                  child: Text(isSelected ? 'Remove Course' : 'Add Course'),
                 ),
               ],
             ),

@@ -16,7 +16,8 @@ class _UpdateUserDataScreenState extends ConsumerState<UpdateUserDataScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _passwordConfirmationController = TextEditingController();
+  final TextEditingController _passwordConfirmationController =
+      TextEditingController();
   bool _isLoading = false;
   String? _errorMessage;
 
@@ -68,9 +69,9 @@ class _UpdateUserDataScreenState extends ConsumerState<UpdateUserDataScreen> {
               _isLoading
                   ? const Center(child: CircularProgressIndicator())
                   : ElevatedButton(
-                onPressed: _updateUserData,
-                child: const Text('Update'),
-              ),
+                      onPressed: _updateUserData,
+                      child: const Text('Update'),
+                    ),
               if (_errorMessage != null)
                 Padding(
                   padding: const EdgeInsets.only(top: 16),
@@ -96,7 +97,8 @@ class _UpdateUserDataScreenState extends ConsumerState<UpdateUserDataScreen> {
 
     final PatchUseData data = PatchUseData(
       name: _nameController.text.isNotEmpty ? _nameController.text : null,
-      password: _passwordController.text.isNotEmpty ? _passwordController.text : null,
+      password:
+          _passwordController.text.isNotEmpty ? _passwordController.text : null,
       passwordConfirmation: _passwordConfirmationController.text.isNotEmpty
           ? _passwordConfirmationController.text
           : null,

@@ -4,7 +4,8 @@ class PatchUseData {
   String? password;
   String? passwordConfirmation;
 
-  PatchUseData({this.name, this.email, this.password, this.passwordConfirmation});
+  PatchUseData(
+      {this.name, this.email, this.password, this.passwordConfirmation});
 
   PatchUseData.fromJson(Map<String, dynamic> json) {
     name = json['name'];

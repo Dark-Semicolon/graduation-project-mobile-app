@@ -2,9 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../Riverpod/river_state.dart';
+import 'Widgets/course_bar.dart';
 
 class SelectedCoursesScreen extends ConsumerStatefulWidget {
-  const SelectedCoursesScreen({super.key});
+  final DateTime endDate;
+  final bool canModify;
+
+  const SelectedCoursesScreen({
+    super.key,
+    required this.endDate,
+    required this.canModify,
+  });
 
   @override
   _SelectedCoursesScreenState createState() => _SelectedCoursesScreenState();
@@ -29,6 +37,19 @@ class _SelectedCoursesScreenState extends ConsumerState<SelectedCoursesScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Selected Courses'),
+        actions: [
+          if (widget.canModify)
+            IconButton(
+              icon: const Icon(Icons.edit),
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const CoursesList(),
+                  ),
+                );
+              },
+            ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -56,7 +77,7 @@ class _SelectedCoursesScreenState extends ConsumerState<SelectedCoursesScreen> {
                   return SelectedCourseExpandableSection(
                     title: courseData.attributes!.name!,
                     description:
-                        'Description: ${courseData.attributes!.description!}\n'
+                    'Description: ${courseData.attributes!.description!}\n'
                         'Credit Hours: ${courseData.attributes!.creditHours!}',
                     index: index,
                     isExpanded: _expandedIndex == index,
