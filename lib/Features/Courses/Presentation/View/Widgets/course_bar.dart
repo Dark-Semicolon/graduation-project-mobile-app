@@ -228,7 +228,7 @@ class CoursesExpandableSection extends StatelessWidget {
             padding: const EdgeInsets.all(7.0),
             child: Container(
               decoration: BoxDecoration(
-                color: isSelected ? Colors.green : Colors.blue,
+                color: isSelected ? Colors.teal : Colors.blue,
                 borderRadius: BorderRadius.circular(12.0),
               ),
               padding: const EdgeInsets.all(16.0),

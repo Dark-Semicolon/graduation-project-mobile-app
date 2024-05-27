@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_onboarding_slider/flutter_onboarding_slider.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../Local App Data/Local/local_storage.dart';
 
@@ -13,8 +14,8 @@ class OnBoarding extends StatelessWidget {
   Widget build(BuildContext context) {
     return OnBoardingSlider(
       onFinish: () async {
-        await HiveBoxManager.addToBox('Status', 'onBoardingStatus', true);
-        GoRouter.of(context).push('/LoginPage');
+        await HiveBoxManager.addToBox('Status', 'isOnboardingShown', true);
+        context.go('/LoginPage');
       },
       hasSkip: true,
       finishButtonText: 'Start',

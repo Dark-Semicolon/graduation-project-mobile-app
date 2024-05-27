@@ -1,5 +1,3 @@
-import 'package:eductionsystem/Features/Splash/Persentation/splash_view.dart';
-import 'package:eductionsystem/Features/profile/profile_page.dart';
 import 'package:go_router/go_router.dart';
 
 import '../Features/Courses/Presentation/View/courses_screen.dart';
@@ -7,7 +5,9 @@ import '../Features/Grades/presentation/view/Grade_View.dart';
 import '../Features/Home/Presentation/view/home_page.dart';
 import '../Features/Login/Presentation/login_page.dart';
 import '../Features/Splash/AppPreiew/on_boarding.dart';
+import '../Features/Splash/Persentation/splash_view.dart';
 import '../Features/assignment/AssignmentPage.dart';
+import '../Features/profile/profile_page.dart';
 
 abstract class AppRouter {
   static final router = GoRouter(
@@ -20,10 +20,6 @@ abstract class AppRouter {
         path: '/OnBoarding',
         builder: (context, state) => const OnBoarding(),
       ),
-      // GoRoute(
-      //   path: '/DisplayUserData',
-      //   builder: (context, state) => const DisplayUserData(),
-      // ),
       GoRoute(
         path: '/LoginPage',
         builder: (context, state) => const LoginPage(),
@@ -32,7 +28,6 @@ abstract class AppRouter {
         path: '/CoursesScreen',
         builder: (context, state) => const CoursesScreen(),
       ),
-
       GoRoute(
         path: '/HomePage',
         builder: (context, state) => const HomePage(),
@@ -56,26 +51,6 @@ abstract class AppRouter {
           numberOfTasks: 3,
         ),
       ),
-
-      //   GoRoute(
-      //       path: '/searchPage',
-      //       builder: (context, state) => const SearchViewBody()),
     ],
   );
 }
-// GoRoute(
-// path: '/Page1',
-// builder: (context, state) => const Page1(),
-// ),
-// GoRoute(
-// path: '/Page2',
-// builder: (context, state) => const Page2(),
-// ),
-// GoRoute(
-// path: '/Page3',
-// builder: (context, state) => const Page3(),
-// ),
-// GoRoute(
-// path: '/Page4',
-// builder: (context, state) => const Page4(),
-// ),

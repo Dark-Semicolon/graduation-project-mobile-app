@@ -3,48 +3,61 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../Core/AssetsData.dart';
 import '../../../../Data/API/Token/token_manager.dart';
+import '../../../../Local App Data/Local/local_storage.dart';
 
-class SplashViewbody extends StatefulWidget {
-  const SplashViewbody({super.key});
+class SplashViewBody extends StatefulWidget {
+  const SplashViewBody({Key? key}) : super(key: key);
 
   @override
-  State<SplashViewbody> createState() => _SplashViewbodyState();
+  _SplashViewBodyState createState() => _SplashViewBodyState();
 }
 
-class _SplashViewbodyState extends State<SplashViewbody>
+class _SplashViewBodyState extends State<SplashViewBody>
     with SingleTickerProviderStateMixin {
-  late AnimationController animationController;
-  late Animation<double> fadeAnimation;
+  late AnimationController _animationController;
+  late Animation<double> _fadeAnimation;
 
   @override
   void initState() {
     super.initState();
 
-    animationController = AnimationController(
+    _animationController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 2),
     );
 
-    fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(animationController);
+    _fadeAnimation =
+        Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
 
-    animationController.forward();
+    _animationController.forward();
 
-    Future.delayed(
-      const Duration(seconds: 2),
-          () async {
-        final token = await TokenManager.getToken();
-        if (token == null) {
-          GoRouter.of(context).push('/LoginPage');
-        } else {
-          GoRouter.of(context).push('/HomePage');
-        }
-      },
-    );
+    _checkOnboardingStatus();
+  }
+
+  Future<void> _checkOnboardingStatus() async {
+    await Future.delayed(const Duration(seconds: 2));
+
+    final isOnboardingShown =
+        await HiveBoxManager.readFromBox('Status', 'isOnboardingShown') ??
+            false;
+
+    if (!mounted) return;
+
+    if (!isOnboardingShown) {
+      context.go('/OnBoarding');
+    } else {
+      final token = await TokenManager.getToken();
+      if (token == null) {
+        context.go('/LoginPage');
+      } else {
+        context.go('/HomePage');
+      }
+    }
   }
 
   @override
   void dispose() {
-    animationController.dispose(); // Dispose of the AnimationController
+    _animationController.dispose();
     super.dispose();
   }
 
@@ -57,14 +70,14 @@ class _SplashViewbodyState extends State<SplashViewbody>
         Image.asset(AssetsData.logo),
         const SizedBox(height: 8),
         AnimatedBuilder(
-          animation: fadeAnimation,
+          animation: _fadeAnimation,
           builder: (context, _) {
             return FadeTransition(
-              opacity: fadeAnimation,
+              opacity: _fadeAnimation,
               child: const Column(
                 children: [
                   Text(
-                    'Eduaction',
+                    'Education',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
