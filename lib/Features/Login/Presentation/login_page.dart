@@ -32,25 +32,24 @@ class _LoginPageState extends State<LoginPage> {
                 key: _formKey,
                 child: Column(
                   children: [
-                    const SizedBox(height: 25),
                     const Text.rich(
                       TextSpan(
                         children: [
                           TextSpan(
-                            text: 'Uni ',
+                            text: 'Campus ',
                             style: TextStyle(
                               color: Colors.black,
-                              fontSize: 60,
+                              fontSize: 50,
                               fontFamily: 'Outfit',
                               fontWeight: FontWeight.w500,
                               height: 0,
                             ),
                           ),
                           TextSpan(
-                            text: 'name',
+                            text: 'Suite',
                             style: TextStyle(
                               color: Color(0xFF4E74F9),
-                              fontSize: 60,
+                              fontSize: 40,
                               fontFamily: 'Outfit',
                               fontWeight: FontWeight.w700,
                               height: 0,
@@ -84,13 +83,7 @@ class _LoginPageState extends State<LoginPage> {
                       children: [
                         TextButton(
                           onPressed: () {
-                            // Navigator.push(
-                            //   context,
-                            //   MaterialPageRoute(
-                            //     builder: (context) =>
-                            //          ForgotPasswordPage(), // Navigate to forgot password page
-                            //   ),
-                            // );
+
                           },
                           child: const Text(
                             'Forgot Password ?',
