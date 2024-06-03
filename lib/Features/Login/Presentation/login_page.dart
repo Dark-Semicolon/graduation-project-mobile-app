@@ -66,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
                       prefixIcon: Icons.email,
                       keyboardType: TextInputType.emailAddress,
                       errorMessage:
-                          'Please enter a valid email address', // Specify error message
+                          'Please enter a valid email address',
                     ),
                     const SizedBox(height: 30),
                     CustomTextField(
@@ -76,7 +76,7 @@ class _LoginPageState extends State<LoginPage> {
                       prefixIcon: Icons.lock,
                       obscureText: true,
                       errorMessage:
-                          'Please enter your password', // Specify error message
+                          'Please enter your password',
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
