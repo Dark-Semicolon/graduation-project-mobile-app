@@ -2,7 +2,6 @@ import 'package:eductionsystem/Features/Login/Update%20user/update_api.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../Presentation/view/widgets/form_field_custom.dart';
 import 'PatchUseDataModel.dart';
 
 class UpdateUserDataScreen extends ConsumerStatefulWidget {
@@ -34,7 +33,7 @@ class _UpdateUserDataScreenState extends ConsumerState<UpdateUserDataScreen> {
           key: _formKey,
           child: ListView(
             children: [
-              CustomTextField(
+              UpdateCustomTextField(
                 controller: _nameController,
                 labelText: 'Name',
                 hintText: 'Enter your name',
@@ -42,7 +41,7 @@ class _UpdateUserDataScreenState extends ConsumerState<UpdateUserDataScreen> {
                 errorMessage: 'Please enter your name',
               ),
               const SizedBox(height: 16),
-              CustomTextField(
+              UpdateCustomTextField(
                 controller: _passwordController,
                 labelText: 'Password',
                 hintText: 'Enter your password',
@@ -51,7 +50,7 @@ class _UpdateUserDataScreenState extends ConsumerState<UpdateUserDataScreen> {
                 errorMessage: 'Please enter your password',
               ),
               const SizedBox(height: 16),
-              CustomTextField(
+              UpdateCustomTextField(
                 controller: _passwordConfirmationController,
                 labelText: 'Confirm Password',
                 hintText: 'Confirm your password',
@@ -119,5 +118,49 @@ class _UpdateUserDataScreenState extends ConsumerState<UpdateUserDataScreen> {
         _isLoading = false;
       });
     }
+  }
+}
+
+class UpdateCustomTextField extends StatelessWidget {
+  final TextEditingController controller;
+  final String labelText;
+  final String hintText;
+  final IconData prefixIcon;
+  final bool obscureText;
+  final TextInputType keyboardType;
+  final String errorMessage;
+  final FormFieldValidator<String>? validator;
+
+  const UpdateCustomTextField({
+    super.key,
+    required this.controller,
+    required this.labelText,
+    required this.hintText,
+    required this.prefixIcon,
+    this.obscureText = false,
+    this.keyboardType = TextInputType.text,
+    required this.errorMessage,
+    this.validator,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: controller,
+      decoration: InputDecoration(
+        labelText: labelText,
+        hintText: hintText,
+        prefixIcon: Icon(
+          prefixIcon,
+          color: Colors.blueAccent,
+        ),
+        border: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(8)),
+        ),
+      ),
+      obscureText: obscureText,
+      keyboardType: keyboardType,
+
+    );
   }
 }
