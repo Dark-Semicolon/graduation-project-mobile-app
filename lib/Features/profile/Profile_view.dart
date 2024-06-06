@@ -62,7 +62,7 @@ class ProfileListView extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) =>  UpdateUserDataScreen(),
+                builder: (context) => UpdateUserDataScreen(),
               ),
             );
           },

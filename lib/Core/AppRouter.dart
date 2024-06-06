@@ -26,6 +26,10 @@ abstract class AppRouter {
         builder: (context, state) => const LoginPage(),
       ),
       GoRoute(
+        path: '/LogoutScreen',
+        builder: (context, state) => const LogoutScreen(),
+      ),
+      GoRoute(
         path: '/CoursesScreen',
         builder: (context, state) => const CoursesScreen(),
       ),
@@ -36,10 +40,6 @@ abstract class AppRouter {
       GoRoute(
         path: '/ProfilePage',
         builder: (context, state) => const ProfilePage(),
-      ),
-      GoRoute(
-        path: '/LogoutScreen',
-        builder: (context, state) => const LogoutScreen(),
       ),
       GoRoute(
         path: '/GradesPage',

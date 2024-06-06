@@ -9,16 +9,16 @@ class CoursesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return  Scaffold(
       backgroundColor: Colors.white,
-      body: const Column(
+      body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          CoursesScreenUpperPart(),
-          CoursesList(),
+          const CoursesScreenUpperPart(),
+          const CoursesList(),
+          CustomBottomNavBar(selectedMenu: MenuState.courses),
         ],
       ),
-      bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.courses),
     );
   }
 }
