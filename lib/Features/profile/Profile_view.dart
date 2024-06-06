@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../Core/Device Info/device_info_test.dart';
-import '../../Data/API/Token/token_manager.dart';
 import '../Login/Update user/update_user_screen.dart';
 
 class ProfileListView extends StatelessWidget {
@@ -92,7 +91,8 @@ class ProfileListView extends StatelessWidget {
           title: const Text("Logout"),
           trailing: const Icon(Icons.arrow_forward_ios),
           onTap: () async {
-            await TokenManager.logoutUser(context);
+            final navigator = GoRouter.of(context);
+            navigator.go('/LogoutScreen');
           },
         ),
       ],

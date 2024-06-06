@@ -5,6 +5,7 @@ import '../../../Data/Models/availble_courses.dart';
 import '../../../Data/Models/course_selection.dart';
 import '../../../Data/Services/get_availble_courses_services.dart';
 import '../../../Riverpod/river_state.dart';
+import 'courses_minmax.dart';
 
 class SectionData {
   final String title;
@@ -192,6 +193,7 @@ class _CoursesListState extends ConsumerState<CoursesList> {
                 );
               },
             ),
+            const CourseMinMax(),
           ],
         ),
       ),

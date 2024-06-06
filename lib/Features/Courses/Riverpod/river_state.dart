@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../../Data/API/Const/end_points.dart';
@@ -176,6 +178,43 @@ class CourseNotifier extends StateNotifier<CourseState> {
       return CourseSelection.fromJson(courseSelectionJson);
     } else {
       throw Exception('Failed to fetch course selection details');
+    }
+  }
+
+  Future<void> navigateBasedOnCourseSelection(BuildContext context) async {
+    try {
+      await fetchSelectedCourses();
+      final courseSelection = await fetchCourseSelection();
+      final endDate = DateTime.parse(courseSelection.data!.attributes!.endAt!);
+
+      print('Selected Courses: ${state.selectedCourseIds}');
+      print('Course Selection End Date: $endDate');
+
+      if (state.selectedCourseIds.isNotEmpty) {
+        if (DateTime.now().isBefore(endDate)) {
+          print(
+              'Navigating to SelectedCoursesScreen with modification allowed');
+          GoRouter.of(context).go('/SelectedCoursesScreen',
+              extra: {'endDate': endDate, 'canModify': true});
+        } else {
+          print(
+              'Navigating to SelectedCoursesScreen with modification not allowed');
+          GoRouter.of(context).go('/SelectedCoursesScreen',
+              extra: {'endDate': endDate, 'canModify': false});
+        }
+      } else {
+        if (DateTime.now().isBefore(endDate)) {
+          print('Navigating to CoursesScreen');
+          GoRouter.of(context).go('/CoursesScreen');
+        } else {
+          print('Navigating to ContactAdminScreen');
+          GoRouter.of(context).go('/ContactAdminScreen');
+        }
+      }
+    } catch (e) {
+      print('Error: $e');
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Error: $e')));
     }
   }
 }

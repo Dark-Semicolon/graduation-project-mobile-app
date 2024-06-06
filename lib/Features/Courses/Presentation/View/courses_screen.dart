@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../../../Core/GloabalWidgets/nav_bar.dart';
 import 'Widgets/course_bar.dart';
-import 'Widgets/courses_minmax.dart';
 import 'Widgets/courses_upper_part.dart';
 
 class CoursesScreen extends StatelessWidget {
@@ -17,7 +16,6 @@ class CoursesScreen extends StatelessWidget {
         children: [
           CoursesScreenUpperPart(),
           CoursesList(),
-          CourseMinMax(),
         ],
       ),
       bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.courses),

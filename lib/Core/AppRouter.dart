@@ -4,6 +4,7 @@ import '../Features/Courses/Presentation/View/courses_screen.dart';
 import '../Features/Grades/presentation/view/Grade_View.dart';
 import '../Features/Home/Presentation/view/home_page.dart';
 import '../Features/Login/Presentation/login_page.dart';
+import '../Features/Login/Presentation/logout_screen.dart';
 import '../Features/Splash/AppPreiew/on_boarding.dart';
 import '../Features/Splash/Persentation/splash_view.dart';
 import '../Features/assignment/AssignmentPage.dart';
@@ -35,6 +36,10 @@ abstract class AppRouter {
       GoRoute(
         path: '/ProfilePage',
         builder: (context, state) => const ProfilePage(),
+      ),
+      GoRoute(
+        path: '/LogoutScreen',
+        builder: (context, state) => const LogoutScreen(),
       ),
       GoRoute(
         path: '/GradesPage',
