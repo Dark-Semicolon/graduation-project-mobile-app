@@ -51,8 +51,6 @@ abstract class AppRouter {
         path: '/SelectedCoursesScreenWithoutEdit',
         builder: (context, state) => const SelectedCoursesScreenWithoutEdit(),
       ),
-
-
       GoRoute(
         path: '/GradesPage',
         builder: (context, state) => const GradesPage(),

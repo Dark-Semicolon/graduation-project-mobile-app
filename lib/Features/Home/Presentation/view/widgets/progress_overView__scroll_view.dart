@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../../Constants/FontsConst.dart';
-import '../../../../Courses/Utils/courses_navigator.dart';
 import 'home_page_all.dart';
 
 class ProgressOverViewScrollView extends StatelessWidget {
@@ -41,15 +40,6 @@ class ProgressOverViewScrollView extends StatelessWidget {
                       },
                     ),
                     ProgressOverView(
-                      title: 'Assignments',
-                      color: Colors.blue,
-                      percentage: 0.5,
-                      svgAssetPath: 'assets/notification_bill.svg',
-                      onPressed: () {
-                        GoRouter.of(context).go('/AssignmentsPage');
-                      },
-                    ),
-                    ProgressOverView(
                       title: 'Enroll Courses',
                       color: Colors.blue,
                       percentage: 0.5,
@@ -64,10 +54,19 @@ class ProgressOverViewScrollView extends StatelessWidget {
                       percentage: 0.5,
                       svgAssetPath: 'assets/notification_bill.svg',
                       onPressed: () async {
-                        GoRouter.of(context).go('/SelectedCoursesScreenWithoutEdit');
+                        GoRouter.of(context)
+                            .go('/SelectedCoursesScreenWithoutEdit');
                       },
                     ),
-
+                    ProgressOverView(
+                      title: 'Assignments',
+                      color: Colors.blue,
+                      percentage: 0.5,
+                      svgAssetPath: 'assets/notification_bill.svg',
+                      onPressed: () {
+                        GoRouter.of(context).go('/AssignmentsPage');
+                      },
+                    ),
                   ],
                 ),
               ),

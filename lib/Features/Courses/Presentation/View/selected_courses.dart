@@ -10,7 +10,7 @@ class SelectedCoursesScreen extends ConsumerStatefulWidget {
 
   const SelectedCoursesScreen({
     super.key,
-  /*  required this.endDate,
+    /*  required this.endDate,
     required this.canModify,*/
   });
 
@@ -34,9 +34,7 @@ class _SelectedCoursesScreenState extends ConsumerState<SelectedCoursesScreen> {
     final courseState = ref.watch(courseProvider);
 
     return Scaffold(
-
       backgroundColor: Colors.white,
-
       appBar: AppBar(
         title: const Text('Selected Courses'),
         /*actions: [
@@ -56,7 +54,6 @@ class _SelectedCoursesScreenState extends ConsumerState<SelectedCoursesScreen> {
           },
         ),
       ),
-
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

@@ -18,7 +18,8 @@ class SelectedCoursesScreenWithoutEdit extends ConsumerStatefulWidget {
   _SelectedCoursesScreenState createState() => _SelectedCoursesScreenState();
 }
 
-class _SelectedCoursesScreenState extends ConsumerState<SelectedCoursesScreenWithoutEdit> {
+class _SelectedCoursesScreenState
+    extends ConsumerState<SelectedCoursesScreenWithoutEdit> {
   late int _expandedIndex;
 
   @override
@@ -34,9 +35,7 @@ class _SelectedCoursesScreenState extends ConsumerState<SelectedCoursesScreenWit
     final courseState = ref.watch(courseProvider);
 
     return Scaffold(
-
       backgroundColor: Colors.white,
-
       appBar: AppBar(
         title: const Text('Selected Courses'),
         /*actions: [
@@ -56,7 +55,6 @@ class _SelectedCoursesScreenState extends ConsumerState<SelectedCoursesScreenWit
           },
         ),
       ),
-
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -83,7 +81,7 @@ class _SelectedCoursesScreenState extends ConsumerState<SelectedCoursesScreenWit
                   return SelectedCourseExpandableSection(
                     title: courseData.attributes!.name!,
                     description:
-                    'Description: ${courseData.attributes!.description!}\n'
+                        'Description: ${courseData.attributes!.description!}\n'
                         'Credit Hours: ${courseData.attributes!.creditHours!}',
                     index: index,
                     isExpanded: _expandedIndex == index,
