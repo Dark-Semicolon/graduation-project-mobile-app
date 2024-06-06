@@ -1,6 +1,8 @@
 import 'package:go_router/go_router.dart';
 
 import '../Features/Courses/Presentation/View/courses_screen.dart';
+import '../Features/Courses/Presentation/View/selected_courses.dart';
+import '../Features/Courses/Presentation/View/selected_courses_view_without_edit.dart';
 import '../Features/Grades/presentation/view/Grade_View.dart';
 import '../Features/Home/Presentation/view/home_page.dart';
 import '../Features/Login/Presentation/login_page.dart';
@@ -41,6 +43,16 @@ abstract class AppRouter {
         path: '/ProfilePage',
         builder: (context, state) => const ProfilePage(),
       ),
+      GoRoute(
+        path: '/SelectedCoursesScreen',
+        builder: (context, state) => const SelectedCoursesScreen(),
+      ),
+      GoRoute(
+        path: '/SelectedCoursesScreenWithoutEdit',
+        builder: (context, state) => const SelectedCoursesScreenWithoutEdit(),
+      ),
+
+
       GoRoute(
         path: '/GradesPage',
         builder: (context, state) => const GradesPage(),

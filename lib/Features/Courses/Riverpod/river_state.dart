@@ -127,22 +127,68 @@ class CourseNotifier extends StateNotifier<CourseState> {
     );
 
     if (response.statusCode == 200) {
-      final List<dynamic> courseListJson = jsonDecode(response.body)['courses'];
-      final courses = courseListJson
-          .map((json) => AvailableCoursesData.fromJson(json))
-          .toList();
+      final List<dynamic> courseIdListJson = jsonDecode(response.body);
+      print('Course ID List JSON: $courseIdListJson'); // Debug print
 
-      final selectedCourseIds = courses.map((course) => course.id!).toList();
-      final courseDetails = {for (var course in courses) course.id!: course};
+      if (courseIdListJson is List<dynamic>) {
+        final selectedCourseIds = courseIdListJson.cast<int>();
+        final availableCourses =
+            await getAvailableCourses(); // Fetch or get the available courses data
 
-      state = state.copyWith(
-        selectedCourseIds: selectedCourseIds,
-        courseDetails: courseDetails,
-        totalCreditHours: courses.fold(
-            0, (sum, course) => sum! + course.attributes!.creditHours!),
-      );
+        // Filter the available courses based on the selected course IDs
+        final filteredCourses = availableCourses
+            .where((course) => selectedCourseIds.contains(course.id))
+            .toList();
+
+        final courseDetails = {
+          for (var course in filteredCourses) course.id!: course
+        };
+
+        state = state.copyWith(
+          selectedCourseIds: selectedCourseIds,
+          courseDetails: courseDetails,
+          totalCreditHours: filteredCourses.fold(
+            0,
+            (sum, course) => sum! + course.attributes!.creditHours!,
+          ),
+        );
+      } else {
+        throw Exception('Invalid JSON structure');
+      }
     } else {
       throw Exception('Failed to load enrolled courses');
+    }
+  }
+
+  Future<List<AvailableCoursesData>> getAvailableCourses() async {
+    final token = await TokenManager.getToken();
+    const url =
+        '${MainApiConstants.baseUrl}/api/v1/student/courseSelection/availableCourses'; // Update this URL to the correct endpoint if necessary
+    final response = await http.get(
+      Uri.parse(url),
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    print('getAvailableCourses request URL: $url'); // Debug print
+    print(
+        'getAvailableCourses response status: ${response.statusCode}'); // Debug print
+    print('getAvailableCourses response body: ${response.body}'); // Debug print
+
+    if (response.statusCode == 200) {
+      final responseJson = jsonDecode(response.body);
+      if (responseJson is Map<String, dynamic> &&
+          responseJson.containsKey('data')) {
+        final List<dynamic> courseListJson = responseJson['data'];
+        return courseListJson
+            .map((json) => AvailableCoursesData.fromJson(json))
+            .toList();
+      } else {
+        throw Exception('Invalid JSON structure: expected "data" key');
+      }
+    } else {
+      throw Exception('Failed to load available courses');
     }
   }
 

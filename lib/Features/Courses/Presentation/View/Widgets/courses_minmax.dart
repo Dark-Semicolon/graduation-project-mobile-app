@@ -71,8 +71,8 @@ class CourseMinMax extends ConsumerWidget {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) => SelectedCoursesScreen(
-                        endDate: endDate,
-                        canModify: canModify,
+                        /*endDate: endDate,
+                        canModify: canModify,*/
                       ),
                     ),
                   );

@@ -4,13 +4,13 @@ import 'package:go_router/go_router.dart';
 
 import '../../Riverpod/river_state.dart';
 
-class SelectedCoursesScreen extends ConsumerStatefulWidget {
+class SelectedCoursesScreenWithoutEdit extends ConsumerStatefulWidget {
 /*  final DateTime endDate;
   final bool canModify;*/
 
-  const SelectedCoursesScreen({
+  const SelectedCoursesScreenWithoutEdit({
     super.key,
-  /*  required this.endDate,
+    /*  required this.endDate,
     required this.canModify,*/
   });
 
@@ -18,7 +18,7 @@ class SelectedCoursesScreen extends ConsumerStatefulWidget {
   _SelectedCoursesScreenState createState() => _SelectedCoursesScreenState();
 }
 
-class _SelectedCoursesScreenState extends ConsumerState<SelectedCoursesScreen> {
+class _SelectedCoursesScreenState extends ConsumerState<SelectedCoursesScreenWithoutEdit> {
   late int _expandedIndex;
 
   @override
@@ -83,7 +83,7 @@ class _SelectedCoursesScreenState extends ConsumerState<SelectedCoursesScreen> {
                   return SelectedCourseExpandableSection(
                     title: courseData.attributes!.name!,
                     description:
-                        'Description: ${courseData.attributes!.description!}\n'
+                    'Description: ${courseData.attributes!.description!}\n'
                         'Credit Hours: ${courseData.attributes!.creditHours!}',
                     index: index,
                     isExpanded: _expandedIndex == index,
@@ -97,21 +97,6 @@ class _SelectedCoursesScreenState extends ConsumerState<SelectedCoursesScreen> {
               ),
             ),
             const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () async {
-                try {
-                  await ref.read(courseProvider.notifier).saveSelectedCourses();
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Courses saved successfully')),
-                  );
-                } catch (e) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Failed to save courses: $e')),
-                  );
-                }
-              },
-              child: const Text('Save Courses'),
-            ),
           ],
         ),
       ),
