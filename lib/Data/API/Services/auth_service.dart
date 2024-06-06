@@ -28,7 +28,7 @@ class AuthApi {
       return 'The email field is required';
     } else {
       if (response.headers['content-type']?.contains('html') ?? false) {
-        return 'Failed to login. Server returned an unexpected response.';
+        return 'Failed to login. Wrong Password';
       }
       return 'Failed to login: ${response.body}';
     }
@@ -84,3 +84,5 @@ class AuthRepository {
     return await authApi.fetchUserData(token);
   }
 }
+
+

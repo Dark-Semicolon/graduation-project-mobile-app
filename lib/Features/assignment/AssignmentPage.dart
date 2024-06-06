@@ -2,7 +2,7 @@ import 'package:eductionsystem/Features/assignment/widgets/TaskComplete.dart';
 import 'package:eductionsystem/Features/assignment/widgets/TaskProgress.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../Constants/FontsConst.dart';
 import '../../Core/GloabalWidgets/nav_bar.dart';
@@ -29,17 +29,10 @@ class AssignmentsView extends StatelessWidget {
           style: TextStyle(color: Colors.black),
         ),
         leading: IconButton(
-          icon: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SvgPicture.asset(
-              'assets/icons/Back ICon.svg',
-              color: Colors.black,
-              width: 18,
-              height: 18,
-            ),
-          ),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pop(context);
+            final navigator = GoRouter.of(context);
+            navigator.go('/HomePage');
           },
         ),
       ),
