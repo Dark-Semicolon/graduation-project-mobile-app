@@ -65,8 +65,7 @@ class _LoginPageState extends State<LoginPage> {
                       hintText: 'Enter Your Email',
                       prefixIcon: Icons.email,
                       keyboardType: TextInputType.emailAddress,
-                      errorMessage:
-                          'Please enter a valid email address',
+                      errorMessage: 'Please enter a valid email address',
                     ),
                     const SizedBox(height: 30),
                     CustomTextField(
@@ -75,18 +74,15 @@ class _LoginPageState extends State<LoginPage> {
                       hintText: 'Password',
                       prefixIcon: Icons.lock,
                       obscureText: true,
-                      errorMessage:
-                          'Please enter your password',
+                      errorMessage: 'Please enter your password',
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         TextButton(
-                          onPressed: () {
-
-                          },
+                          onPressed: () {},
                           child: const Text(
-                            'Forgot Password ?',
+                            'Forgot Password?',
                             style: TextStyle(color: Colors.blueAccent),
                           ),
                         ),
@@ -94,9 +90,9 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     const SizedBox(height: 10),
                     ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          Navigator.push(
+                          final result = await Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => LoginUserProcess(
@@ -105,7 +101,11 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           );
 
-
+                          if (result != null) {
+                            setState(() {
+                              loginMessage = result;
+                            });
+                          }
                         }
                       },
                       style: ElevatedButton.styleFrom(
@@ -124,6 +124,15 @@ class _LoginPageState extends State<LoginPage> {
                             color: Colors.white),
                       ),
                     ),
+                    const SizedBox(height: 10),
+                    if (loginMessage != null)
+                      Text(
+                        loginMessage!,
+                        style: const TextStyle(
+                          color: Colors.red,
+                          fontSize: 16,
+                        ),
+                      ),
                     const SizedBox(height: 60),
                     const Row(
                       mainAxisAlignment: MainAxisAlignment.center,

@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+
 import '../../../Data/API/Const/end_points.dart';
 import '../../../Data/API/Models/auth_data.dart';
 import '../../../Data/API/Services/auth_service.dart';
 import '../../../Data/API/Token/token_manager.dart';
-
 class LoginUserProcess extends StatefulWidget {
   final String email;
   final String password;
 
-  const LoginUserProcess(
-      {super.key, required this.email, required this.password});
+  const LoginUserProcess({super.key, required this.email, required this.password});
 
   @override
   _LoginUserProcessState createState() => _LoginUserProcessState();
@@ -20,8 +19,7 @@ class _LoginUserProcessState extends State<LoginUserProcess> {
   late String _email;
   late String _password;
 
-  final authRepository =
-      AuthRepository(authApi: AuthApi(baseUrl: MainApiConstants.baseUrl));
+  final authRepository = AuthRepository(authApi: AuthApi(baseUrl: MainApiConstants.baseUrl));
 
   @override
   void initState() {
@@ -37,22 +35,13 @@ class _LoginUserProcessState extends State<LoginUserProcess> {
       password: _password,
       deviceName: 'Oppo',
     );
-    final token = await authRepository.loginUser(authData);
+    final result = await authRepository.loginUser(authData);
 
-    if (token != null) {
-      TokenManager.setToken(token);
+    if (result != null && !result.startsWith('Failed')) {
+      TokenManager.setToken(result);
       GoRouter.of(context).push('/Homepage');
     } else {
-      // Handle login failure
-    }
-  }
-
-  Future<void> _logoutUser() async {
-    final token = await TokenManager.getToken();
-    if (token != null) {
-      await authRepository.logoutUser(token);
-      TokenManager.deleteToken();
-      GoRouter.of(context).push('/Login');
+      Navigator.pop(context, result); // Pass the error message back to the previous screen
     }
   }
 
@@ -65,4 +54,3 @@ class _LoginUserProcessState extends State<LoginUserProcess> {
     );
   }
 }
-
