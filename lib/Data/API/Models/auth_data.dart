@@ -3,7 +3,7 @@ class AuthDataModel {
   String? password;
   String? deviceName;
 
-  AuthDataModel({this.email, this.password, this.deviceName});
+ AuthDataModel({this.email, this.password, this.deviceName});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = {
@@ -11,6 +11,8 @@ class AuthDataModel {
       'password': password,
       'device_name': deviceName,
     };
+
     return data;
+
   }
 }

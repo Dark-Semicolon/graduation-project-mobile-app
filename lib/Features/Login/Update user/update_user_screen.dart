@@ -1,166 +1,113 @@
+import 'dart:io';
+
+import 'package:eductionsystem/Data/API/Services/api_service.dart';
 import 'package:eductionsystem/Features/Login/Update%20user/update_api.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'PatchUseDataModel.dart';
 
-class UpdateUserDataScreen extends ConsumerStatefulWidget {
-  const UpdateUserDataScreen({super.key});
-
+class UpdateUserDataScreen extends StatefulWidget {
   @override
   _UpdateUserDataScreenState createState() => _UpdateUserDataScreenState();
 }
 
-class _UpdateUserDataScreenState extends ConsumerState<UpdateUserDataScreen> {
+class _UpdateUserDataScreenState extends State<UpdateUserDataScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _passwordConfirmationController =
-      TextEditingController();
+  File? _image;
+
+  final UserApiService _userApiService = UserApiService();
   bool _isLoading = false;
-  String? _errorMessage;
+
+  static Future<File?> pickImageGallery() async {
+    final ImagePicker imagePicker = ImagePicker();
+    final XFile? imageXFile = await imagePicker.pickImage(source: ImageSource.gallery);
+    if (imageXFile == null) {
+      print('No image selected.');
+      return null;
+    }
+    return File(imageXFile.path);
+  }
+
+  Future<void> _updateUserData() async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isLoading = true;
+      });
+
+      PatchUseData data = PatchUseData(
+        name: _nameController.text,
+      );
+
+      try {
+        await _userApiService.updateUserData(data, image: _image);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('User data updated successfully')),
+        );
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to update user data: $e')),
+        );
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('Update User Data'),
+        title: Text('Update User Data'),
       ),
-      body: Padding(
+      body: _isLoading
+          ? Center(child: CircularProgressIndicator())
+          : SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
-          child: ListView(
+          child: Column(
             children: [
-              UpdateCustomTextField(
+              TextFormField(
                 controller: _nameController,
-                labelText: 'Name',
-                hintText: 'Enter your name',
-                prefixIcon: Icons.person,
-                errorMessage: 'Please enter your name',
-              ),
-              const SizedBox(height: 16),
-              UpdateCustomTextField(
-                controller: _passwordController,
-                labelText: 'Password',
-                hintText: 'Enter your password',
-                prefixIcon: Icons.lock,
-                obscureText: true,
-                errorMessage: 'Please enter your password',
-              ),
-              const SizedBox(height: 16),
-              UpdateCustomTextField(
-                controller: _passwordConfirmationController,
-                labelText: 'Confirm Password',
-                hintText: 'Confirm your password',
-                prefixIcon: Icons.lock,
-                obscureText: true,
-                errorMessage: 'Please confirm your password',
+                decoration: InputDecoration(labelText: 'Name'),
                 validator: (value) {
-                  if (value != _passwordController.text) {
-                    return 'Passwords do not match';
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your name';
                   }
                   return null;
                 },
               ),
-              const SizedBox(height: 32),
-              _isLoading
-                  ? const Center(child: CircularProgressIndicator())
-                  : ElevatedButton(
-                      onPressed: _updateUserData,
-                      child: const Text('Update'),
-                    ),
-              if (_errorMessage != null)
-                Padding(
-                  padding: const EdgeInsets.only(top: 16),
-                  child: Text(
-                    _errorMessage!,
-                    style: const TextStyle(color: Colors.red),
-                  ),
+              SizedBox(height: 20),
+              _image == null
+                  ? Text('No image selected.')
+                  : ClipOval(
+                child: Image.file(
+                  _image!,
+                  width: 100,
+                  height: 100,
+                  fit: BoxFit.cover,
                 ),
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  _image = await pickImageGallery();
+                  setState(() {}); // Refresh UI after picking image
+                },
+                child: Text('Pick Image'),
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _updateUserData,
+                child: Text('Update'),
+              ),
             ],
           ),
         ),
       ),
-    );
-  }
-
-  Future<void> _updateUserData() async {
-    if (!_formKey.currentState!.validate()) return;
-
-    setState(() {
-      _isLoading = true;
-      _errorMessage = null;
-    });
-
-    final PatchUseData data = PatchUseData(
-      name: _nameController.text.isNotEmpty ? _nameController.text : null,
-      password:
-          _passwordController.text.isNotEmpty ? _passwordController.text : null,
-      passwordConfirmation: _passwordConfirmationController.text.isNotEmpty
-          ? _passwordConfirmationController.text
-          : null,
-    );
-
-    try {
-      await UserApiService().updateUserData(data);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('User data updated successfully')),
-      );
-      Navigator.pop(context);
-    } catch (e) {
-      setState(() {
-        _errorMessage = 'Failed to update user data: $e';
-      });
-    } finally {
-      setState(() {
-        _isLoading = false;
-      });
-    }
-  }
-}
-
-class UpdateCustomTextField extends StatelessWidget {
-  final TextEditingController controller;
-  final String labelText;
-  final String hintText;
-  final IconData prefixIcon;
-  final bool obscureText;
-  final TextInputType keyboardType;
-  final String errorMessage;
-  final FormFieldValidator<String>? validator;
-
-  const UpdateCustomTextField({
-    super.key,
-    required this.controller,
-    required this.labelText,
-    required this.hintText,
-    required this.prefixIcon,
-    this.obscureText = false,
-    this.keyboardType = TextInputType.text,
-    required this.errorMessage,
-    this.validator,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller,
-      decoration: InputDecoration(
-        labelText: labelText,
-        hintText: hintText,
-        prefixIcon: Icon(
-          prefixIcon,
-          color: Colors.blueAccent,
-        ),
-        border: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(8)),
-        ),
-      ),
-      obscureText: obscureText,
-      keyboardType: keyboardType,
-
     );
   }
 }
