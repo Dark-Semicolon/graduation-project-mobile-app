@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../Core/Device Info/device_info_test.dart';
-import '../Login/Update user/update_user_screen.dart';
 
 class ProfileListView extends StatelessWidget {
   const ProfileListView({super.key});
@@ -20,7 +19,9 @@ class ProfileListView extends StatelessWidget {
           ),
           title: const Text("Edit Your Account"),
           trailing: const Icon(Icons.arrow_forward_ios),
-          onTap: () {},
+          onTap: () {
+            GoRouter.of(context).push('/UpdateUserDataScreen');
+          },
         ),
         ListTile(
           leading: SvgPicture.asset(
@@ -50,22 +51,6 @@ class ProfileListView extends StatelessWidget {
           title: const Text("Terms & Conditions"),
           trailing: const Icon(Icons.arrow_forward_ios),
           onTap: () {},
-        ),
-        ListTile(
-          leading: SvgPicture.asset(
-            "assets/icons/Settings.svg",
-            colorFilter: const ColorFilter.mode(iconColor, BlendMode.srcIn),
-          ),
-          title: const Text("update user"),
-          trailing: const Icon(Icons.arrow_forward_ios),
-          onTap: () async {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => UpdateUserDataScreen(),
-              ),
-            );
-          },
         ),
         ListTile(
           leading: SvgPicture.asset(
