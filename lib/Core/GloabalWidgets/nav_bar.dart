@@ -5,7 +5,6 @@ import '../../../../Constants/const.dart';
 import '../../Features/Courses/Presentation/View/courses_screen.dart';
 import '../../Features/Grades/presentation/view/Grade_View.dart';
 import '../../Features/Home/Presentation/view/home_page.dart';
-import '../../Features/assignment/AssignmentPage.dart';
 import '../../Features/profile/profile_page.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
@@ -64,21 +63,6 @@ class CustomBottomNavBar extends StatelessWidget {
                 MenuState.Grades,
                 selectedMenu,
                 const GradesPage(),
-              ),
-              _buildNavItem(
-                context,
-                "Assignments",
-                "assets/icons/Parcel.svg",
-                MenuState.assessments,
-                selectedMenu,
-                AssignmentsView(
-                  tasks: [
-                    Task('Math 1 assignment 1', false, '2 days'),
-                    Task('Math 1 assignment 2', true),
-                    Task('Math 1 assignment 3', false, '5 days'),
-                  ],
-                  numberOfTasks: 3,
-                ),
               ),
               _buildNavItem(
                 context,
@@ -226,15 +210,6 @@ class CustomBottomNavBar extends StatelessWidget {
         return const HomePage();
       case MenuState.courses:
         return const CoursesScreen();
-      case MenuState.assessments:
-        return AssignmentsView(
-          tasks: [
-            Task('Math 1 assignment 1', false, '2 days'),
-            Task('Math 1 assignment 2', true),
-            Task('Math 1 assignment 3', false, '5 days'),
-          ],
-          numberOfTasks: 3,
-        );
       case MenuState.account:
         return const ProfilePage();
       case MenuState.Grades:

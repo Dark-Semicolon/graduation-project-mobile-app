@@ -1,6 +1,8 @@
+import 'package:eductionsystem/Constants/const.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../../Constants/FontsConst.dart';
 import '../../../Data/Models/availble_courses.dart';
 import '../../../Data/Models/course_selection.dart';
 import '../../../Data/Services/get_availble_courses_services.dart';
@@ -9,7 +11,7 @@ import 'courses_minmax.dart';
 
 class SectionData {
   final String title;
-  final String description;
+  final TextSpan description;
   final AvailableCoursesData courseData;
 
   SectionData({
@@ -55,8 +57,26 @@ class _CoursesListState extends ConsumerState<CoursesList> {
       _sectionData = availableCourses.data!.map((courseData) {
         return SectionData(
           title: courseData.attributes!.name!,
-          description: 'Description: ${courseData.attributes!.description!}\n'
-              'Credit Hours: ${courseData.attributes!.creditHours!}',
+          description: TextSpan(
+            children: [
+              TextSpan(
+                text: '${courseData.attributes!.description!}\n',
+                style: AppFonts.manropeNormalSizable(
+                    height: 1.5, color: Colors.black, fontSize: 15),
+              ),
+              const TextSpan(
+                text: 'Credit Hours: ',
+                style: TextStyle(color: kPrimaryColor, fontSize: 15),
+              ),
+              TextSpan(
+                text: '${courseData.attributes!.creditHours!}',
+                style: const TextStyle(
+                    color: kPrimaryColor,
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
           courseData: courseData,
         );
       }).toList();
@@ -170,6 +190,18 @@ class _CoursesListState extends ConsumerState<CoursesList> {
       child: SingleChildScrollView(
         child: Column(
           children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 20, top: 25),
+              child: Row(
+                children: [
+                  Text(
+                    'Available Courses To Enroll',
+                    style: AppFonts.manropeBoldSizable(
+                        color: kPrimaryColor, fontSize: 17),
+                  ),
+                ],
+              ),
+            ),
             ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
@@ -227,27 +259,55 @@ class CoursesExpandableSection extends StatelessWidget {
         InkWell(
           onTap: onTap,
           child: Padding(
-            padding: const EdgeInsets.all(7.0),
+            padding: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
             child: Container(
               decoration: BoxDecoration(
-                color: isSelected ? Colors.teal : Colors.blue,
+                color: isSelected ? Colors.teal : kPrimaryColor,
                 borderRadius: BorderRadius.circular(12.0),
               ),
               padding: const EdgeInsets.all(16.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    sectionData.title,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: sectionData.title,
+                                style: AppFonts.manropeNormalSizable(
+                                  fontSize: 18,
+                                  color: Colors.white,
+                                  height: null,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const Expanded(child: SizedBox()),
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text:
+                                    '${sectionData.courseData.attributes!.creditHours} Hours',
+                                style: AppFonts.manropeBoldSizable(
+                                  fontSize: 15,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Icon(
+                          isExpanded ? Icons.expand_less : Icons.expand_more,
+                          color: Colors.white,
+                        ),
+                      ],
                     ),
-                  ),
-                  Icon(
-                    isExpanded ? Icons.expand_less : Icons.expand_more,
-                    color: Colors.white,
                   ),
                 ],
               ),
@@ -257,24 +317,52 @@ class CoursesExpandableSection extends StatelessWidget {
         if (isExpanded)
           AnimatedContainer(
             duration: const Duration(milliseconds: 300),
-            decoration: BoxDecoration(
-              color: Colors.grey.shade200,
-              borderRadius: BorderRadius.circular(12.0),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(10),
+                  bottomRight: Radius.circular(15)),
             ),
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(20.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(
-                  sectionData.description,
-                  style: const TextStyle(
-                    fontSize: 16.0,
+                RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: sectionData.title,
+                        style: AppFonts.manropeNormalSizable(
+                          fontSize: 18,
+                          color: Colors.white,
+                          height: null,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 const SizedBox(height: 10),
                 ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(100, 40),
+                    // Adjusted width and height
+                    backgroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      side: BorderSide(
+                        color: isSelected ? Colors.teal : kPrimaryColor,
+                        // Border color
+                        width: 2, // Border width
+                      ),
+                    ),
+                  ),
                   onPressed: buttonAction,
-                  child: Text(isSelected ? 'Remove Course' : 'Add Course'),
+                  child: Text(
+                    isSelected ? 'Remove Course' : 'Add Course',
+                    style: TextStyle(
+                      color: isSelected ? Colors.teal : kPrimaryColor,
+                    ),
+                  ),
                 ),
               ],
             ),

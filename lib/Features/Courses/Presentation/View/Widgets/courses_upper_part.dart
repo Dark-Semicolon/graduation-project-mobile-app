@@ -1,3 +1,5 @@
+import 'package:eductionsystem/Constants/FontsConst.dart';
+import 'package:eductionsystem/Constants/const.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
@@ -25,6 +27,12 @@ class _CoursesScreenUpperPartState extends State<CoursesScreenUpperPart> {
     _courseSelection = CoursesApiService().fetchCourseSelection();
   }
 
+  int calculateDaysLeft(String endDate) {
+    final now = DateTime.now();
+    final deadline = DateTime.parse(endDate);
+    return deadline.difference(now).inDays;
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<CourseSelection>(
@@ -35,6 +43,9 @@ class _CoursesScreenUpperPartState extends State<CoursesScreenUpperPart> {
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {
+          final daysLeft =
+              calculateDaysLeft(snapshot.data!.data!.attributes!.endAt!);
+
           return Padding(
             padding: const EdgeInsets.all(15.0),
             child: Column(
@@ -54,50 +65,83 @@ class _CoursesScreenUpperPartState extends State<CoursesScreenUpperPart> {
                       ],
                     ),
                     const SizedBox(width: 15),
-                    const Column(
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(height: 15),
-                        Text(
-                          'Eslam Tarek',
-                          style: TextStyle(
-                            fontSize: 30,
-                          ),
+                        const SizedBox(height: 15),
+                        Row(
+                          children: [
+                            Text(
+                              'Hii, ',
+                              style: AppFonts.manropeBoldSizable(
+                                  fontSize: 18, color: kPrimaryColor),
+                            ),
+                            Text(
+                              'Eslam Tarek',
+                              style: AppFonts.manropeNormalSizable(
+                                  fontSize: 18,
+                                  color: kPrimaryColor,
+                                  height: null),
+                            ),
+                          ],
                         ),
-                        Text(
-                          'Semester 2 Year 4',
-                          style: TextStyle(
-                            fontSize: 20,
-                          ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              'You Are In ',
+                              style: AppFonts.manropeNormalSizable(
+                                  fontSize: 12,
+                                  color: Colors.black,
+                                  height: null),
+                            ),
+                            Text(
+                              ' Semester 2 Year 4 ',
+                              style: AppFonts.manropeNormalSizable(
+                                  fontSize: 12,
+                                  color: Colors.black,
+                                  height: null),
+                            ),
+                            Text(
+                              'Enrolments',
+                              style: AppFonts.manropeNormalSizable(
+                                  fontSize: 12,
+                                  color: Colors.black,
+                                  height: null),
+                            ),
+                          ],
                         ),
                       ],
                     ),
                     const Expanded(child: SizedBox()),
                     Column(
                       children: [
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          width: 100,
-                          height: 80,
-                          decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            color: Colors.redAccent,
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Enrollments end on ${DateFormat('yyyy-MM-dd').format(DateTime.parse(snapshot.data!.data!.attributes!.endAt!))}',
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                fontSize: 15,
-                                color: Colors.white,
+                        const SizedBox(height: 10),
+                        Center(
+                          child: Row(
+                            children: [
+                              Text(
+                                'Deadline in ',
+                                style: AppFonts.manropeNormalSizable(
+                                    fontSize: 15,
+                                    color: Colors.pink,
+                                    height: null),
                               ),
-                            ),
+                              Text(
+                                '$daysLeft days',
+                                textAlign: TextAlign.center,
+                                style: AppFonts.manropeNormalSizable(
+                                    fontSize: 15,
+                                    color: Colors.pink,
+                                    height: null),
+                              ),
+                            ],
                           ),
                         ),
                       ],
-                    )
+                    ),
                   ],
                 ),
               ],

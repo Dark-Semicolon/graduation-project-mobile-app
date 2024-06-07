@@ -10,7 +10,6 @@ import '../Features/Login/Presentation/logout_screen.dart';
 import '../Features/Login/Update user/update_user_screen.dart';
 import '../Features/Splash/AppPreiew/on_boarding.dart';
 import '../Features/Splash/Persentation/splash_view.dart';
-import '../Features/assignment/AssignmentPage.dart';
 import '../Features/profile/profile_page.dart';
 
 abstract class AppRouter {
@@ -59,17 +58,6 @@ abstract class AppRouter {
       GoRoute(
         path: '/GradesPage',
         builder: (context, state) => const GradesPage(),
-      ),
-      GoRoute(
-        path: '/AssignmentsPage',
-        builder: (context, state) => AssignmentsView(
-          tasks: [
-            Task('Math 1 assignment 1', false, '2 days'),
-            Task('Math 1 assignment 2', true),
-            Task('Math 1 assignment 3', false, '5 days'),
-          ],
-          numberOfTasks: 3,
-        ),
       ),
     ],
   );

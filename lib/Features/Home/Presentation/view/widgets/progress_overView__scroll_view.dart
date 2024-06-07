@@ -58,15 +58,6 @@ class ProgressOverViewScrollView extends StatelessWidget {
                             .go('/SelectedCoursesScreenWithoutEdit');
                       },
                     ),
-                    ProgressOverView(
-                      title: 'Assignments',
-                      color: Colors.blue,
-                      percentage: 0.5,
-                      svgAssetPath: 'assets/notification_bill.svg',
-                      onPressed: () {
-                        GoRouter.of(context).go('/AssignmentsPage');
-                      },
-                    ),
                   ],
                 ),
               ),

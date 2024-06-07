@@ -63,14 +63,17 @@ class _HomePageAllState extends State<HomePageAll> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       const SizedBox(width: 15),
-                      Column(mainAxisAlignment: MainAxisAlignment.center,
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           CircleAvatar(
                             radius: 20,
                             backgroundColor: Colors.grey[300],
-                            backgroundImage: _userData != null && _userData!.data!.attributes!.image != null
-                                ? NetworkImage('http://10.0.2.2:8000/storage/${_userData!.data!.attributes!.image}')
+                            backgroundImage: _userData != null &&
+                                    _userData!.data!.attributes!.image != null
+                                ? NetworkImage(
+                                    'http://10.0.2.2:8000/storage/${_userData!.data!.attributes!.image}')
                                 : null,
                           ),
                           const SizedBox(height: 20),

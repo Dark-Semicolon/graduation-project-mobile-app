@@ -70,7 +70,7 @@ class AppFonts {
     );
   }
 
-  static TextStyle manropeBold18Sizable({double? fontSize, Color? color}) {
+  static TextStyle manropeBoldSizable({double? fontSize, Color? color}) {
     return TextStyle(
       fontFamily: 'Manrope',
       fontSize: fontSize ?? 18,
@@ -80,13 +80,14 @@ class AppFonts {
     );
   }
 
-  static TextStyle manropeNormalSizable({double? fontSize, Color? color}) {
+  static TextStyle manropeNormalSizable(
+      {double? fontSize, Color? color, required double? height}) {
     return TextStyle(
       fontFamily: 'Manrope',
       fontSize: fontSize ?? 16,
       fontWeight: FontWeight.normal,
       letterSpacing: -0.30000001192092896,
-      height: 1,
+      height: height ?? 1,
       color: color ?? AppColors.white1, // Default color is white
     );
   }

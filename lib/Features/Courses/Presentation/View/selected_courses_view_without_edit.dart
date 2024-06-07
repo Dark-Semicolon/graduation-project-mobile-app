@@ -5,13 +5,8 @@ import 'package:go_router/go_router.dart';
 import '../../Riverpod/river_state.dart';
 
 class SelectedCoursesScreenWithoutEdit extends ConsumerStatefulWidget {
-/*  final DateTime endDate;
-  final bool canModify;*/
-
   const SelectedCoursesScreenWithoutEdit({
     super.key,
-    /*  required this.endDate,
-    required this.canModify,*/
   });
 
   @override
