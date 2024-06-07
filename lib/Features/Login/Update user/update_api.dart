@@ -1,96 +1,36 @@
 import 'dart:convert';
-import 'dart:io';
+
 import 'package:http/http.dart' as http;
-import 'package:http_parser/http_parser.dart';
+
 import '../../../../Data/API/Const/end_points.dart';
 import '../../../../Data/API/Token/token_manager.dart';
-import '../../../Data/API/Services/api_constant.dart';
-import 'PatchUseDataModel.dart';
+import 'patch_user_data_model.dart';
 
 class UserApiService {
-  static const String _baseUrl = ApiConstants.baseUrl;
+  static const String _baseUrl = MainApiConstants.baseUrl;
 
-  static Future<dynamic> multiPartRequestForDetection({
-    required String endPoint,
-    Map<String, String>? header,
-    Map<String, String>? body,
-    required File image,
-  }) async {
-    try {
-      var stream = http.ByteStream(image.openRead());
-      stream.cast();
-      var length = await image.length();
-      var uri = Uri.parse("$_baseUrl/user");
-      var request = http.MultipartRequest('PATCH', uri);
-
-      // Add headers
-      request.headers.addAll(header ?? {});
-
-      // Add body fields
-      if (body != null) {
-        request.fields.addAll(body);
-      }
-
-      // Add the image file
-      var multipartFile = http.MultipartFile(
-        'image',
-        stream,
-        length,
-        filename: image.path.split('/').last,
-      );
-      request.files.add(multipartFile);
-
-      // Send the request
-      var response = await request.send();
-      final res = await http.Response.fromStream(response);
-
-      // Print and handle the response
-      print('Response body: ${res.body}');
-      if (res.statusCode == 200 || res.statusCode == 201) {
-        return jsonDecode(res.body);
-      } else {
-        print('Error status code: ${res.statusCode}');
-        print('Error response: ${res.body}');
-        return null;
-      }
-    } catch (e) {
-      print('Exception caught: $e');
-      return null;
-    }
-  }
-
-  Future<void> updateUserData(PatchUseData data, {File? image}) async {
+  Future<void> updateUserData(PatchUseData data) async {
     final token = await TokenManager.getToken();
-    var headers = {
-      'Authorization': 'Bearer $token',
-      'Content-Type': 'application/json',
-    };
-    var body = data.toJson().map((key, value) => MapEntry(key, value.toString()));
+    final response = await http.patch(
+      Uri.parse('$_baseUrl${MainApiConstants.userDataEndpoint}'),
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(data.toJson()),
+    );
 
-    var endpoint = MainApiConstants.userDataEndpoint;
-    var url = Uri.parse("$_baseUrl/user");
-    print("Request URL: $url"); // Print full URL for debugging
-
-    if (image != null) {
-      await multiPartRequestForDetection(
-        endPoint: endpoint,
-        header: headers,
-        body: body,
-        image: image,
-      );
-    } else {
-      var response = await http.put(url, headers: headers, body: jsonEncode(body));
-      if (response.statusCode == 200) {
-        if (response.body.isEmpty) {
-          print('User data updated successfully. Response: {}');
-        } else {
-          print('User data updated successfully. Response: ${response.body}');
-        }
+    if (response.statusCode != 200) {
+      final responseBody = jsonDecode(response.body);
+      final errorMessage = responseBody['message'] ?? 'Unknown error';
+      if (responseBody['errors'] != null) {
+        final errors = responseBody['errors']
+            .entries
+            .map((entry) => '${entry.key}: ${entry.value.join(', ')}')
+            .join('\n');
+        throw Exception('$errorMessage\n$errors');
       } else {
-        print('Failed to update user data. Status code: ${response.statusCode},'
-            ' Response: ${response.body}');
-        throw Exception('Failed to update user data. Status code: '
-            '${response.statusCode}, Response: ${response.body}');
+        throw Exception(errorMessage);
       }
     }
   }
