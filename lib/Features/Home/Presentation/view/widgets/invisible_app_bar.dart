@@ -1,3 +1,4 @@
+import 'package:eductionsystem/Constants/const.dart';
 import 'package:flutter/material.dart';
 
 class InvisibleAppBar extends StatelessWidget {
@@ -11,7 +12,7 @@ class InvisibleAppBar extends StatelessWidget {
       child: AppBar(
         automaticallyImplyLeading: false,
         elevation: 0,
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: kPrimaryColor,
       ),
     );
   }

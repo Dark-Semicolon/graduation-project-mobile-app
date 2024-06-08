@@ -56,7 +56,7 @@ class AssignmentsView extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: CustomBottomNavBar(
+      bottomNavigationBar: const CustomBottomNavBar(
         selectedMenu: MenuState.assessments,
       ),
     );

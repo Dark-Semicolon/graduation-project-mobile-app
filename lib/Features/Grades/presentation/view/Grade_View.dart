@@ -51,7 +51,7 @@ class _GradesPageState extends State<GradesPage> {
         ),
       ),
       body: const GradeViewBody(),
-      bottomNavigationBar: CustomBottomNavBar(
+      bottomNavigationBar: const CustomBottomNavBar(
         selectedMenu: MenuState.Grades,
       ),
     );

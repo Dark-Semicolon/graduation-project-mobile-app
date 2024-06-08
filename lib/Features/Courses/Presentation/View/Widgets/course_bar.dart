@@ -61,7 +61,8 @@ class _CoursesListState extends ConsumerState<CoursesList> {
             children: [
               TextSpan(
                 text: '${courseData.attributes!.description!}\n',
-                style: AppFonts.manropeNormalSizable(height: 1.5,fontSize: 15,color: Colors.black),
+                style: AppFonts.manropeNormalSizable(
+                    height: 1.5, fontSize: 15, color: Colors.black),
               ),
               const TextSpan(
                 text: 'Credit Hours: ',
@@ -327,7 +328,6 @@ class CoursesExpandableSection extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 RichText(
-
                   text: sectionData.description,
                 ),
                 const SizedBox(height: 10),

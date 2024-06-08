@@ -12,9 +12,9 @@ class LoginErrorResponse {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['message'] = this.message;
-    if (this.errors != null) {
-      data['errors'] = this.errors!.toJson();
+    data['message'] = message;
+    if (errors != null) {
+      data['errors'] = errors!.toJson();
     }
     return data;
   }
@@ -33,8 +33,8 @@ class Errors {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['email'] = this.email;
-    data['password'] = this.password;
+    data['email'] = email;
+    data['password'] = password;
     return data;
   }
 }

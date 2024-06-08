@@ -3,7 +3,6 @@ import 'package:eductionsystem/Features/Grades/presentation/manger/Academic_Seme
 import 'package:eductionsystem/Features/Grades/presentation/manger/Academic_Semester_Cubit/academic_semseter_states.dart';
 import 'package:eductionsystem/Features/Grades/presentation/view/Widgets/Select_year_widget.dart';
 import 'package:eductionsystem/Features/Grades/presentation/view/Widgets/Total_Grade_Widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -31,14 +30,14 @@ class GradeViewBody extends StatelessWidget {
           BlocBuilder<AcademicSemsterCubit, AcademicSemseterStates>(
             builder: (context, state) {
               if (state is LoadingAcademicSemseterState) {
-                return Center(
+                return const Center(
                   child: CircularProgressIndicator(),
                 );
               }
               if (state is SuccessAcademicSemseterState) {
                 return const Select_Semester_container();
               }
-              return SizedBox();
+              return const SizedBox();
             },
           ),
           const SizedBox(height: 20),

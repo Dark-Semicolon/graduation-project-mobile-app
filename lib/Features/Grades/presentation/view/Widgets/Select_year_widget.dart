@@ -1,12 +1,10 @@
 import 'package:eductionsystem/Features/Grades/GPA/GPACubit.dart';
 import 'package:eductionsystem/Features/Grades/data/models/academic_semester_model.dart';
 import 'package:eductionsystem/Features/Grades/data/models/academic_year_model.dart';
-import 'package:eductionsystem/Features/Grades/data/repos/course_grade_repo.dart';
 import 'package:eductionsystem/Features/Grades/presentation/manger/Academic_Semester_Cubit/academic_semester_cubit.dart';
 import 'package:eductionsystem/Features/Grades/presentation/manger/Academic_Year_Cubit/academic_year_cubit.dart';
 import 'package:eductionsystem/Features/Grades/presentation/manger/Academic_Year_Cubit/academic_year_state.dart';
 import 'package:eductionsystem/Features/Grades/presentation/manger/Couser_Grade_Cubit/course_grade_cubit.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -129,7 +127,7 @@ class YearWidget extends StatelessWidget {
             padding: const EdgeInsets.all(16.0),
             child: Text(
               academicYearModel.academicSemesterAttributes.name,
-              style: TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white),
             ),
           ),
         ),
@@ -152,7 +150,7 @@ class SemesterWidget extends StatelessWidget {
       onTap: () async {
 
         final SharedPreferences prefs = await SharedPreferences.getInstance();
-        var yearId = await prefs.getInt('yearId');
+        var yearId = prefs.getInt('yearId');
         BlocProvider.of<CourseGradeCubit>(context).fetchStudentCoursesGrade(
             yearId: yearId!, semesterId: academicSemesterModel.id);
         BlocProvider.of<GPACubit>(context).setSemesterGPA(academicSemesterModel.gpa);

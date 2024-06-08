@@ -1,5 +1,4 @@
 import 'package:eductionsystem/Features/Grades/data/models/course_model.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../data/repos/course_grade_repo.dart';
@@ -22,7 +21,7 @@ class SubjectScore extends StatelessWidget {
           child: ListTile(
               title: Text(
                 courseModel.relationships.courseInstance
-                    .courseInstanceRelationships.course!.courseAttributes!.name,
+                    .courseInstanceRelationships.course.courseAttributes!.name,
                 style: const TextStyle(
                     fontSize: 24, fontFamily: 'jost', color: Colors.white),
               ),

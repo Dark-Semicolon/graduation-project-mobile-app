@@ -101,7 +101,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ))
         ],
       ),
-      bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.account),
+      bottomNavigationBar: const CustomBottomNavBar(selectedMenu: MenuState.account),
     );
   }
 }

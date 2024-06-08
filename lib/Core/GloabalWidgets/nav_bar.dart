@@ -10,15 +10,13 @@ import '../../Features/profile/profile_page.dart';
 class CustomBottomNavBar extends StatelessWidget {
   final MenuState selectedMenu;
 
-  CustomBottomNavBar({
+  const CustomBottomNavBar({
     super.key,
     required this.selectedMenu,
   });
 
   @override
   Widget build(BuildContext context) {
-    const Color inActiveIconColor = Color(0xFFB6B6B6);
-
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: Container(
@@ -129,77 +127,6 @@ class CustomBottomNavBar extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildModifiedGradesNavItem(
-    BuildContext context,
-    String title,
-    String iconPath,
-    MenuState menuState,
-    MenuState selectedMenu,
-    Widget destination,
-  ) {
-    const Color inActiveIconColor = Color(0xFFB6B6B6);
-    final Color iconColor =
-        menuState == selectedMenu ? kPrimaryColor : inActiveIconColor;
-
-    return GestureDetector(
-      onTap: () {
-        if (menuState != selectedMenu) {
-          Navigator.push(
-            context,
-            CustomPageRoute(
-              page: destination,
-            ),
-          );
-        }
-      },
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          AnimatedContainer(
-            duration: const Duration(milliseconds: 300),
-            height: 70, // Modified height
-            width: 70, // Modified width
-            decoration: BoxDecoration(
-              color: menuState == selectedMenu
-                  ? kPrimaryColor.withOpacity(0.2)
-                  : Colors.transparent,
-              borderRadius: BorderRadius.circular(35), // Modified shape
-              boxShadow: [
-                if (menuState == selectedMenu)
-                  BoxShadow(
-                    color: kPrimaryColor.withOpacity(0.5),
-                    blurRadius: 10,
-                    spreadRadius: 1,
-                  ),
-              ],
-            ),
-          ),
-          Positioned(
-            top: 0,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                SvgPicture.asset(
-                  iconPath,
-                  color: iconColor,
-                  height: 32, // Modified icon size
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  title,
-                  style: TextStyle(
-                    color: iconColor,
-                    fontSize: 12,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
       ),
     );
   }

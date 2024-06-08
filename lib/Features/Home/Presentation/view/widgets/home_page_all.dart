@@ -1,22 +1,22 @@
+import 'package:eductionsystem/Constants/const.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../../Constants/FontsConst.dart';
-import '../../../../../Constants/Icons.dart';
 import '../../../../../Data/API/Models/user_data.dart';
+import '../../../../../Data/API/Services/api_constant.dart';
 import '../../../../../Data/API/Services/auth_service.dart';
 import '../../../../../Data/API/Token/token_manager.dart';
 
-class HomePageAll extends StatefulWidget {
-  const HomePageAll({super.key});
+class HomePageUpperBar extends StatefulWidget {
+  const HomePageUpperBar({super.key});
 
   @override
-  _HomePageAllState createState() => _HomePageAllState();
+  _HomePageUpperBarState createState() => _HomePageUpperBarState();
 }
 
-class _HomePageAllState extends State<HomePageAll> {
+class _HomePageUpperBarState extends State<HomePageUpperBar> {
   final AuthRepository _authRepository = AuthRepository(
-    authApi: AuthApi(baseUrl: 'http://10.0.2.2:8000'),
+    authApi: AuthApi(baseUrl: ApiConstants.baseUrlShort),
   );
   UserDataModel? _userData;
 
@@ -32,18 +32,18 @@ class _HomePageAllState extends State<HomePageAll> {
       if (token != null) {
         final userData = await _authRepository.fetchUserData(token);
         if (userData != null) {
-          print('Fetched user data: ${userData.toJson()}'); // Debug statement
+          // print('Fetched user data: ${userData.toJson()}'); // Debug statement
           setState(() {
             _userData = userData;
           });
         } else {
-          print('User data is null');
+          // print('User data is null');
         }
       } else {
-        print('Token is null');
+        // print('Token is null');
       }
     } catch (error) {
-      print('Error fetching user data: $error');
+      // print('Error fetching user data: $error');
     }
   }
 
@@ -54,58 +54,40 @@ class _HomePageAllState extends State<HomePageAll> {
         Stack(
           children: [
             Container(
-              color: Colors.blueAccent, // Blue container
+              color: kPrimaryColor, // Blue container
               height: 110,
               width: double.infinity,
-              child: Column(
+              child: Row(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                  const SizedBox(width: 25),
+                  Column(
                     children: [
-                      const SizedBox(width: 15),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const SizedBox(height: 5),
-                          CircleAvatar(
-                            radius: 20,
-                            backgroundColor: Colors.grey[300],
-                            backgroundImage: _userData != null &&
-                                    _userData!.data!.attributes!.image != null
-                                ? NetworkImage(
-                                    'http://10.0.2.2:8000/storage/${_userData!.data!.attributes!.image}')
-                                : null,
-                          ),
-                          const SizedBox(height: 20),
-                        ],
+                      const SizedBox(height: 5),
+                      CircleAvatar(
+                        radius: 20,
+                        backgroundColor: Colors.grey[300],
+                        backgroundImage: _userData != null &&
+                                _userData!.data!.attributes!.image != null
+                            ? NetworkImage(
+                                'http://10.0.2.2:8000/storage/${_userData!.data!.attributes!.image}')
+                            : null,
                       ),
-                      const SizedBox(width: 10),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            _userData?.data?.attributes?.name ?? 'name',
-                            style: AppFonts.manrope18,
-                          ),
-                          const Text(
-                            'You Enrolled in AYA',
-                            style: AppFonts.manrope15,
-                          ),
-                        ],
-                      ),
-                      const Expanded(child: SizedBox()),
-                      Column(
-                        children: [
-                          SvgPicture.asset(
-                            NotificationBill,
-                            height: 35,
-                            width: 3,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(width: 30),
+                      const SizedBox(height: 20),
                     ],
                   ),
+                  const SizedBox(width: 20),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(_userData?.data?.attributes?.name ?? 'name',
+                          style: AppFonts.manropeBoldSizable(
+                              color: Colors.white, fontSize: 20)),
+                      Text('Welcome To CamusSuit',
+                          style: AppFonts.manropeNormalSizable(
+                              height: null, color: Colors.white, fontSize: 15)),
+                    ],
+                  ),
+                  const Expanded(child: SizedBox()),
                 ],
               ),
             ),

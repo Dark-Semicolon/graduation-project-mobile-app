@@ -1,3 +1,4 @@
+import 'package:eductionsystem/Constants/const.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../Core/GloabalWidgets/nav_bar.dart';
@@ -16,7 +17,7 @@ class HomePage extends StatelessWidget {
         child: AppBar(
           automaticallyImplyLeading: false,
           elevation: 0,
-          backgroundColor: Colors.blueAccent,
+          backgroundColor: kPrimaryColor,
         ),
       ),
       body: const Column(
@@ -25,28 +26,12 @@ class HomePage extends StatelessWidget {
           SizedBox(height: 20),
           ScheduleView(),
           SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [],
-          ),
         ],
       ),
-      bottomNavigationBar: CustomBottomNavBar(
+      bottomNavigationBar: const CustomBottomNavBar(
         selectedMenu: MenuState.home,
       ),
     );
   }
 }
 
-// ElevatedButton(
-// onPressed: () {
-// GoRouter.of(context).push('/DisplayUserData');
-// },
-// child: const Text('User Data'),
-// ),
-// ElevatedButton(
-// onPressed: () {
-// GoRouter.of(context).push('/GradesPage');
-// },
-// child: const Text('Geades Page'),
-// ),

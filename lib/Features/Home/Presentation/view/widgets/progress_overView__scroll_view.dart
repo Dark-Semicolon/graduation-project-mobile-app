@@ -1,3 +1,4 @@
+import 'package:eductionsystem/Constants/const.dart';
 import 'package:eductionsystem/Features/Home/Presentation/view/widgets/progress_overview.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -12,16 +13,16 @@ class ProgressOverViewScrollView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const HomePageAll(),
+        const HomePageUpperBar(),
         Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Padding(
+             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
               child: Text(
                 "Progress OverView",
-                style: AppFonts.roboto17,
+                style: AppFonts.manropeNormalSizable(height: null,color: kPrimaryColor,fontSize: 20),
               ),
             ),
             SingleChildScrollView(
@@ -58,6 +59,17 @@ class ProgressOverViewScrollView extends StatelessWidget {
                             .go('/SelectedCoursesScreenWithoutEdit');
                       },
                     ),
+                    ProgressOverView(
+                      title: 'Your Courses',
+                      color: Colors.blue,
+                      percentage: 0.5,
+                      svgAssetPath: 'assets/notification_bill.svg',
+                      onPressed: () async {
+                        GoRouter.of(context)
+                            .go('/SelectedCoursesScreenWithoutEdit');
+                      },
+                    ),
+
                   ],
                 ),
               ),

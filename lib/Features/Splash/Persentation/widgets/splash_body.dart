@@ -6,7 +6,7 @@ import '../../../../Data/API/Token/token_manager.dart';
 import '../../../../Local App Data/Local/local_storage.dart';
 
 class SplashViewBody extends StatefulWidget {
-  const SplashViewBody({Key? key}) : super(key: key);
+  const SplashViewBody({super.key});
 
   @override
   _SplashViewBodyState createState() => _SplashViewBodyState();

@@ -46,7 +46,7 @@ class _AllYearGpa extends State<AllYearGpa> {
   @override
   Widget build(BuildContext context) {
     return Text(
-      '${_userData?.data?.gpa?.toString().substring(0,4) ?? '0.00'}',
+      _userData?.data?.gpa?.toString().substring(0,4) ?? '0.00',
       style: const TextStyle(fontSize: 18),
 
     );

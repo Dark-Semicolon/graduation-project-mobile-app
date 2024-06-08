@@ -130,32 +130,28 @@ class CourseNotifier extends StateNotifier<CourseState> {
       final List<dynamic> courseIdListJson = jsonDecode(response.body);
       print('Course ID List JSON: $courseIdListJson'); // Debug print
 
-      if (courseIdListJson is List<dynamic>) {
-        final selectedCourseIds = courseIdListJson.cast<int>();
-        final availableCourses =
-            await getAvailableCourses(); // Fetch or get the available courses data
+      final selectedCourseIds = courseIdListJson.cast<int>();
+      final availableCourses =
+          await getAvailableCourses(); // Fetch or get the available courses data
 
-        // Filter the available courses based on the selected course IDs
-        final filteredCourses = availableCourses
-            .where((course) => selectedCourseIds.contains(course.id))
-            .toList();
+      // Filter the available courses based on the selected course IDs
+      final filteredCourses = availableCourses
+          .where((course) => selectedCourseIds.contains(course.id))
+          .toList();
 
-        final courseDetails = {
-          for (var course in filteredCourses) course.id!: course
-        };
+      final courseDetails = {
+        for (var course in filteredCourses) course.id!: course
+      };
 
-        state = state.copyWith(
-          selectedCourseIds: selectedCourseIds,
-          courseDetails: courseDetails,
-          totalCreditHours: filteredCourses.fold(
-            0,
-            (sum, course) => sum! + course.attributes!.creditHours!,
-          ),
-        );
-      } else {
-        throw Exception('Invalid JSON structure');
-      }
-    } else {
+      state = state.copyWith(
+        selectedCourseIds: selectedCourseIds,
+        courseDetails: courseDetails,
+        totalCreditHours: filteredCourses.fold(
+          0,
+          (sum, course) => sum! + course.attributes!.creditHours!,
+        ),
+      );
+        } else {
       throw Exception('Failed to load enrolled courses');
     }
   }

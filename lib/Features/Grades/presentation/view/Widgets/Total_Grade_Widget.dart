@@ -43,7 +43,7 @@ class TotalGPAWidget extends StatelessWidget {
                     children: [
                       Column(crossAxisAlignment: CrossAxisAlignment.start ,
                         children: [
-                          Row(mainAxisAlignment: MainAxisAlignment.start,
+                          const Row(mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(
                                 'GPA',
@@ -56,12 +56,12 @@ class TotalGPAWidget extends StatelessWidget {
                               ),
                             ],
                           ),
-                          SizedBox(height: 4),
+                          const SizedBox(height: 4),
                           Row(
                             children: [
                               Text(
                                 gpaText,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 24,
                                   fontFamily: 'Jost',
                                   fontWeight: FontWeight.bold,
@@ -94,10 +94,10 @@ class TotalGPAWidget extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 6),
-                  Divider(),
-                  SizedBox(height: 6),
-                  Row(
+                  const SizedBox(height: 6),
+                  const Divider(),
+                  const SizedBox(height: 6),
+                  const Row(
                     children: [
                       Column(mainAxisAlignment: MainAxisAlignment.center,
                         children: [
