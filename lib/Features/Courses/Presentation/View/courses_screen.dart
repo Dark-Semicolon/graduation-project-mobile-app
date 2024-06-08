@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../Core/GloabalWidgets/nav_bar.dart';
-import 'Widgets/course_bar.dart';
+import 'Widgets/courses_enrollments_list_view.dart';
 import 'Widgets/courses_upper_part.dart';
 
 class CoursesScreen extends StatelessWidget {
