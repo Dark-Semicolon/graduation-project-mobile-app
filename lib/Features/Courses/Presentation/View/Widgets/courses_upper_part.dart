@@ -115,7 +115,6 @@ class _CoursesScreenUpperPartState extends State<CoursesScreenUpperPart> {
                         ),
                       ],
                     ),
-                    const Expanded(child: SizedBox()),
                     Column(
                       children: [
                         const SizedBox(height: 10),
