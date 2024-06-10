@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+
 import '../../../Constants/FontsConst.dart';
 import '../../../Constants/const.dart';
 import '../../../Data/API/Models/user_data.dart';
@@ -18,8 +19,7 @@ class UpdateUserDataScreenState extends State<UpdateUserDataScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _passwordConfirmationController =
-      TextEditingController();
+  final TextEditingController _passwordConfirmationController = TextEditingController();
   bool _isLoading = false;
   String? _errorMessage;
   UserDataModel? _userData;
@@ -30,7 +30,7 @@ class UpdateUserDataScreenState extends State<UpdateUserDataScreen> {
   final TextStyle _labelStyle = AppFonts.manropeNormalSizable(
       color: kPrimaryColor, fontSize: 20, height: null);
   final TextStyle _errorStyle =
-      const TextStyle(fontSize: 14, color: Colors.red);
+  const TextStyle(fontSize: 14, color: Colors.red);
 
   @override
   void initState() {
@@ -80,8 +80,7 @@ class UpdateUserDataScreenState extends State<UpdateUserDataScreen> {
 
     final PatchUseData data = PatchUseData(
       name: _nameController.text.isNotEmpty ? _nameController.text : null,
-      password:
-          _passwordController.text.isNotEmpty ? _passwordController.text : null,
+      password: _passwordController.text.isNotEmpty ? _passwordController.text : null,
       passwordConfirmation: _passwordConfirmationController.text.isNotEmpty
           ? _passwordConfirmationController.text
           : null,
@@ -130,60 +129,67 @@ class UpdateUserDataScreenState extends State<UpdateUserDataScreen> {
         child: _userData == null
             ? const Center(child: CircularProgressIndicator())
             : Form(
-                key: _formKey,
-                child: ListView(
-                  children: [
-                    _buildEditableField(
-                      controller: _nameController,
-                      labelText: 'Name',
-                      hintText: 'Enter your name',
-                      errorMessage: 'Please enter your name',
-                    ),
-                    _buildEditableField(
-                      controller: TextEditingController(
-                          text: _userData?.data?.attributes?.email ?? ''),
-                      labelText: 'Email',
-                      hintText: '',
-                      errorMessage: '',
-                      enabled: false,
-                    ),
-                    _buildEditableField(
-                      controller: _passwordController,
-                      labelText: 'Password',
-                      hintText: 'Enter your password',
-                      obscureText: true,
-                      errorMessage: 'Please enter your password',
-                      onChanged: (value) {
-                        setState(() {});
-                      },
-                    ),
-                    if (_passwordController.text.isNotEmpty)
-                      _buildEditableField(
-                        controller: _passwordConfirmationController,
-                        labelText: 'Confirm Password',
-                        hintText: 'Confirm your password',
-                        obscureText: true,
-                        errorMessage: 'Please confirm your password',
-                        validator: (value) {
-                          if (value != _passwordController.text) {
-                            return 'Passwords do not match';
-                          }
-                          return null;
-                        },
-                      ),
-                    const SizedBox(height: 32),
-                    _buildUpdateButton(),
-                    if (_errorMessage != null)
-                      Padding(
-                        padding: const EdgeInsets.only(top: 16),
-                        child: Text(
-                          _errorMessage!,
-                          style: _errorStyle,
-                        ),
-                      ),
-                  ],
-                ),
+          key: _formKey,
+          child: ListView(
+            children: [
+              _buildEditableField(
+                controller: _nameController,
+                labelText: 'Name',
+                hintText: 'Enter your name',
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your name';
+                  }
+                  return null;
+                },
               ),
+              _buildEditableField(
+                controller: TextEditingController(
+                    text: _userData?.data?.attributes?.email ?? ''),
+                labelText: 'Email',
+                hintText: '',
+                enabled: false,
+              ),
+              _buildEditableField(
+                controller: _passwordController,
+                labelText: 'Password',
+                hintText: 'Enter your password',
+                obscureText: true,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your password';
+                  }
+                  if (!RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$').hasMatch(value)) {
+                    return 'Password must be at least 8 characters long and contain both letters and numbers';
+                  }
+                  return null;
+                },
+              ),
+              _buildEditableField(
+                controller: _passwordConfirmationController,
+                labelText: 'Confirm Password',
+                hintText: 'Confirm your password',
+                obscureText: true,
+                validator: (value) {
+                  if (value != _passwordController.text) {
+                    return 'Passwords do not match';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 32),
+              _buildUpdateButton(),
+              if (_errorMessage != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 16),
+                  child: Text(
+                    _errorMessage!,
+                    style: _errorStyle,
+                  ),
+                ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -192,11 +198,9 @@ class UpdateUserDataScreenState extends State<UpdateUserDataScreen> {
     required TextEditingController controller,
     required String labelText,
     required String hintText,
-    required String errorMessage,
     bool obscureText = false,
     bool enabled = true,
     FormFieldValidator<String>? validator,
-    ValueChanged<String>? onChanged,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -221,13 +225,13 @@ class UpdateUserDataScreenState extends State<UpdateUserDataScreen> {
             decoration: InputDecoration(
               hintText: hintText,
               border: InputBorder.none,
-              contentPadding:
-                  const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+              contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+              errorStyle: _errorStyle,
             ),
             obscureText: obscureText,
-            onChanged: onChanged,
             enabled: enabled,
             style: const TextStyle(fontSize: 16),
+            validator: validator,
           ),
         ),
         const SizedBox(height: 16),
@@ -264,8 +268,8 @@ class UpdateUserDataScreenState extends State<UpdateUserDataScreen> {
             ),
             child: _isLoading
                 ? const CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                  )
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+            )
                 : Text('Update', style: AppFonts.manropeBoldSizable()),
           ),
         ),
@@ -283,8 +287,7 @@ class UpdateUserDataScreenState extends State<UpdateUserDataScreen> {
 }
 
 class UserApiService {
-  static const String userDataEndpoint =
-      'http://10.0.2.2:8000/api/v1/student/user';
+  static const String userDataEndpoint = 'http://10.0.2.2:8000/api/v1/student/user';
 
   Future<UserDataModel> fetchUserData(String token) async {
     final response = await http.get(
@@ -298,11 +301,10 @@ class UserApiService {
     if (response.statusCode == 200) {
       return UserDataModel.fromJson(json.decode(response.body));
     } else {
-      throw Exception('Failed to load user data with status code ');
+      throw Exception('Failed to load user data with status code ${response.statusCode}');
     }
   }
 
-  // ${response.statusCode}
   Future<void> updateUserData(PatchUseData data) async {
     final token = await TokenManager.getToken();
     final response = await http.patch(
@@ -315,8 +317,7 @@ class UserApiService {
     );
 
     if (response.statusCode != 200) {
-      throw Exception(
-          'Password Must Contain Letters And Numbers and More Than 8 Letters');
+      throw Exception('Failed to update user data with status code ${response.statusCode}');
     }
   }
 }
