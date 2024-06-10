@@ -1,16 +1,20 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'patch_user_data_model.dart';
-import 'update_api.dart';
+import 'dart:convert';
 
-class UpdateUserDataScreen extends ConsumerStatefulWidget {
-  const UpdateUserDataScreen({super.key});
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import '../../../Constants/FontsConst.dart';
+import '../../../Constants/const.dart';
+import '../../../Data/API/Models/user_data.dart';
+import '../../../Data/API/Token/token_manager.dart';
+
+class UpdateUserDataScreen extends StatefulWidget {
+  const UpdateUserDataScreen({Key? key}) : super(key: key);
 
   @override
   UpdateUserDataScreenState createState() => UpdateUserDataScreenState();
 }
 
-class UpdateUserDataScreenState extends ConsumerState<UpdateUserDataScreen> {
+class UpdateUserDataScreenState extends State<UpdateUserDataScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -18,71 +22,52 @@ class UpdateUserDataScreenState extends ConsumerState<UpdateUserDataScreen> {
       TextEditingController();
   bool _isLoading = false;
   String? _errorMessage;
+  UserDataModel? _userData;
+
+  // Define text styles
+  final TextStyle _titleStyle = AppFonts.manropeNormalSizable(
+      color: kPrimaryColor, fontSize: 25, height: null);
+  final TextStyle _labelStyle = AppFonts.manropeNormalSizable(
+      color: kPrimaryColor, fontSize: 20, height: null);
+  final TextStyle _errorStyle =
+      const TextStyle(fontSize: 14, color: Colors.red);
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: const Text('Update User Data'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: ListView(
-            children: [
-              UpdateCustomTextField(
-                controller: _nameController,
-                labelText: 'Name',
-                hintText: 'Enter your name',
-                prefixIcon: Icons.person,
-                errorMessage: 'Please enter your name',
-              ),
-              const SizedBox(height: 16),
-              UpdateCustomTextField(
-                controller: _passwordController,
-                labelText: 'Password',
-                hintText: 'Enter your password',
-                prefixIcon: Icons.lock,
-                obscureText: true,
-                errorMessage: 'Please enter your password',
-              ),
-              const SizedBox(height: 16),
-              UpdateCustomTextField(
-                controller: _passwordConfirmationController,
-                labelText: 'Confirm Password',
-                hintText: 'Confirm your password',
-                prefixIcon: Icons.lock,
-                obscureText: true,
-                errorMessage: 'Please confirm your password',
-                validator: (value) {
-                  if (value != _passwordController.text) {
-                    return 'Passwords do not match';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 32),
-              _isLoading
-                  ? const Center(child: CircularProgressIndicator())
-                  : ElevatedButton(
-                      onPressed: _updateUserData,
-                      child: const Text('Update'),
-                    ),
-              if (_errorMessage != null)
-                Padding(
-                  padding: const EdgeInsets.only(top: 16),
-                  child: Text(
-                    _errorMessage!,
-                    style: const TextStyle(color: Colors.red),
-                  ),
-                ),
-            ],
-          ),
-        ),
-      ),
-    );
+  void initState() {
+    super.initState();
+    _fetchUserData();
+  }
+
+  Future<void> _fetchUserData() async {
+    try {
+      final token = await TokenManager.getToken();
+      if (token != null) {
+        final response = await http.get(
+          Uri.parse(UserApiService.userDataEndpoint),
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'application/json',
+          },
+        );
+
+        if (response.statusCode == 200) {
+          final userData = UserDataModel.fromJson(json.decode(response.body));
+          setState(() {
+            _userData = userData;
+            _nameController.text = userData.data?.attributes?.name ?? '';
+          });
+        } else {
+          throw Exception(
+              'Failed to load user data with status code ${response.statusCode}');
+        }
+      } else {
+        throw Exception('Token is null');
+      }
+    } catch (error) {
+      setState(() {
+        _errorMessage = 'Error fetching user data: $error';
+      });
+    }
   }
 
   Future<void> _updateUserData() async {
@@ -104,7 +89,6 @@ class UpdateUserDataScreenState extends ConsumerState<UpdateUserDataScreen> {
 
     try {
       await UserApiService().updateUserData(data);
-
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('User data updated successfully')),
@@ -125,47 +109,236 @@ class UpdateUserDataScreenState extends ConsumerState<UpdateUserDataScreen> {
       }
     }
   }
-}
 
-class UpdateCustomTextField extends StatelessWidget {
-  final TextEditingController controller;
-  final String labelText;
-  final String hintText;
-  final IconData prefixIcon;
-  final bool obscureText;
-  final TextInputType keyboardType;
-  final String errorMessage;
-  final FormFieldValidator<String>? validator;
-
-  const UpdateCustomTextField({
-    super.key,
-    required this.controller,
-    required this.labelText,
-    required this.hintText,
-    required this.prefixIcon,
-    this.obscureText = false,
-    this.keyboardType = TextInputType.text,
-    required this.errorMessage,
-    this.validator,
-  });
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _passwordController.dispose();
+    _passwordConfirmationController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller,
-      decoration: InputDecoration(
-        labelText: labelText,
-        hintText: hintText,
-        prefixIcon: Icon(
-          prefixIcon,
-          color: Colors.blueAccent,
-        ),
-        border: const OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(8)),
-        ),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: Text('Update User Data', style: _titleStyle),
       ),
-      obscureText: obscureText,
-      keyboardType: keyboardType,
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: _userData == null
+            ? const Center(child: CircularProgressIndicator())
+            : Form(
+                key: _formKey,
+                child: ListView(
+                  children: [
+                    _buildEditableField(
+                      controller: _nameController,
+                      labelText: 'Name',
+                      hintText: 'Enter your name',
+                      errorMessage: 'Please enter your name',
+                    ),
+                    _buildEditableField(
+                      controller: TextEditingController(
+                          text: _userData?.data?.attributes?.email ?? ''),
+                      labelText: 'Email',
+                      hintText: '',
+                      errorMessage: '',
+                      enabled: false,
+                    ),
+                    _buildEditableField(
+                      controller: _passwordController,
+                      labelText: 'Password',
+                      hintText: 'Enter your password',
+                      obscureText: true,
+                      errorMessage: 'Please enter your password',
+                      onChanged: (value) {
+                        setState(() {});
+                      },
+                    ),
+                    if (_passwordController.text.isNotEmpty)
+                      _buildEditableField(
+                        controller: _passwordConfirmationController,
+                        labelText: 'Confirm Password',
+                        hintText: 'Confirm your password',
+                        obscureText: true,
+                        errorMessage: 'Please confirm your password',
+                        validator: (value) {
+                          if (value != _passwordController.text) {
+                            return 'Passwords do not match';
+                          }
+                          return null;
+                        },
+                      ),
+                    const SizedBox(height: 32),
+                    _buildUpdateButton(),
+                    if (_errorMessage != null)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 16),
+                        child: Text(
+                          _errorMessage!,
+                          style: _errorStyle,
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+      ),
     );
+  }
+
+  Widget _buildEditableField({
+    required TextEditingController controller,
+    required String labelText,
+    required String hintText,
+    required String errorMessage,
+    bool obscureText = false,
+    bool enabled = true,
+    FormFieldValidator<String>? validator,
+    ValueChanged<String>? onChanged,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(labelText, style: _labelStyle),
+        const SizedBox(height: 8),
+        Container(
+          decoration: BoxDecoration(
+            color: enabled ? Colors.white : Colors.grey[200],
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                spreadRadius: 2,
+                blurRadius: 5,
+                offset: const Offset(0, 3),
+              ),
+            ],
+          ),
+          child: TextFormField(
+            controller: controller,
+            decoration: InputDecoration(
+              hintText: hintText,
+              border: InputBorder.none,
+              contentPadding:
+                  const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+            ),
+            obscureText: obscureText,
+            onChanged: onChanged,
+            enabled: enabled,
+            style: const TextStyle(fontSize: 16),
+          ),
+        ),
+        const SizedBox(height: 16),
+      ],
+    );
+  }
+
+  Widget _buildUpdateButton() {
+    return Stack(
+      children: [
+        Container(
+          height: 50,
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: kPrimaryColor,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.2),
+                spreadRadius: 2,
+                blurRadius: 5,
+                offset: const Offset(0, 3),
+              ),
+            ],
+          ),
+          child: ElevatedButton(
+            onPressed: _isLoading ? null : _updateUserData,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.transparent,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              elevation: 0,
+            ),
+            child: _isLoading
+                ? const CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                  )
+                : Text('Update', style: AppFonts.manropeBoldSizable()),
+          ),
+        ),
+        if (_isLoading)
+          const Positioned.fill(
+            child: Center(
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              ),
+            ),
+          ),
+      ],
+    );
+  }
+}
+
+class UserApiService {
+  static const String userDataEndpoint =
+      'http://10.0.2.2:8000/api/v1/student/user';
+
+  Future<UserDataModel> fetchUserData(String token) async {
+    final response = await http.get(
+      Uri.parse(userDataEndpoint),
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return UserDataModel.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to load user data with status code ');
+    }
+  }
+
+  // ${response.statusCode}
+  Future<void> updateUserData(PatchUseData data) async {
+    final token = await TokenManager.getToken();
+    final response = await http.patch(
+      Uri.parse(userDataEndpoint),
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+      body: json.encode(data.toJson()),
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception(
+          'Password Must Contain Letters And Numbers and More Than 8 Letters');
+    }
+  }
+}
+
+class PatchUseData {
+  String? name;
+  String? password;
+  String? passwordConfirmation;
+
+  PatchUseData({this.name, this.password, this.passwordConfirmation});
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (name != null) {
+      data['name'] = name;
+    }
+    if (password != null) {
+      data['password'] = password;
+    }
+    if (passwordConfirmation != null) {
+      data['password_confirmation'] = passwordConfirmation;
+    }
+    return data;
   }
 }
