@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 
-class GradesCard extends StatelessWidget {
-  final double gpa;
+class CourseEnrollmentCard extends StatelessWidget {
+  final int daysLeft;
   final VoidCallback onPressed;
 
-  const GradesCard({
-    Key? key,
-    required this.gpa,
-    required this.onPressed,
-  }) : super(key: key);
+  CourseEnrollmentCard({required this.daysLeft, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +27,7 @@ class GradesCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
         ),
         child: Stack(
-          clipBehavior: Clip.none, // Allow overflow
+          clipBehavior: Clip.none,
           children: [
             Padding(
               padding: const EdgeInsets.all(16.0),
@@ -39,28 +35,39 @@ class GradesCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  SizedBox(height: 6),
                   Text(
-                    'Grades',
+                    'Courses Enrollment',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 24,
+                      fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: 8),
-                  LinearProgressIndicator(
-                    value: gpa / 4.0,
-                    backgroundColor: Colors.grey[300],
-                    color: Colors.blueAccent,
-                  ),
-                  const SizedBox(height: 14),
-                  Center(
-                    child: Text(
-                      'GPA ${gpa.toStringAsFixed(2)}',
-                      style: TextStyle(
+                  SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.access_time,
                         color: Colors.white,
-                        fontSize: 16,
                       ),
+                      SizedBox(width: 8),
+                      Text(
+                        'Deadline in',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    '$daysLeft days',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ],
@@ -86,7 +93,7 @@ class GradesCard extends StatelessWidget {
                 ),
                 child: Center(
                   child: Icon(
-                    Icons.trending_up,
+                    Icons.book_rounded,
                     color: Colors.white,
                   ),
                 ),

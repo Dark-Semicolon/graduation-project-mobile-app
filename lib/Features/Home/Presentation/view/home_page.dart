@@ -1,5 +1,7 @@
 import 'package:eductionsystem/Constants/const.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/svg.dart';
 
 import '../../../../Core/GloabalWidgets/nav_bar.dart';
 import 'package:eductionsystem/Data/API/Models/user_data.dart';
@@ -62,13 +64,17 @@ class _HomePageState extends State<HomePage> {
       ),
       body: _userData != null
           ? Column(
-        children: [
-          ProgressOverViewScrollView(gpa: _userData!.data!.gpa ?? 0.0),
-          const SizedBox(height: 20),
-          // ScheduleView(),
-          // SizedBox(height: 20),
-        ],
-      )
+              children: [
+                ProgressOverViewScrollView(gpa: _userData!.data!.gpa ?? 0.0),
+                const SizedBox(height: 20),
+                // ScheduleView(),
+                //SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Image.asset('assets/images/college_project-bro.png'),
+                )
+              ],
+            )
           : const Center(child: CircularProgressIndicator()),
       bottomNavigationBar: const CustomBottomNavBar(
         selectedMenu: MenuState.home,

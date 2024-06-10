@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-
 import '../../Riverpod/river_state.dart';
 
 class SelectedCoursesScreen extends ConsumerStatefulWidget {
-/*  final DateTime endDate;
-  final bool canModify;*/
 
   const SelectedCoursesScreen({
     super.key,
-    /*  required this.endDate,
-    required this.canModify,*/
   });
 
   @override
@@ -25,7 +20,6 @@ class _SelectedCoursesScreenState extends ConsumerState<SelectedCoursesScreen> {
   void initState() {
     super.initState();
     _expandedIndex = -1;
-    // Fetch selected courses when the screen is initialized
     ref.read(courseProvider.notifier).fetchSelectedCourses();
   }
 
@@ -37,15 +31,7 @@ class _SelectedCoursesScreenState extends ConsumerState<SelectedCoursesScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Selected Courses'),
-        /*actions: [
-          if (widget.canModify)
-            IconButton(
-              icon: const Icon(Icons.edit),
-              onPressed: () {
-                GoRouter.of(context).go('/CoursesScreen');
-              },
-            ),
-        ],*/
+
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
