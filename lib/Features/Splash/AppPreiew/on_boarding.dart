@@ -65,7 +65,7 @@ class OnBoarding extends StatelessWidget {
                 height: 480,
               ),
               Text(
-                'On your way...',
+                ' Welcome to CampusSuit!',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: kDarkBlueColor,
@@ -77,7 +77,7 @@ class OnBoarding extends StatelessWidget {
                 height: 20,
               ),
               const Text(
-                'to find the perfect looking Onboarding for your app?',
+                'Your all-in-one campus companion. Organize courses, track grades, and stay updated effortlessly!',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black26,
@@ -100,7 +100,7 @@ class OnBoarding extends StatelessWidget {
                 height: 480,
               ),
               Text(
-                'On your way...',
+                'Easy Course Enrollment',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: kDarkBlueColor,
@@ -112,7 +112,7 @@ class OnBoarding extends StatelessWidget {
                 height: 20,
               ),
               const Text(
-                'to find the perfect looking Onboarding for your app?',
+                'Enroll in courses quickly. Browse, select, and enroll with just a few taps.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black26,
@@ -135,7 +135,7 @@ class OnBoarding extends StatelessWidget {
                 height: 480,
               ),
               Text(
-                'You’ve reached your destination.',
+                'Track Your Grades',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: kDarkBlueColor,
@@ -147,7 +147,7 @@ class OnBoarding extends StatelessWidget {
                 height: 20,
               ),
               const Text(
-                'Sliding with animation',
+                'View grades instantly. Monitor progress and access feedback easily.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black26,
@@ -170,7 +170,7 @@ class OnBoarding extends StatelessWidget {
                 height: 480,
               ),
               Text(
-                'Start now!',
+                'Get Started',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: kDarkBlueColor,
@@ -182,7 +182,7 @@ class OnBoarding extends StatelessWidget {
                 height: 20,
               ),
               const Text(
-                'Where everything is possible and customize your onboarding.',
+                'Ready to simplify your campus life? Lets get started with CampusSuit!',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.black26,

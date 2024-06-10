@@ -133,6 +133,7 @@ class UpdateUserDataScreenState extends State<UpdateUserDataScreen> {
           child: ListView(
             children: [
               _buildEditableField(
+                enabled: false,
                 controller: _nameController,
                 labelText: 'Name',
                 hintText: 'Enter your name',
