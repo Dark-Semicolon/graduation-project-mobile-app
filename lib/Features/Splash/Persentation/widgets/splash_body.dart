@@ -67,7 +67,10 @@ class _SplashViewBodyState extends State<SplashViewBody>
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Image.asset(AssetsData.logo),
+      Image.asset(
+      'assets/images/logo.png',
+      width: 100,
+      height: 100,),
         const SizedBox(height: 8),
         AnimatedBuilder(
           animation: _fadeAnimation,
@@ -77,7 +80,7 @@ class _SplashViewBodyState extends State<SplashViewBody>
               child: const Column(
                 children: [
                   Text(
-                    'Education',
+                    'Campus',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -86,7 +89,7 @@ class _SplashViewBodyState extends State<SplashViewBody>
                     ),
                   ),
                   Text(
-                    'System',
+                    'Suit',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,

@@ -1,78 +1,49 @@
 import 'package:eductionsystem/Constants/const.dart';
-import 'package:eductionsystem/Features/Home/Presentation/view/widgets/progress_overview.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../../../Constants/FontsConst.dart';
+import 'Grades_card.dart';
 import 'home_page_all.dart';
 
 class ProgressOverViewScrollView extends StatelessWidget {
-  const ProgressOverViewScrollView({super.key});
+  final double gpa; // GPA parameter
+
+  const ProgressOverViewScrollView({Key? key, required this.gpa}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         const HomePageUpperBar(),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+        Row(
           children: [
-             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Text(
-                "Progress OverView",
-                style: AppFonts.manropeNormalSizable(height: null,color: kPrimaryColor,fontSize: 20),
-              ),
-            ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  children: [
-                    ProgressOverView(
-                      title: 'Grades',
-                      color: Colors.blue,
-                      percentage: 0.5,
-                      svgAssetPath: 'assets/notification_bill.svg',
-                      onPressed: () {
-                        GoRouter.of(context).go('/GradesPage');
-                      },
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Text(
+                    "Progress OverView",
+                    style: AppFonts.manropeNormalSizable(
+                      height: null,
+                      color: kPrimaryColor,
+                      fontSize: 20,
                     ),
-                    ProgressOverView(
-                      title: 'Enroll Courses',
-                      color: Colors.blue,
-                      percentage: 0.5,
-                      svgAssetPath: 'assets/notification_bill.svg',
-                      onPressed: () {
-                        GoRouter.of(context).go('/CoursesScreen');
-                      },
-                    ),
-                    ProgressOverView(
-                      title: 'Your Courses',
-                      color: Colors.blue,
-                      percentage: 0.5,
-                      svgAssetPath: 'assets/notification_bill.svg',
-                      onPressed: () async {
-                        GoRouter.of(context)
-                            .go('/SelectedCoursesScreenWithoutEdit');
-                      },
-                    ),
-                    ProgressOverView(
-                      title: 'Your Courses',
-                      color: Colors.blue,
-                      percentage: 0.5,
-                      svgAssetPath: 'assets/notification_bill.svg',
-                      onPressed: () async {
-                        GoRouter.of(context)
-                            .go('/SelectedCoursesScreenWithoutEdit');
-                      },
-                    ),
-
-                  ],
+                  ),
                 ),
-              ),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      children: [
+                        GradesCard(gpa: double.parse(gpa.toStringAsFixed(2))), // Format GPA here
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),

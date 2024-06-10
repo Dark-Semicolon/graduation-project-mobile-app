@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-
 import '../../../Data/API/Token/token_manager.dart';
 
 class LogoutScreen extends StatefulWidget {

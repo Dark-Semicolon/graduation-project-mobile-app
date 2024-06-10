@@ -16,9 +16,9 @@ class TopImageInLogin extends StatelessWidget {
           top: 20,
           left: 20,
           child: Image.asset(
-            'assets/images/logo_6.png',
-            width: 80,
-            height: 80,
+            'assets/images/logo.png',
+            width: 50,
+            height: 50,
           ),
         ),
       ],

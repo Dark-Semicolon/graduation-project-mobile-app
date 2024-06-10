@@ -16,7 +16,7 @@ class TokenManager {
     }
   }
 
-  /// Retrieves the token from the Hive box.
+  // Retrieves the token from the Hive box.
   static Future<String?> getToken() async {
     try {
       final box = await _getBox();
@@ -28,7 +28,7 @@ class TokenManager {
     }
   }
 
-  /// Deletes the token from the Hive box.
+  // Deletes the token from the Hive box.
   static Future<void> deleteToken() async {
     try {
       final box = await _getBox();
@@ -63,4 +63,3 @@ class TokenManager {
     }
   }
 }
-

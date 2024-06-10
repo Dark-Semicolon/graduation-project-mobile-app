@@ -1,7 +1,6 @@
 import 'package:eductionsystem/Features/Login/Presentation/view/widgets/form_field_custom.dart';
 import 'package:eductionsystem/Features/Login/Presentation/view/widgets/login_upper_part.dart';
 import 'package:flutter/material.dart';
-
 import '../Utils/auth_functions.dart';
 
 class LoginPage extends StatefulWidget {
@@ -46,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                           TextSpan(
-                            text: 'Suite',
+                            text: 'Suit',
                             style: TextStyle(
                               color: Color(0xFF4E74F9),
                               fontSize: 40,

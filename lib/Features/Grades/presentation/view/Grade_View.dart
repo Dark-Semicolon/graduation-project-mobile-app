@@ -16,9 +16,6 @@ class GradesPage extends StatefulWidget {
 class _GradesPageState extends State<GradesPage> {
   @override
   void initState() {
-    // TODO: implement initState
-    // BlocProvider.of<CourseGradeCubit>(context).fetchStudentCoursesGrade();
-
     super.initState();
   }
 
