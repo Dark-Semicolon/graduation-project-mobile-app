@@ -72,12 +72,12 @@ class _CoursesScreenUpperPartState extends State<CoursesScreenUpperPart> {
                         Row(
                           children: [
                             Text(
-                              'Hii, ',
+                              'Hi, ',
                               style: AppFonts.manropeBoldSizable(
                                   fontSize: 18, color: kPrimaryColor),
                             ),
                             Text(
-                              'Eslam Tarek',
+                              'User Name',
                               style: AppFonts.manropeNormalSizable(
                                   fontSize: 18,
                                   color: kPrimaryColor,
@@ -91,24 +91,18 @@ class _CoursesScreenUpperPartState extends State<CoursesScreenUpperPart> {
                         Row(
                           children: [
                             Text(
-                              'You Are In ',
+                              'Deadline in ',
                               style: AppFonts.manropeNormalSizable(
-                                  fontSize: 12,
-                                  color: Colors.black,
+                                  fontSize: 15,
+                                  color: Colors.pink,
                                   height: null),
                             ),
                             Text(
-                              ' Semester 2 Year 4 ',
+                              '$daysLeft days',
+                              textAlign: TextAlign.center,
                               style: AppFonts.manropeNormalSizable(
-                                  fontSize: 12,
-                                  color: Colors.black,
-                                  height: null),
-                            ),
-                            Text(
-                              'Enrolments',
-                              style: AppFonts.manropeNormalSizable(
-                                  fontSize: 12,
-                                  color: Colors.black,
+                                  fontSize: 15,
+                                  color: Colors.pink,
                                   height: null),
                             ),
                           ],
@@ -118,27 +112,7 @@ class _CoursesScreenUpperPartState extends State<CoursesScreenUpperPart> {
                     Column(
                       children: [
                         const SizedBox(height: 10),
-                        Center(
-                          child: Row(
-                            children: [
-                              Text(
-                                'Deadline in ',
-                                style: AppFonts.manropeNormalSizable(
-                                    fontSize: 15,
-                                    color: Colors.pink,
-                                    height: null),
-                              ),
-                              Text(
-                                '$daysLeft days',
-                                textAlign: TextAlign.center,
-                                style: AppFonts.manropeNormalSizable(
-                                    fontSize: 15,
-                                    color: Colors.pink,
-                                    height: null),
-                              ),
-                            ],
-                          ),
-                        ),
+
                       ],
                     ),
                   ],

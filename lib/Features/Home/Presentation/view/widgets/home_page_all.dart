@@ -62,7 +62,7 @@ class _HomePageUpperBarState extends State<HomePageUpperBar> {
                   const SizedBox(width: 25),
                   Column(
                     children: [
-                      const SizedBox(height: 5),
+                      const SizedBox(height: 15),
                       CircleAvatar(
                         radius: 20,
                         backgroundColor: Colors.grey[300],
@@ -75,10 +75,11 @@ class _HomePageUpperBarState extends State<HomePageUpperBar> {
                       const SizedBox(height: 20),
                     ],
                   ),
-                  const SizedBox(width: 20),
+                  const SizedBox(width: 5),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      SizedBox(height: 10,),
                       Text(_userData?.data?.attributes?.name ?? 'name',
                           style: AppFonts.manropeBoldSizable(
                               color: Colors.white, fontSize: 20)),
