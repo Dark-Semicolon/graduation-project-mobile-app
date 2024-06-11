@@ -81,7 +81,7 @@ class AppFonts {
   }
 
   static TextStyle manropeNormalSizable(
-      {double? fontSize, Color? color, required double? height}) {
+      {double? fontSize, Color? color,  double? height}) {
     return TextStyle(
       fontFamily: 'Manrope',
       fontSize: fontSize ?? 16,

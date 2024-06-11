@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../Constants/const.dart';
-import '../../Features/Courses/Presentation/View/courses_screen.dart';
+import '../../Features/Courses/Presentation/View/courses_enrollment_screen.dart';
 import '../../Features/Grades/presentation/view/Grade_View.dart';
 import '../../Features/Home/Presentation/view/home_page.dart';
 import '../../Features/profile/profile_page.dart';
@@ -52,7 +52,7 @@ class CustomBottomNavBar extends StatelessWidget {
                 "assets/icons/Bill Icon.svg",
                 MenuState.courses,
                 selectedMenu,
-                const CoursesScreen(),
+                const CoursesEnrollmentScreen(),
               ),
               _buildNavItem(
                 context,
@@ -136,7 +136,7 @@ class CustomBottomNavBar extends StatelessWidget {
       case MenuState.home:
         return const HomePage();
       case MenuState.courses:
-        return const CoursesScreen();
+        return const CoursesEnrollmentScreen();
       case MenuState.account:
         return const ProfilePage();
       case MenuState.Grades:

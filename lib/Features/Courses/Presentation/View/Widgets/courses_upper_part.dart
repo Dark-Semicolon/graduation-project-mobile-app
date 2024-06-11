@@ -109,10 +109,9 @@ class _CoursesScreenUpperPartState extends State<CoursesScreenUpperPart> {
                         ),
                       ],
                     ),
-                    Column(
+                    const Column(
                       children: [
-                        const SizedBox(height: 10),
-
+                        SizedBox(height: 10),
                       ],
                     ),
                   ],

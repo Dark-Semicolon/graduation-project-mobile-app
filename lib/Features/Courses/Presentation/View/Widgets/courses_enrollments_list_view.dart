@@ -178,6 +178,11 @@ class _CoursesListState extends ConsumerState<CoursesList> {
     final courseState = ref.watch(courseProvider);
     return Expanded(
       child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(
+          decelerationRate: ScrollDecelerationRate.fast,
+        ),
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+         clipBehavior: Clip.antiAlias,
         child: Column(
           children: [
             Padding(

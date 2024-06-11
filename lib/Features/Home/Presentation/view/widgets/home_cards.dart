@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 import '../../../../../Constants/FontsConst.dart';
 
-class ProgressOverView extends StatelessWidget {
-  const ProgressOverView({
+class HomeCards extends StatelessWidget {
+  const HomeCards({
     super.key,
     this.title = 'Title',
     this.color = Colors.blue,

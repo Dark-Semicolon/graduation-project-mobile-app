@@ -1,14 +1,13 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as http; // Added import
 
 import '../../../../Data/API/Const/end_points.dart';
 import '../../../../Data/API/Token/token_manager.dart';
 import '../Data/Models/availble_courses.dart';
 import '../Data/Models/course_selection.dart';
+import '../Data/Services/get_availble_courses_services.dart';
 
 class CourseState {
   final List<int> selectedCourseIds;
@@ -45,13 +44,15 @@ class CourseState {
       maxCreditHours: maxCreditHours ?? this.maxCreditHours,
       courseDetails: courseDetails ?? this.courseDetails,
       isLoading: isLoading ?? this.isLoading,
-      errorMessage: errorMessage,
+      errorMessage: errorMessage ?? this.errorMessage,
     );
   }
 }
 
 class CourseNotifier extends StateNotifier<CourseState> {
-  CourseNotifier()
+  final CoursesApiService apiService;
+
+  CourseNotifier(this.apiService)
       : super(CourseState(
             selectedCourseIds: [],
             totalCreditHours: 0,
@@ -128,7 +129,6 @@ class CourseNotifier extends StateNotifier<CourseState> {
 
     if (response.statusCode == 200) {
       final List<dynamic> courseIdListJson = jsonDecode(response.body);
-      print('Course ID List JSON: $courseIdListJson'); // Debug print
 
       final selectedCourseIds = courseIdListJson.cast<int>();
       final availableCourses =
@@ -151,41 +151,14 @@ class CourseNotifier extends StateNotifier<CourseState> {
           (sum, course) => sum! + course.attributes!.creditHours!,
         ),
       );
-        } else {
+    } else {
       throw Exception('Failed to load enrolled courses');
     }
   }
 
   Future<List<AvailableCoursesData>> getAvailableCourses() async {
-    final token = await TokenManager.getToken();
-    const url =
-        '${MainApiConstants.baseUrl}/api/v1/student/courseSelection/availableCourses'; // Update this URL to the correct endpoint if necessary
-    final response = await http.get(
-      Uri.parse(url),
-      headers: {
-        'Authorization': 'Bearer $token',
-      },
-    );
-
-    print('getAvailableCourses request URL: $url'); // Debug print
-    print(
-        'getAvailableCourses response status: ${response.statusCode}'); // Debug print
-    print('getAvailableCourses response body: ${response.body}'); // Debug print
-
-    if (response.statusCode == 200) {
-      final responseJson = jsonDecode(response.body);
-      if (responseJson is Map<String, dynamic> &&
-          responseJson.containsKey('data')) {
-        final List<dynamic> courseListJson = responseJson['data'];
-        return courseListJson
-            .map((json) => AvailableCoursesData.fromJson(json))
-            .toList();
-      } else {
-        throw Exception('Invalid JSON structure: expected "data" key');
-      }
-    } else {
-      throw Exception('Failed to load available courses');
-    }
+    final response = await apiService.fetchAvailableCourses();
+    return response.data!;
   }
 
   void removeCourse(int courseId) {
@@ -206,62 +179,42 @@ class CourseNotifier extends StateNotifier<CourseState> {
   }
 
   Future<CourseSelection> fetchCourseSelection() async {
-    final token = await TokenManager.getToken();
-    final response = await http.get(
-      Uri.parse(
-          '${MainApiConstants.baseUrl}${MainApiConstants.courseSelection}'),
-      headers: {
-        'Authorization': 'Bearer $token',
-      },
-    );
-
-    if (response.statusCode == 200) {
-      final courseSelectionJson = jsonDecode(response.body);
-      return CourseSelection.fromJson(courseSelectionJson);
-    } else {
-      throw Exception('Failed to fetch course selection details');
-    }
+    return await apiService.fetchCourseSelection();
   }
 
-  Future<void> navigateBasedOnCourseSelection(BuildContext context) async {
+  Future<String> determineNavigationScreen() async {
     try {
       await fetchSelectedCourses();
       final courseSelection = await fetchCourseSelection();
       final endDate = DateTime.parse(courseSelection.data!.attributes!.endAt!);
 
-      print('Selected Courses: ${state.selectedCourseIds}');
-      print('Course Selection End Date: $endDate');
+      if (state.selectedCourseIds.isEmpty && DateTime.now().isBefore(endDate)) {
+        // No course IDs selected and end date hasn't come
+        return '/CoursesScreen';
 
-      if (state.selectedCourseIds.isNotEmpty) {
-        if (DateTime.now().isBefore(endDate)) {
-          print(
-              'Navigating to SelectedCoursesScreen with modification allowed');
-          GoRouter.of(context).go('/SelectedCoursesScreen',
-              extra: {'endDate': endDate, 'canModify': true});
-        } else {
-          print(
-              'Navigating to SelectedCoursesScreen with modification not allowed');
-          GoRouter.of(context).go('/SelectedCoursesScreen',
-              extra: {'endDate': endDate, 'canModify': false});
-        }
+      } else if (state.selectedCourseIds.isNotEmpty &&
+          DateTime.now().isBefore(endDate)) {
+        // Course IDs selected and end date hasn't come
+        return '/SelectedCoursesScreen';
+      } else if (state.selectedCourseIds.isNotEmpty &&
+          DateTime.now().isAfter(endDate)) {
+        // Course IDs selected and end date has come
+        return '/SelectedCoursesScreenWithoutEdit';
+      } else if (state.selectedCourseIds.isEmpty &&
+          DateTime.now().isAfter(endDate)) {
+        // No course IDs selected and end date has come
+        return '/ContactAdminScreen';
       } else {
-        if (DateTime.now().isBefore(endDate)) {
-          print('Navigating to CoursesScreen');
-          GoRouter.of(context).go('/CoursesScreen');
-        } else {
-          print('Navigating to ContactAdminScreen');
-          GoRouter.of(context).go('/ContactAdminScreen');
-        }
+        throw Exception('Unknown navigation state');
       }
     } catch (e) {
-      print('Error: $e');
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Error: $e')));
+      throw Exception('Error determining navigation screen: $e');
     }
   }
 }
 
 final courseProvider =
     StateNotifierProvider<CourseNotifier, CourseState>((ref) {
-  return CourseNotifier();
+  final apiService = CoursesApiService();
+  return CourseNotifier(apiService);
 });

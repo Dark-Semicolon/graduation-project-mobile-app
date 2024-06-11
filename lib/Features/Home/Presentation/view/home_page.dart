@@ -1,14 +1,11 @@
 import 'package:eductionsystem/Constants/const.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_svg/svg.dart';
-
-import '../../../../Core/GloabalWidgets/nav_bar.dart';
 import 'package:eductionsystem/Data/API/Models/user_data.dart';
 import 'package:eductionsystem/Data/API/Services/auth_service.dart';
 import 'package:eductionsystem/Data/API/Token/token_manager.dart';
-import 'widgets/progress_overView__scroll_view.dart';
-import 'widgets/schedule_view.dart';
+import 'package:flutter/material.dart';
+
+import '../../../../Core/GloabalWidgets/nav_bar.dart';
+import 'widgets/home_horizontal_scroller_view.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -65,10 +62,10 @@ class _HomePageState extends State<HomePage> {
       body: _userData != null
           ? Column(
               children: [
-                ProgressOverViewScrollView(gpa: _userData!.data!.gpa ?? 0.0),
+                HomeHorizontalScrollView(gpa: _userData!.data!.gpa ?? 0.0),
                 const SizedBox(height: 25),
                 // ScheduleView(),
-               SizedBox(height: 48),
+                SizedBox(height: 48),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Image.asset('assets/images/college_project-bro.png'),

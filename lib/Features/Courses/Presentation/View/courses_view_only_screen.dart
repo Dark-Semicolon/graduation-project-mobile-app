@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../Riverpod/river_state.dart';
 
-class SelectedCoursesScreenWithoutEdit extends ConsumerStatefulWidget {
-  const SelectedCoursesScreenWithoutEdit({
+class CoursesViewOnlyScreen extends ConsumerStatefulWidget {
+  const CoursesViewOnlyScreen({
     super.key,
   });
 
@@ -13,8 +13,7 @@ class SelectedCoursesScreenWithoutEdit extends ConsumerStatefulWidget {
   _SelectedCoursesScreenState createState() => _SelectedCoursesScreenState();
 }
 
-class _SelectedCoursesScreenState
-    extends ConsumerState<SelectedCoursesScreenWithoutEdit> {
+class _SelectedCoursesScreenState extends ConsumerState<CoursesViewOnlyScreen> {
   late int _expandedIndex;
 
   @override
@@ -32,7 +31,7 @@ class _SelectedCoursesScreenState
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('Selected Courses'),
+        title: const Text('Your Selected Courses'),
         /*actions: [
           if (widget.canModify)
             IconButton(

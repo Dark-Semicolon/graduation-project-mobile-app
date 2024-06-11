@@ -1,10 +1,10 @@
 import 'package:eductionsystem/Constants/FontsConst.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../../Constants/const.dart';
 import '../../../Riverpod/river_state.dart';
-import '../selected_courses.dart';
 
 class CourseMinMax extends ConsumerWidget {
   const CourseMinMax({super.key});
@@ -124,14 +124,8 @@ class CourseMinMax extends ConsumerWidget {
     try {
       await courseNotifier.saveSelectedCourses();
       final courseSelection = await courseNotifier.fetchCourseSelection();
-      final endDate = DateTime.parse(courseSelection.data!.attributes!.endAt!);
-      final canModify = DateTime.now().isBefore(endDate);
-
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) => const SelectedCoursesScreen(),
-        ),
-      );
+      final navigator = GoRouter.of(context);
+      navigator.go('/ConfirmCoursesScreen');
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

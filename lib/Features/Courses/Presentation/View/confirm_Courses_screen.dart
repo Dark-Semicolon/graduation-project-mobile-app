@@ -1,19 +1,23 @@
+import 'package:eductionsystem/Constants/const.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../../../../Constants/FontsConst.dart';
 import '../../Riverpod/river_state.dart';
+import 'Widgets/course_burrons.dart';
+import 'Widgets/courses_numbers.dart';
 
-class SelectedCoursesScreen extends ConsumerStatefulWidget {
-
-  const SelectedCoursesScreen({
-    super.key,
-  });
+class ConfirmCoursesScreen extends ConsumerStatefulWidget {
+  const ConfirmCoursesScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _SelectedCoursesScreenState createState() => _SelectedCoursesScreenState();
 }
 
-class _SelectedCoursesScreenState extends ConsumerState<SelectedCoursesScreen> {
+class _SelectedCoursesScreenState extends ConsumerState<ConfirmCoursesScreen> {
   late int _expandedIndex;
 
   @override
@@ -30,8 +34,7 @@ class _SelectedCoursesScreenState extends ConsumerState<SelectedCoursesScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('Selected Courses'),
-
+        title: const Text('Your Selected Courses and Edit'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -40,18 +43,27 @@ class _SelectedCoursesScreenState extends ConsumerState<SelectedCoursesScreen> {
           },
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Selected Courses:',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 10),
-            Expanded(
-              child: ListView.builder(
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(
+          decelerationRate: ScrollDecelerationRate.fast,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text(
+                  'Your Enrolled Courses',
+                  style: AppFonts.manropeNormalSizable(
+                      color: kPrimaryColor, fontSize: 25),
+                ),
+              ),
+              const SizedBox(height: 10),
+              ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
                 itemCount: courseState.selectedCourseIds.length,
                 itemBuilder: (context, index) {
                   final courseId = courseState.selectedCourseIds[index];
@@ -59,7 +71,8 @@ class _SelectedCoursesScreenState extends ConsumerState<SelectedCoursesScreen> {
 
                   if (courseData == null) {
                     return ListTile(
-                      title: Text('Course ID: $courseId'),
+                      title: Text('Course ID: $courseId',
+                          style: AppFonts.manropeNormalSizable()),
                     );
                   }
 
@@ -78,24 +91,24 @@ class _SelectedCoursesScreenState extends ConsumerState<SelectedCoursesScreen> {
                   );
                 },
               ),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () async {
-                try {
-                  await ref.read(courseProvider.notifier).saveSelectedCourses();
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Courses saved successfully')),
-                  );
-                } catch (e) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Failed to save courses: $e')),
-                  );
-                }
-              },
-              child: const Text('Save Courses'),
-            ),
-          ],
+              const Padding(
+                padding: EdgeInsets.all(20.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    CoursesNumbers(),
+                    Expanded(child: SizedBox()),
+                    EditCoursesButton(),
+                  ],
+                ),
+              ),
+              const SaveCoursesButton(),
+              const SizedBox(
+                height: 50,
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -129,7 +142,7 @@ class SelectedCourseExpandableSection extends StatelessWidget {
             padding: const EdgeInsets.all(7.0),
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: kPrimaryColor,
                 borderRadius: BorderRadius.circular(12.0),
               ),
               padding: const EdgeInsets.all(16.0),
@@ -138,11 +151,7 @@ class SelectedCourseExpandableSection extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: AppFonts.manropeNormalSizable(fontSize: 20),
                   ),
                   Icon(
                     isExpanded ? Icons.expand_less : Icons.expand_more,
@@ -157,18 +166,16 @@ class SelectedCourseExpandableSection extends StatelessWidget {
           AnimatedContainer(
             duration: const Duration(milliseconds: 300),
             decoration: BoxDecoration(
-              color: Colors.grey.shade200,
+              color: Colors.white,
               borderRadius: BorderRadius.circular(12.0),
             ),
             padding: const EdgeInsets.all(16.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
                   description,
-                  style: const TextStyle(
-                    fontSize: 16.0,
-                  ),
+                  style: AppFonts.manropeNormalSizable(
+                      color: Colors.black, fontSize: 17, height: 1.5),
                 ),
               ],
             ),

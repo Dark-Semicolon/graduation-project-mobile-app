@@ -20,7 +20,7 @@ class CourseEnrollmentCard extends StatelessWidget {
               color: Colors.black.withOpacity(0.4),
               spreadRadius: 2,
               blurRadius: 12,
-              offset: Offset(-3, 4),
+              offset: const Offset(-3, 4),
             ),
           ],
           color: Colors.blue[800],
@@ -35,8 +35,8 @@ class CourseEnrollmentCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 6),
-                  Text(
+                  const SizedBox(height: 6),
+                  const Text(
                     'Courses Enrollment',
                     style: TextStyle(
                       color: Colors.white,
@@ -44,8 +44,8 @@ class CourseEnrollmentCard extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 8),
-                  Row(
+                  const SizedBox(height: 8),
+                  const Row(
                     children: [
                       Icon(
                         Icons.access_time,
@@ -61,10 +61,10 @@ class CourseEnrollmentCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                   Text(
                     '$daysLeft days',
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -87,11 +87,11 @@ class CourseEnrollmentCard extends StatelessWidget {
                       color: Colors.black.withOpacity(0.5),
                       spreadRadius: 2,
                       blurRadius: 5,
-                      offset: Offset(-1, 4),
+                      offset: const Offset(-1, 4),
                     ),
                   ],
                 ),
-                child: Center(
+                child: const Center(
                   child: Icon(
                     Icons.book_rounded,
                     color: Colors.white,

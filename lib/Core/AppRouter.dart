@@ -1,8 +1,9 @@
 import 'package:go_router/go_router.dart';
 
-import '../Features/Courses/Presentation/View/courses_screen.dart';
-import '../Features/Courses/Presentation/View/selected_courses.dart';
-import '../Features/Courses/Presentation/View/selected_courses_view_without_edit.dart';
+import '../Features/Courses/Presentation/View/confirm_Courses_screen.dart';
+import '../Features/Courses/Presentation/View/courses_enrollment_screen.dart';
+import '../Features/Courses/Presentation/View/courses_view_edit_screen.dart';
+import '../Features/Courses/Presentation/View/courses_view_only_screen.dart';
 import '../Features/Grades/presentation/view/Grade_View.dart';
 import '../Features/Home/Presentation/view/home_page.dart';
 import '../Features/Login/Presentation/login_page.dart';
@@ -33,7 +34,7 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: '/CoursesScreen',
-        builder: (context, state) => const CoursesScreen(),
+        builder: (context, state) => const CoursesEnrollmentScreen(),
       ),
       GoRoute(
         path: '/HomePage',
@@ -49,11 +50,15 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: '/SelectedCoursesScreen',
-        builder: (context, state) => const SelectedCoursesScreen(),
+        builder: (context, state) => const CoursesViewAndEditScreen(),
+      ),
+      GoRoute(
+        path: '/ConfirmCoursesScreen',
+        builder: (context, state) => const ConfirmCoursesScreen(),
       ),
       GoRoute(
         path: '/SelectedCoursesScreenWithoutEdit',
-        builder: (context, state) => const SelectedCoursesScreenWithoutEdit(),
+        builder: (context, state) => const CoursesViewOnlyScreen(),
       ),
       GoRoute(
         path: '/GradesPage',
