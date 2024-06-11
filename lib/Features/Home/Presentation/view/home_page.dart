@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> {
                 ProgressOverViewScrollView(gpa: _userData!.data!.gpa ?? 0.0),
                 const SizedBox(height: 25),
                 // ScheduleView(),
-               SizedBox(height: 20),
+               SizedBox(height: 48),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Image.asset('assets/images/college_project-bro.png'),

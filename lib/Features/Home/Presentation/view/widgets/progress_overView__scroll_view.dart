@@ -54,7 +54,7 @@ class _ProgressOverViewScrollViewState extends State<ProgressOverViewScrollView>
                     ),
                   ),
                 ),
-                SizedBox(height: 16,),
+                SizedBox(height: 22,),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   child: Padding(
