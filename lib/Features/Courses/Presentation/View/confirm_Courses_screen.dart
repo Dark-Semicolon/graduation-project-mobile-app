@@ -7,6 +7,7 @@ import '../../../../../Constants/FontsConst.dart';
 import '../../Riverpod/river_state.dart';
 import 'Widgets/course_burrons.dart';
 import 'Widgets/courses_numbers.dart';
+import 'Widgets/courses_view_only_list.dart';
 
 class ConfirmCoursesScreen extends ConsumerStatefulWidget {
   const ConfirmCoursesScreen({
@@ -14,10 +15,10 @@ class ConfirmCoursesScreen extends ConsumerStatefulWidget {
   }) : super(key: key);
 
   @override
-  _SelectedCoursesScreenState createState() => _SelectedCoursesScreenState();
+  _ConfirmCoursesScreenState createState() => _ConfirmCoursesScreenState();
 }
 
-class _SelectedCoursesScreenState extends ConsumerState<ConfirmCoursesScreen> {
+class _ConfirmCoursesScreenState extends ConsumerState<ConfirmCoursesScreen> {
   late int _expandedIndex;
 
   @override
@@ -27,10 +28,14 @@ class _SelectedCoursesScreenState extends ConsumerState<ConfirmCoursesScreen> {
     ref.read(courseProvider.notifier).fetchSelectedCourses();
   }
 
+  void _handleSectionTapped(int index) {
+    setState(() {
+      _expandedIndex = (_expandedIndex == index) ? -1 : index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final courseState = ref.watch(courseProvider);
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -61,35 +66,10 @@ class _SelectedCoursesScreenState extends ConsumerState<ConfirmCoursesScreen> {
                 ),
               ),
               const SizedBox(height: 10),
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: courseState.selectedCourseIds.length,
-                itemBuilder: (context, index) {
-                  final courseId = courseState.selectedCourseIds[index];
-                  final courseData = courseState.courseDetails[courseId];
+              CoursesListViewOnly(
 
-                  if (courseData == null) {
-                    return ListTile(
-                      title: Text('Course ID: $courseId',
-                          style: AppFonts.manropeNormalSizable()),
-                    );
-                  }
-
-                  return SelectedCourseExpandableSection(
-                    title: courseData.attributes!.name!,
-                    description:
-                        'Description: ${courseData.attributes!.description!}\n'
-                        'Credit Hours: ${courseData.attributes!.creditHours!}',
-                    index: index,
-                    isExpanded: _expandedIndex == index,
-                    onTap: () {
-                      setState(() {
-                        _expandedIndex = (_expandedIndex == index) ? -1 : index;
-                      });
-                    },
-                  );
-                },
+                expandedIndex: _expandedIndex,
+                onSectionTapped: _handleSectionTapped,
               ),
               const Padding(
                 padding: EdgeInsets.all(20.0),
@@ -106,81 +86,11 @@ class _SelectedCoursesScreenState extends ConsumerState<ConfirmCoursesScreen> {
               const SaveCoursesButton(),
               const SizedBox(
                 height: 50,
-              )
+              ),
             ],
           ),
         ),
       ),
-    );
-  }
-}
-
-class SelectedCourseExpandableSection extends StatelessWidget {
-  final String title;
-  final String description;
-  final int index;
-  final bool isExpanded;
-  final VoidCallback onTap;
-
-  const SelectedCourseExpandableSection({
-    super.key,
-    required this.title,
-    required this.description,
-    required this.index,
-    required this.isExpanded,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        InkWell(
-          onTap: onTap,
-          child: Padding(
-            padding: const EdgeInsets.all(7.0),
-            child: Container(
-              decoration: BoxDecoration(
-                color: kPrimaryColor,
-                borderRadius: BorderRadius.circular(12.0),
-              ),
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    title,
-                    style: AppFonts.manropeNormalSizable(fontSize: 20),
-                  ),
-                  Icon(
-                    isExpanded ? Icons.expand_less : Icons.expand_more,
-                    color: Colors.white,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-        if (isExpanded)
-          AnimatedContainer(
-            duration: const Duration(milliseconds: 300),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(12.0),
-            ),
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                Text(
-                  description,
-                  style: AppFonts.manropeNormalSizable(
-                      color: Colors.black, fontSize: 17, height: 1.5),
-                ),
-              ],
-            ),
-          ),
-      ],
     );
   }
 }

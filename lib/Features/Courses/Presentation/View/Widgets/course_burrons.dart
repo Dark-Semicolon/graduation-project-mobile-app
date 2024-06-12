@@ -48,10 +48,9 @@ class EditCoursesButton extends ConsumerWidget {
   Widget build(BuildContext context, ref) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: kPrimaryColor,
+        backgroundColor: Colors.white,
         minimumSize: const Size(50, 50),
-        fixedSize: const Size(100, 100),
-
+        fixedSize: const Size(150, 50),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
@@ -60,8 +59,15 @@ class EditCoursesButton extends ConsumerWidget {
         final navigator = GoRouter.of(context);
         navigator.go('/CoursesScreen');
       },
-      child:
-          Center(child: Text('Edit', style: AppFonts.manropeBoldSizable())),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(Icons.edit, color: kPrimaryColor),
+          const SizedBox(width: 8),
+          Text('Edit',
+              style: AppFonts.manropeBoldSizable(color: kPrimaryColor)),
+        ],
+      ),
     );
   }
 }
