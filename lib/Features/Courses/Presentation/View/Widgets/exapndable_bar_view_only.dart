@@ -34,12 +34,14 @@ class SelectedCourseExpandableSectionViewOnly extends StatelessWidget {
             padding: const EdgeInsets.all(10.0),
             child: Material(
               elevation: 2.0,
-              borderRadius: BorderRadius.circular(16.0), // Increased border radius
+              borderRadius: BorderRadius.circular(16.0),
+              // Increased border radius
               child: Container(
                 width: double.infinity, // Adjusted width
                 decoration: BoxDecoration(
                   color: kPrimaryColor,
-                  borderRadius: BorderRadius.circular(16.0), // Increased border radius
+                  borderRadius:
+                      BorderRadius.circular(16.0), // Increased border radius
                 ),
                 padding: const EdgeInsets.all(16.0),
                 child: Row(
@@ -88,7 +90,8 @@ class SelectedCourseExpandableSectionViewOnly extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(16.0), // Increased border radius
+                    borderRadius:
+                        BorderRadius.circular(16.0), // Increased border radius
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

@@ -11,8 +11,8 @@ import 'Widgets/courses_view_only_list.dart';
 
 class ConfirmCoursesScreen extends ConsumerStatefulWidget {
   const ConfirmCoursesScreen({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   _ConfirmCoursesScreenState createState() => _ConfirmCoursesScreenState();
@@ -41,7 +41,6 @@ class _ConfirmCoursesScreenState extends ConsumerState<ConfirmCoursesScreen> {
       body: Column(
         children: [
           const CoursesScreenUpperPart(),
-
           SingleChildScrollView(
             physics: const BouncingScrollPhysics(
               decelerationRate: ScrollDecelerationRate.fast,

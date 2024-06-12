@@ -182,7 +182,7 @@ class _CoursesListState extends ConsumerState<CoursesList> {
           decelerationRate: ScrollDecelerationRate.fast,
         ),
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-         clipBehavior: Clip.antiAlias,
+        clipBehavior: Clip.antiAlias,
         child: Column(
           children: [
             Padding(
