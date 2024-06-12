@@ -1,8 +1,12 @@
+import 'package:eductionsystem/Constants/const.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
+import '../../../../../Constants/FontsConst.dart';
 import '../../Riverpod/river_state.dart';
+import 'Widgets/courses_numbers.dart';
+import 'Widgets/courses_upper_part.dart';
+import 'Widgets/courses_view_only_list.dart';
 
 class CoursesViewOnlyScreen extends ConsumerStatefulWidget {
   const CoursesViewOnlyScreen({
@@ -10,164 +14,72 @@ class CoursesViewOnlyScreen extends ConsumerStatefulWidget {
   });
 
   @override
-  _SelectedCoursesScreenState createState() => _SelectedCoursesScreenState();
+  CoursesViewOnlyScreenState createState() => CoursesViewOnlyScreenState();
 }
 
-class _SelectedCoursesScreenState extends ConsumerState<CoursesViewOnlyScreen> {
+class CoursesViewOnlyScreenState extends ConsumerState<CoursesViewOnlyScreen> {
   late int _expandedIndex;
 
   @override
   void initState() {
     super.initState();
     _expandedIndex = -1;
-    // Fetch selected courses when the screen is initialized
     ref.read(courseProvider.notifier).fetchSelectedCourses();
   }
 
+  void _handleSectionTapped(int index) {
+    setState(() {
+      _expandedIndex = (_expandedIndex == index) ? -1 : index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final courseState = ref.watch(courseProvider);
-
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: const Text('Your Selected Courses'),
-        /*actions: [
-          if (widget.canModify)
-            IconButton(
-              icon: const Icon(Icons.edit),
-              onPressed: () {
-                GoRouter.of(context).go('/CoursesScreen');
-              },
-            ),
-        ],*/
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            final navigator = GoRouter.of(context);
-            navigator.go('/HomePage');
-          },
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Selected Courses:',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 10),
-            Expanded(
-              child: ListView.builder(
-                itemCount: courseState.selectedCourseIds.length,
-                itemBuilder: (context, index) {
-                  final courseId = courseState.selectedCourseIds[index];
-                  final courseData = courseState.courseDetails[courseId];
-
-                  if (courseData == null) {
-                    return ListTile(
-                      title: Text('Course ID: $courseId'),
-                    );
-                  }
-
-                  return SelectedCourseExpandableSection(
-                    title: courseData.attributes!.name!,
-                    description:
-                        'Description: ${courseData.attributes!.description!}\n'
-                        'Credit Hours: ${courseData.attributes!.creditHours!}',
-                    index: index,
-                    isExpanded: _expandedIndex == index,
-                    onTap: () {
-                      setState(() {
-                        _expandedIndex = (_expandedIndex == index) ? -1 : index;
-                      });
-                    },
-                  );
-                },
-              ),
-            ),
-            const SizedBox(height: 20),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class SelectedCourseExpandableSection extends StatelessWidget {
-  final String title;
-  final String description;
-  final int index;
-  final bool isExpanded;
-  final VoidCallback onTap;
-
-  const SelectedCourseExpandableSection({
-    super.key,
-    required this.title,
-    required this.description,
-    required this.index,
-    required this.isExpanded,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        InkWell(
-          onTap: onTap,
-          child: Padding(
-            padding: const EdgeInsets.all(7.0),
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-                borderRadius: BorderRadius.circular(12.0),
-              ),
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold,
+      body: Column(
+        children: [
+          const CoursesScreenUpperPart(),
+          Expanded(
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              scrollDirection: Axis.vertical,
+              child: Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          top: 15.0, left: 15.0, right: 15.0),
+                      child: Text(
+                        'Your Enrolled Courses',
+                        style: AppFonts.manropeNormalSizable(
+                            color: kPrimaryColor, fontSize: 25),
+                      ),
                     ),
-                  ),
-                  Icon(
-                    isExpanded ? Icons.expand_less : Icons.expand_more,
-                    color: Colors.white,
-                  ),
-                ],
+                    CoursesListViewOnly(
+                      expandedIndex: _expandedIndex,
+                      onSectionTapped: _handleSectionTapped,
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.all(20.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          CoursesNumbers(),
+                          Expanded(child: SizedBox()),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-        if (isExpanded)
-          AnimatedContainer(
-            duration: const Duration(milliseconds: 300),
-            decoration: BoxDecoration(
-              color: Colors.grey.shade200,
-              borderRadius: BorderRadius.circular(12.0),
-            ),
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  description,
-                  style: const TextStyle(
-                    fontSize: 16.0,
-                  ),
-                ),
-              ],
-            ),
-          ),
-      ],
+        ],
+      ),
     );
   }
 }

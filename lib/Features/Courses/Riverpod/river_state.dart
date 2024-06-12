@@ -190,20 +190,19 @@ class CourseNotifier extends StateNotifier<CourseState> {
 
       if (state.selectedCourseIds.isEmpty && DateTime.now().isBefore(endDate)) {
         // No course IDs selected and end date hasn't come
-        return '/CoursesScreen';
-
+        return '/CoursesEnrollmentScreen';
       } else if (state.selectedCourseIds.isNotEmpty &&
           DateTime.now().isBefore(endDate)) {
         // Course IDs selected and end date hasn't come
-        return '/SelectedCoursesScreen';
+        return '/CoursesViewAndEditScreen';
       } else if (state.selectedCourseIds.isNotEmpty &&
           DateTime.now().isAfter(endDate)) {
         // Course IDs selected and end date has come
-        return '/SelectedCoursesScreenWithoutEdit';
+        return '/CoursesViewOnlyScreen';
       } else if (state.selectedCourseIds.isEmpty &&
           DateTime.now().isAfter(endDate)) {
         // No course IDs selected and end date has come
-        return '/ContactAdminScreen';
+        return '/EnrollmentEndedScreen';
       } else {
         throw Exception('Unknown navigation state');
       }

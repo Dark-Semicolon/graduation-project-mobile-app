@@ -31,6 +31,8 @@ class SaveCoursesButton extends ConsumerWidget {
           ),
           onPressed: () async {
             try {
+              final navigator = GoRouter.of(context);
+              navigator.go('/HomePage');
               await ref.read(courseProvider.notifier).saveSelectedCourses();
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('Courses saved successfully')),
@@ -78,7 +80,7 @@ class EditCoursesButton extends ConsumerWidget {
             ),
             onPressed: () async {
               final navigator = GoRouter.of(context);
-              navigator.go('/CoursesScreen');
+              navigator.go('/CoursesEnrollmentScreen');
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,

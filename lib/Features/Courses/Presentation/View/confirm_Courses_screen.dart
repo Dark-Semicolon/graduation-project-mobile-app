@@ -41,44 +41,46 @@ class _ConfirmCoursesScreenState extends ConsumerState<ConfirmCoursesScreen> {
       body: Column(
         children: [
           const CoursesScreenUpperPart(),
-          SingleChildScrollView(
-            physics: const BouncingScrollPhysics(
-              decelerationRate: ScrollDecelerationRate.fast,
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Text(
-                      'Your Enrolled Courses',
-                      style: AppFonts.manropeNormalSizable(
-                          color: kPrimaryColor, fontSize: 25),
+          Expanded(
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              scrollDirection: Axis.vertical,
+              child: Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          top: 15.0, left: 15.0, right: 15.0),
+                      child: Text(
+                        'Your Enrolled Courses',
+                        style: AppFonts.manropeNormalSizable(
+                            color: kPrimaryColor, fontSize: 25),
+                      ),
                     ),
-                  ),
-                  CoursesListViewOnly(
-                    expandedIndex: _expandedIndex,
-                    onSectionTapped: _handleSectionTapped,
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.all(20.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        CoursesNumbers(),
-                        Expanded(child: SizedBox()),
-                        EditCoursesButton(),
-                      ],
+                    CoursesListViewOnly(
+                      expandedIndex: _expandedIndex,
+                      onSectionTapped: _handleSectionTapped,
                     ),
-                  ),
-                  const SaveCoursesButton(),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                ],
+                    const Padding(
+                      padding: EdgeInsets.all(20.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          CoursesNumbers(),
+                          Expanded(child: SizedBox()),
+                          EditCoursesButton(),
+                        ],
+                      ),
+                    ),
+                    const SaveCoursesButton(),
+                    const SizedBox(
+                      height: 50,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
