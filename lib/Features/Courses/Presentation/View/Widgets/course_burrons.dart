@@ -16,11 +16,18 @@ class SaveCoursesButton extends ConsumerWidget {
       child: Center(
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-            backgroundColor: kPrimaryColor,
-            minimumSize: const Size(200, 50),
+            backgroundColor: Colors.white,
+            minimumSize: const Size(220, 45),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(50),
+              side: const BorderSide(
+                color: kPrimaryColor,
+                width: 1,
+              ),
             ),
+            elevation: 5,
+            shadowColor:
+                Colors.black.withOpacity(0.5), // Customize shadow color
           ),
           onPressed: () async {
             try {
@@ -34,7 +41,8 @@ class SaveCoursesButton extends ConsumerWidget {
               );
             }
           },
-          child: Text('Save Courses', style: AppFonts.manropeBoldSizable()),
+          child: Text('Save Courses',
+              style: AppFonts.manropeBoldSizable(color: kPrimaryColor)),
         ),
       ),
     );
@@ -46,26 +54,42 @@ class EditCoursesButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.white,
-        minimumSize: const Size(50, 50),
-        fixedSize: const Size(150, 50),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-      ),
-      onPressed: () async {
-        final navigator = GoRouter.of(context);
-        navigator.go('/CoursesScreen');
-      },
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(Icons.edit, color: kPrimaryColor),
-          const SizedBox(width: 8),
-          Text('Edit',
-              style: AppFonts.manropeBoldSizable(color: kPrimaryColor)),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.white,
+              minimumSize: const Size(50, 50),
+              fixedSize: const Size(130, 40),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+                side: const BorderSide(
+                  color: kPrimaryColor, // Border color
+                  width: 1, // Border width
+                ),
+              ),
+              elevation: 5,
+              // Add shadow elevation
+              shadowColor:
+                  Colors.black.withOpacity(0.5), // Customize shadow color
+            ),
+            onPressed: () async {
+              final navigator = GoRouter.of(context);
+              navigator.go('/CoursesScreen');
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.edit, color: kPrimaryColor),
+                const SizedBox(width: 8),
+                Text('Edit',
+                    style: AppFonts.manropeBoldSizable(color: kPrimaryColor)),
+              ],
+            ),
+          ),
         ],
       ),
     );

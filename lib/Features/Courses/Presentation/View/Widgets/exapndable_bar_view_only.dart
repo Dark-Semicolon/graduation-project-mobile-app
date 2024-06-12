@@ -6,6 +6,7 @@ import '../../../../../Constants/const.dart';
 class SelectedCourseExpandableSectionViewOnly extends StatelessWidget {
   final String title;
   final String description;
+  final int creditHours;
   final int index;
   final int expandedIndex;
   final Function(int) onSectionTapped;
@@ -14,6 +15,7 @@ class SelectedCourseExpandableSectionViewOnly extends StatelessWidget {
     super.key,
     required this.title,
     required this.description,
+    required this.creditHours,
     required this.index,
     required this.expandedIndex,
     required this.onSectionTapped,
@@ -29,14 +31,15 @@ class SelectedCourseExpandableSectionViewOnly extends StatelessWidget {
         InkWell(
           onTap: () => onSectionTapped(index),
           child: Padding(
-            padding: const EdgeInsets.all(7.0),
+            padding: const EdgeInsets.all(10.0),
             child: Material(
               elevation: 2.0,
-              borderRadius: BorderRadius.circular(12.0),
+              borderRadius: BorderRadius.circular(16.0), // Increased border radius
               child: Container(
+                width: double.infinity, // Adjusted width
                 decoration: BoxDecoration(
                   color: kPrimaryColor,
-                  borderRadius: BorderRadius.circular(12.0),
+                  borderRadius: BorderRadius.circular(16.0), // Increased border radius
                 ),
                 padding: const EdgeInsets.all(16.0),
                 child: Row(
@@ -46,6 +49,15 @@ class SelectedCourseExpandableSectionViewOnly extends StatelessWidget {
                       title,
                       style: AppFonts.manropeNormalSizable(
                           fontSize: 20, color: Colors.white),
+                    ),
+                    const Expanded(child: SizedBox()),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 7),
+                      child: Text(
+                        '$creditHours H',
+                        style: AppFonts.manropeNormalSizable(
+                            fontSize: 15, color: Colors.white),
+                      ),
                     ),
                     AnimatedRotation(
                       turns: isExpanded ? 0.5 : 0,
@@ -76,14 +88,32 @@ class SelectedCourseExpandableSectionViewOnly extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(12.0),
+                    borderRadius: BorderRadius.circular(16.0), // Increased border radius
                   ),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         description,
                         style: AppFonts.manropeNormalSizable(
                             color: Colors.black, fontSize: 17, height: 1.5),
+                      ),
+                      const SizedBox(height: 8),
+                      Row(
+                        children: [
+                          Text(
+                            'Credit Hours:',
+                            style: AppFonts.manropeBoldSizable(
+                              color: kPrimaryColor,
+                              fontSize: 17,
+                            ),
+                          ),
+                          Text(
+                            '  $creditHours',
+                            style: AppFonts.manropeBoldSizable(
+                                color: kPrimaryColor, fontSize: 20),
+                          ),
+                        ],
                       ),
                     ],
                   ),

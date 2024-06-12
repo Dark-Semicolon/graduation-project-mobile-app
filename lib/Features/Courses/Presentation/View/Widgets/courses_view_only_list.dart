@@ -2,7 +2,6 @@ import 'package:eductionsystem/Features/Courses/Presentation/View/Widgets/exapnd
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../../Constants/FontsConst.dart';
 import '../../../Riverpod/river_state.dart';
 
 class CoursesListViewOnly extends ConsumerWidget {
@@ -29,15 +28,16 @@ class CoursesListViewOnly extends ConsumerWidget {
 
         if (courseData == null) {
           return ListTile(
-            title: Text('Course ID: $courseId',
-                style: AppFonts.manropeNormalSizable()),
+            title: Text(
+              'Course ID: $courseId',
+            ),
           );
         }
 
         return SelectedCourseExpandableSectionViewOnly(
           title: courseData.attributes!.name!,
-          description: 'Description: ${courseData.attributes!.description!}\n'
-              'Credit Hours: ${courseData.attributes!.creditHours!}',
+          description: courseData.attributes!.description!,
+          creditHours: courseData.attributes!.creditHours!,
           index: index,
           expandedIndex: expandedIndex,
           onSectionTapped: onSectionTapped,
