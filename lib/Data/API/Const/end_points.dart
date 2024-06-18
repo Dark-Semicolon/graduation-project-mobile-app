@@ -11,5 +11,6 @@ class MainApiConstants {
 
 
 
+
       '/api/v1/student/courseSelection/enrollments';
 }
