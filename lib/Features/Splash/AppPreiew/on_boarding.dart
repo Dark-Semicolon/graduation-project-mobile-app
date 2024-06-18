@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_onboarding_slider/flutter_onboarding_slider.dart';
+import 'package:flutter_svg/flutter_svg.dart'; // Import flutter_svg package
 import 'package:go_router/go_router.dart';
+
 import '../../../Local App Data/Local/local_storage.dart';
 
 class OnBoarding extends StatelessWidget {
@@ -47,9 +49,9 @@ class OnBoarding extends StatelessWidget {
       pageBackgroundColor: Colors.white,
       background: [
         Image.asset('assets/images/college students-rafiki.png', height: 400),
+        SvgPicture.asset('assets/images/Select-bro.svg', height: 400),
         Image.asset('assets/images/Grades-bro.png', height: 400),
         Image.asset('assets/images/Nerd-bro.png', height: 400),
-        Image.asset('assets/images/doctorIMG.png', height: 400)
       ],
       speed: 1.8,
       pageBodies: [
