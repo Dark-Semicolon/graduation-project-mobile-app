@@ -1,10 +1,12 @@
-import 'package:eductionsystem/Constants/FontsConst.dart';
-import 'package:eductionsystem/Constants/const.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
+import '../../../../../Constants/FontsConst.dart';
 import '../../../../../Constants/Icons.dart';
+import '../../../../../Constants/const.dart';
+import '../../../../../Core/utils/retrive_user_data.dart';
 import '../../../Data/Models/course_selection.dart';
 import '../../../Data/Services/get_availble_courses_services.dart';
 
@@ -39,7 +41,12 @@ class _CoursesScreenUpperPartState extends State<CoursesScreenUpperPart> {
       future: _courseSelection,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
+          return Center(
+            child: LoadingAnimationWidget.waveDots(
+              color: Colors.blue,
+              size: 50,
+            ),
+          );
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {
@@ -76,18 +83,13 @@ class _CoursesScreenUpperPartState extends State<CoursesScreenUpperPart> {
                               style: AppFonts.manropeBoldSizable(
                                   fontSize: 18, color: kPrimaryColor),
                             ),
-                            Text(
-                              'User Name',
+                            UserName(
                               style: AppFonts.manropeNormalSizable(
-                                  fontSize: 18,
-                                  color: kPrimaryColor,
-                                  height: null),
+                                  fontSize: 18, color: kPrimaryColor),
                             ),
                           ],
                         ),
-                        const SizedBox(
-                          height: 5,
-                        ),
+                        const SizedBox(height: 5),
                         Row(
                           children: [
                             Text(

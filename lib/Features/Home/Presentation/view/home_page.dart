@@ -17,7 +17,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final AuthRepository _authRepository = AuthRepository(
-    authApi: AuthApi(baseUrl:MainApiConstants.baseUrl),
+    authApi: AuthApi(baseUrl: MainApiConstants.baseUrl),
   );
   UserDataModel? _userData;
 
@@ -66,7 +66,7 @@ class _HomePageState extends State<HomePage> {
                 HomeHorizontalScrollView(gpa: _userData!.data!.gpa ?? 0.0),
                 const SizedBox(height: 25),
                 // ScheduleView(),
-                SizedBox(height: 48),
+                const SizedBox(height: 48),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Image.asset('assets/images/college_project-bro.png'),

@@ -1,4 +1,6 @@
+import 'package:eductionsystem/Data/API/Const/end_points.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../../Core/GloabalWidgets/nav_bar.dart';
 import '../../Data/API/Models/user_data.dart';
@@ -15,7 +17,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   final AuthRepository _authRepository = AuthRepository(
-    authApi: AuthApi(baseUrl: 'http://10.0.2.2:8000'),
+    authApi: AuthApi(baseUrl: MainApiConstants.baseUrl),
   );
   UserDataModel? _userData;
 
@@ -62,7 +64,8 @@ class _ProfilePageState extends State<ProfilePage> {
                         radius: 48,
                         backgroundColor: Colors.grey[300],
                         backgroundImage: NetworkImage(
-                            'http://10.0.2.2:8000/storage/${_userData!.data!.attributes!.image ?? ''}'),
+                          '${MainApiConstants.baseUrl}/storage/${_userData!.data!.attributes!.image ?? ''}',
+                        ),
                       ),
                       const SizedBox(height: 16),
                       Text(
@@ -82,26 +85,26 @@ class _ProfilePageState extends State<ProfilePage> {
                           fontWeight: FontWeight.w900,
                         ),
                       ),
-
-                      // Text(
-                      //   'GPA: ${_userData!.data!.gpa ?? '0.00'}',
-                      //   style: const TextStyle(fontSize: 14),
-                      // ),
                     ],
                   )
-                : const CircularProgressIndicator(),
+                : LoadingAnimationWidget.waveDots(
+                    color: Colors.blue,
+                    size: 50,
+                  ),
           ),
           const Center(
-              child: Column(
-            children: [
-              SizedBox(height: 16),
-              ProfileListView(),
-              SizedBox(height: 16),
-            ],
-          ))
+            child: Column(
+              children: [
+                SizedBox(height: 16),
+                ProfileListView(),
+                SizedBox(height: 16),
+              ],
+            ),
+          ),
         ],
       ),
-      bottomNavigationBar: const CustomBottomNavBar(selectedMenu: MenuState.account),
+      bottomNavigationBar:
+          const CustomBottomNavBar(selectedMenu: MenuState.account),
     );
   }
 }
