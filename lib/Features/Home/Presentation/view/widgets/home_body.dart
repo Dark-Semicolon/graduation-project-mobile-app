@@ -33,7 +33,7 @@ class HomeBody extends ConsumerWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Text(
-                    "Progress OverView",
+                    "Student Services",
                     style: AppFonts.manropeNormalSizable(
                       height: null,
                       color: kPrimaryColor,
