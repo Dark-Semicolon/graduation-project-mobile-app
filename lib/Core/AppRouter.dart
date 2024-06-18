@@ -1,3 +1,4 @@
+import 'package:eductionsystem/Core/privacy_policy_screen.dart';
 import 'package:go_router/go_router.dart';
 
 import '../Features/Courses/Presentation/View/confirm_Courses_screen.dart';
@@ -68,6 +69,10 @@ abstract class AppRouter {
       GoRoute(
         path: '/GradesPage',
         builder: (context, state) => const GradesPage(),
+      ),
+      GoRoute(
+        path: '/PrivacyPolicyScreen',
+        builder: (context, state) => const PrivacyPolicyScreen(),
       ),
     ],
   );

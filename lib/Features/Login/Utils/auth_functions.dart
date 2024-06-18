@@ -1,3 +1,4 @@
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -5,11 +6,14 @@ import '../../../Data/API/Const/end_points.dart';
 import '../../../Data/API/Models/auth_data.dart';
 import '../../../Data/API/Services/auth_service.dart';
 import '../../../Data/API/Token/token_manager.dart';
+
 class LoginUserProcess extends StatefulWidget {
   final String email;
   final String password;
 
-  const LoginUserProcess({super.key, required this.email, required this.password});
+  const LoginUserProcess(
+      {Key? key, required this.email, required this.password})
+      : super(key: key);
 
   @override
   _LoginUserProcessState createState() => _LoginUserProcessState();
@@ -19,7 +23,8 @@ class _LoginUserProcessState extends State<LoginUserProcess> {
   late String _email;
   late String _password;
 
-  final authRepository = AuthRepository(authApi: AuthApi(baseUrl: MainApiConstants.baseUrl));
+  final authRepository =
+      AuthRepository(authApi: AuthApi(baseUrl: MainApiConstants.baseUrl));
 
   @override
   void initState() {
@@ -30,18 +35,25 @@ class _LoginUserProcessState extends State<LoginUserProcess> {
   }
 
   Future<void> _loginUser() async {
-    final authData = AuthDataModel(
-      email: _email,
-      password: _password,
-      deviceName: 'Oppo',
-    );
-    final result = await authRepository.loginUser(authData);
+    try {
+      final deviceName = await getAndroidDeviceName();
+      final authData = AuthDataModel(
+        email: _email,
+        password: _password,
+        deviceName: deviceName,
+      );
+      final result = await authRepository.loginUser(authData);
 
-    if (result != null && !result.startsWith('Failed')) {
-      TokenManager.setToken(result);
-      GoRouter.of(context).push('/Homepage');
-    } else {
-      Navigator.pop(context, result); // Pass the error message back to the previous screen
+      if (result != null && !result.startsWith('Failed')) {
+        TokenManager.setToken(result);
+        GoRouter.of(context).push('/Homepage');
+      } else {
+        Navigator.pop(context,
+            result); // Pass the error message back to the previous screen
+      }
+    } catch (e) {
+      Navigator.pop(context,
+          'Error: ${e.toString()}'); // Handle error and pass message back to the previous screen
     }
   }
 
@@ -53,4 +65,10 @@ class _LoginUserProcessState extends State<LoginUserProcess> {
       ),
     );
   }
+}
+
+Future<String> getAndroidDeviceName() async {
+  DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
+  AndroidDeviceInfo androidInfo = await deviceInfoPlugin.androidInfo;
+  return androidInfo.brand;
 }

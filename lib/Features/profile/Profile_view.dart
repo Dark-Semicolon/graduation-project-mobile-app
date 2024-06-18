@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../Core/Device Info/device_info_test.dart';
-
 class ProfileListView extends StatelessWidget {
   const ProfileListView({super.key});
 
@@ -25,15 +23,6 @@ class ProfileListView extends StatelessWidget {
         ),
         ListTile(
           leading: SvgPicture.asset(
-            "assets/icons/Bell.svg",
-            colorFilter: const ColorFilter.mode(iconColor, BlendMode.srcIn),
-          ),
-          title: const Text("Notifications"),
-          trailing: const Icon(Icons.arrow_forward_ios),
-          onTap: () {},
-        ),
-        ListTile(
-          leading: SvgPicture.asset(
             "assets/icons/Check mark rounde.svg",
             colorFilter: const ColorFilter.mode(iconColor, BlendMode.srcIn),
           ),
@@ -50,22 +39,9 @@ class ProfileListView extends StatelessWidget {
           ),
           title: const Text("Terms & Conditions"),
           trailing: const Icon(Icons.arrow_forward_ios),
-          onTap: () {},
-        ),
-        ListTile(
-          leading: SvgPicture.asset(
-            "assets/icons/Settings.svg",
-            colorFilter: const ColorFilter.mode(iconColor, BlendMode.srcIn),
-          ),
-          title: const Text("Help Center"),
-          trailing: const Icon(Icons.arrow_forward_ios),
           onTap: () async {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const DeviceInfoPage(),
-              ),
-            );
+            final navigator = GoRouter.of(context);
+            navigator.go('/PrivacyPolicyScreen');
           },
         ),
         ListTile(
