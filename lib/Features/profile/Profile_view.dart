@@ -41,7 +41,7 @@ class ProfileListView extends StatelessWidget {
           trailing: const Icon(Icons.arrow_forward_ios),
           onTap: () async {
             final navigator = GoRouter.of(context);
-            navigator.go('/PrivacyPolicyScreen');
+            navigator.push('/PrivacyPolicyScreen');
           },
         ),
         ListTile(

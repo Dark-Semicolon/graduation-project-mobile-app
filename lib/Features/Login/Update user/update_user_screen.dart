@@ -127,7 +127,7 @@ class UpdateUserDataScreenState extends State<UpdateUserDataScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Update User Data', style: _titleStyle),
+        title: Text('Edit Your Data', style: _titleStyle),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
