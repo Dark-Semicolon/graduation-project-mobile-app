@@ -13,8 +13,8 @@ class TopImageInLogin extends StatelessWidget {
           fit: BoxFit.fill,
         ),
         Positioned(
-          top: 20,
-          left: 20,
+          top: 60,
+          left: 370,
           child: Image.asset(
             'assets/images/logo.png',
             width: 50,
