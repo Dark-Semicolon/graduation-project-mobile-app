@@ -1,10 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:eductionsystem/Features/Login/Presentation/view/widgets/form_field_custom.dart';
 import 'package:eductionsystem/Features/Login/Presentation/view/widgets/login_upper_part.dart';
-import 'package:flutter/material.dart';
 import '../Utils/auth_functions.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -41,7 +41,6 @@ class _LoginPageState extends State<LoginPage> {
                               fontSize: 50,
                               fontFamily: 'Outfit',
                               fontWeight: FontWeight.w500,
-                              height: 0,
                             ),
                           ),
                           TextSpan(
@@ -51,7 +50,6 @@ class _LoginPageState extends State<LoginPage> {
                               fontSize: 40,
                               fontFamily: 'Outfit',
                               fontWeight: FontWeight.w700,
-                              height: 0,
                             ),
                           ),
                         ],
@@ -83,8 +81,9 @@ class _LoginPageState extends State<LoginPage> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => LoginUserProcess(
-                                  email: _emailController.text.trim(),
-                                  password: _passwordController.text.trim()),
+                                email: _emailController.text.trim(),
+                                password: _passwordController.text.trim(),
+                              ),
                             ),
                           );
 
@@ -105,10 +104,11 @@ class _LoginPageState extends State<LoginPage> {
                       child: const Text(
                         'Login',
                         style: TextStyle(
-                            fontSize: 22,
-                            fontFamily: 'Outfit',
-                            fontWeight: FontWeight.normal,
-                            color: Colors.white),
+                          fontSize: 22,
+                          fontFamily: 'Outfit',
+                          fontWeight: FontWeight.normal,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                     const SizedBox(height: 10),
@@ -140,10 +140,11 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
     );
   }
 }
+

@@ -87,21 +87,37 @@ class _CoursesListState extends ConsumerState<CoursesList> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Add Course'),
-          content: const Text('Are you sure you want to add this course?'),
+          title: Center(
+              child: Text('Add Course',
+                  style: AppFonts.manropeBoldSizable(
+                      fontSize: 20, color: kPrimaryColor))),
+          content: Text(
+            'Are you sure you want to add this course?',
+            style: AppFonts.manropeNormalSizable(
+                fontSize: 15, color: Colors.black),
+          ),
           actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                _addCourse(courseData);
-              },
-              child: const Text('Add'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    _addCourse(courseData);
+                  },
+                  child: Text('Add',
+                      style: AppFonts.manropeBoldSizable(
+                          fontSize: 15, color: Colors.black)),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Cancel',
+                      style: AppFonts.manropeNormalSizable(
+                          fontSize: 15, color: Colors.black)),
+                ),
+              ],
             ),
           ],
         );
@@ -122,21 +138,35 @@ class _CoursesListState extends ConsumerState<CoursesList> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Remove Course'),
-          content: const Text('Are you sure you want to remove this course?'),
+          title: Center(
+              child: Text('Remove Course',
+                  style: AppFonts.manropeBoldSizable(
+                      fontSize: 20, color: kPrimaryColor))),
+          content: Text('Are you sure you want to remove this course?',
+              style: AppFonts.manropeNormalSizable(
+                  fontSize: 15, color: Colors.black)),
           actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                _removeCourse(courseId);
-              },
-              child: const Text('Remove'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    _removeCourse(courseId);
+                  },
+                  child: Text('Remove',
+                      style: AppFonts.manropeBoldSizable(
+                          fontSize: 15, color: Colors.black)),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Cancel',
+                      style: AppFonts.manropeNormalSizable(
+                          fontSize: 15, color: Colors.black)),
+                ),
+              ],
             ),
           ],
         );
@@ -149,7 +179,8 @@ class _CoursesListState extends ConsumerState<CoursesList> {
     courseNotifier.removeCourse(courseId);
     if (!courseNotifier.isMinCreditHoursReached()) {
       _showErrorDialog(
-          'Failed to remove course. It may fall below the minimum credit hours.');
+        'Your Credit Hours Below The Minimum Credit !!',
+      );
     }
   }
 
@@ -158,14 +189,35 @@ class _CoursesListState extends ConsumerState<CoursesList> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Error'),
-          content: Text(message),
+          title: Center(
+              child: Text('Warning',
+                  style: AppFonts.manropeBoldSizable(
+                      color: Colors.redAccent, fontSize: 20))),
+          content: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Flexible(
+                child: Text(
+                  message,
+                  style: AppFonts.manropeNormalSizable(
+                      color: Colors.black, fontSize: 15),
+                  overflow: TextOverflow.clip,
+                  softWrap: true,
+                  maxLines: 2,
+                ),
+              ),
+            ],
+          ),
           actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('OK'),
+            Center(
+              child: TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK',
+                    style: AppFonts.manropeBoldSizable(
+                        color: Colors.redAccent, fontSize: 15)),
+              ),
             ),
           ],
         );

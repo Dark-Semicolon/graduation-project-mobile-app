@@ -8,23 +8,24 @@ import '../../../Constants/const.dart';
 import '../../../Data/API/Const/end_points.dart';
 import '../../../Data/API/Models/user_data.dart';
 import '../../../Data/API/Token/token_manager.dart';
-
 class UpdateUserDataScreen extends StatefulWidget {
   const UpdateUserDataScreen({super.key});
 
   @override
-  _UpdateUserDataScreenState createState() => _UpdateUserDataScreenState();
+  UpdateUserDataScreenState createState() => UpdateUserDataScreenState();
 }
 
-class _UpdateUserDataScreenState extends State<UpdateUserDataScreen> {
+class UpdateUserDataScreenState extends State<UpdateUserDataScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _passwordConfirmationController =
-      TextEditingController();
+  final TextEditingController _passwordConfirmationController = TextEditingController();
   bool _isLoading = false;
   String? _errorMessage;
   UserDataModel? _userData;
+
+  bool _isPasswordVisible = false; // Add this state variable
+  bool _isPasswordConfirmationVisible = false; // Add this state variable
 
   // Define text styles
   final TextStyle _titleStyle = AppFonts.manropeNormalSizable(
@@ -88,8 +89,7 @@ class _UpdateUserDataScreenState extends State<UpdateUserDataScreen> {
 
     final PatchUserData data = PatchUserData(
       name: _nameController.text.isNotEmpty ? _nameController.text : null,
-      password:
-          _passwordController.text.isNotEmpty ? _passwordController.text : null,
+      password: _passwordController.text.isNotEmpty ? _passwordController.text : null,
       passwordConfirmation: _passwordConfirmationController.text.isNotEmpty
           ? _passwordConfirmationController.text
           : null,
@@ -134,69 +134,76 @@ class _UpdateUserDataScreenState extends State<UpdateUserDataScreen> {
         child: _userData == null
             ? const Center(child: CircularProgressIndicator())
             : Form(
-                key: _formKey,
-                child: ListView(
-                  children: [
-                    _buildEditableField(
-                      enabled: true,
-                      controller: _nameController,
-                      labelText: 'Name',
-                      hintText: 'Enter your name',
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your name';
-                        }
-                        return null;
-                      },
-                    ),
-                    _buildEditableField(
-                      controller: TextEditingController(
-                          text: _userData?.data?.attributes?.email ?? ''),
-                      labelText: 'Email',
-                      hintText: '',
-                      enabled: false,
-                    ),
-                    _buildEditableField(
-                      controller: _passwordController,
-                      labelText: 'Password',
-                      hintText: 'Enter your password',
-                      obscureText: true,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your password';
-                        }
-                        /*if (!RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$')
-                            .hasMatch(value)) {
-                          return 'Password must be at least 8 characters long and contain both letters and numbers';
-                        }*/
-                        return null;
-                      },
-                    ),
-                    _buildEditableField(
-                      controller: _passwordConfirmationController,
-                      labelText: 'Confirm Password',
-                      hintText: 'Confirm your password',
-                      obscureText: true,
-                      validator: (value) {
-                        if (value != _passwordController.text) {
-                          return 'Passwords do not match';
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 32),
-                    _buildUpdateButton(),
-                    if (_errorMessage != null)
-                      Padding(
-                        padding: const EdgeInsets.only(top: 16),
-                        child: Text(
-                          _errorMessage!,
-                          style: _errorStyle,
-                        ),
-                      ),
-                  ],
-                ),
+          key: _formKey,
+          child: ListView(
+            children: [
+              _buildEditableField(
+                enabled: false,
+                controller: _nameController,
+                labelText: 'Name',
+                hintText: 'Enter your name',
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your name';
+                  }
+                  return null;
+                },
               ),
+              _buildEditableField(
+                controller: TextEditingController(
+                    text: _userData?.data?.attributes?.email ?? ''),
+                labelText: 'Email',
+                hintText: '',
+                enabled: false,
+              ),
+              _buildEditableField(
+                controller: _passwordController,
+                labelText: 'Password',
+                hintText: 'Enter your password',
+                obscureText: !_isPasswordVisible,
+                onToggleVisibility: () {
+                  setState(() {
+                    _isPasswordVisible = !_isPasswordVisible;
+                  });
+                },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your password';
+                  }
+                  return null;
+                },
+              ),
+              _buildEditableField(
+                controller: _passwordConfirmationController,
+                labelText: 'Confirm Password',
+                hintText: 'Confirm your password',
+                obscureText: !_isPasswordConfirmationVisible,
+                onToggleVisibility: () {
+                  setState(() {
+                    _isPasswordConfirmationVisible =
+                    !_isPasswordConfirmationVisible;
+                  });
+                },
+                validator: (value) {
+                  if (value != _passwordController.text) {
+                    return 'Passwords do not match';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 32),
+              _buildUpdateButton(),
+              if (_errorMessage != null)
+                Padding(
+                  padding: const EdgeInsets.only(top: 16),
+                  child: Text(
+                    _errorMessage!,
+                    style: _errorStyle,
+                  ),
+                ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -208,6 +215,7 @@ class _UpdateUserDataScreenState extends State<UpdateUserDataScreen> {
     bool obscureText = false,
     bool enabled = true,
     FormFieldValidator<String>? validator,
+    VoidCallback? onToggleVisibility,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -232,9 +240,15 @@ class _UpdateUserDataScreenState extends State<UpdateUserDataScreen> {
             decoration: InputDecoration(
               hintText: hintText,
               border: InputBorder.none,
-              contentPadding:
-                  const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+              contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
               errorStyle: _errorStyle,
+              suffixIcon: IconButton(
+                icon: Icon(
+                  obscureText ? Icons.visibility_off : Icons.visibility,
+                  color: Colors.grey,
+                ),
+                onPressed: onToggleVisibility,
+              ),
             ),
             obscureText: obscureText,
             enabled: enabled,
@@ -274,8 +288,8 @@ class _UpdateUserDataScreenState extends State<UpdateUserDataScreen> {
         ),
         child: _isLoading
             ? const CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-              )
+          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+        )
             : Text('Update', style: AppFonts.manropeBoldSizable()),
       ),
     );
@@ -316,7 +330,6 @@ class UserApiService {
 
     if (response.statusCode == 302) {
       throw Exception(
-
           'Password must be at least 8 characters long and contain both letters and numbers');
     }
     if (response.statusCode != 200) {
