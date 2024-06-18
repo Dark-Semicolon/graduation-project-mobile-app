@@ -17,18 +17,17 @@ class SelectYear extends StatefulWidget {
 }
 
 class _SelectYear extends State<SelectYear> {
-// Initial Selected Value
+  // Initial Selected Value
   String dropdownvalue = '2024';
   String dropdownvalue2 = '2024';
 
   @override
   void initState() {
     BlocProvider.of<AcademicYearCubit>(context).getAcademicYears();
-    // TODO: implement initState
     super.initState();
   }
 
-// List of items in our dropdown menu
+  // List of items in our dropdown menu
   var items = [
     '2020',
     '2021',
@@ -49,6 +48,11 @@ class _SelectYear extends State<SelectYear> {
           );
         }
         if (state is SuccessAcademicYearState) {
+          if (state.yearsList.isEmpty) {
+            return const Center(
+              child: Text("You don't have any grades"),
+            );
+          }
           return SizedBox(
             width: double.infinity,
             height: 50,
@@ -63,33 +67,27 @@ class _SelectYear extends State<SelectYear> {
             ),
           );
         }
-        return Container(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                DropdownButton(
-                  value: dropdownvalue,
-
-                  icon: const Icon(Icons.keyboard_arrow_down),
-
-                  items: items.map((String items) {
-                    return DropdownMenuItem(
-                      value: items,
-                      child: Text(items),
-                    );
-                  }).toList(),
-                  // After selecting the desired option,it will
-                  // change button value to selected value
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      dropdownvalue = newValue!;
-                    });
-                  },
-                ),
-              ],
-            ),
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              DropdownButton(
+                value: dropdownvalue,
+                icon: const Icon(Icons.keyboard_arrow_down),
+                items: items.map((String items) {
+                  return DropdownMenuItem(
+                    value: items,
+                    child: Text(items),
+                  );
+                }).toList(),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    dropdownvalue = newValue!;
+                  });
+                },
+              ),
+            ],
           ),
         );
       },
@@ -148,7 +146,6 @@ class SemesterWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
-
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         var yearId = prefs.getInt('yearId');
         BlocProvider.of<CourseGradeCubit>(context).fetchStudentCoursesGrade(
