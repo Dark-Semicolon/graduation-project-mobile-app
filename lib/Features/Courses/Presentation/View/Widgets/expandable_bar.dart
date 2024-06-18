@@ -13,14 +13,14 @@ class CoursesExpandableSection extends StatelessWidget {
   final VoidCallback buttonAction;
 
   const CoursesExpandableSection({
-    super.key,
+    Key? key,
     required this.sectionData,
     required this.index,
     required this.isExpanded,
     required this.isSelected,
     required this.onTap,
     required this.buttonAction,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,14 @@ class CoursesExpandableSection extends StatelessWidget {
               borderRadius: BorderRadius.circular(12.0),
               child: Container(
                 decoration: BoxDecoration(
-                  color: isSelected ? Colors.teal : kPrimaryColor,
+                  color: isSelected ? null : kPrimaryColor,
+                  gradient: isSelected
+                      ? LinearGradient(
+                          colors: [Colors.teal, kPrimaryColor],
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                        )
+                      : null,
                   borderRadius: BorderRadius.circular(12.0),
                 ),
                 padding: const EdgeInsets.all(16.0),
@@ -108,7 +115,7 @@ class CoursesExpandableSection extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
                 child: Container(
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(10),
