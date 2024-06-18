@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../../Constants/const.dart';
 import '../../Features/Courses/Presentation/View/courses_enrollment_screen.dart';
 import '../../Features/Grades/presentation/view/Grade_View.dart';
-import '../../Features/Home/Presentation/view/home_page.dart';
+import '../../Features/Home/Presentation/view/home_screen.dart';
 import '../../Features/profile/profile_page.dart';
 
 class CustomBottomNavBar extends StatelessWidget {

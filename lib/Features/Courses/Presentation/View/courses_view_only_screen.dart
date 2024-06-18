@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../Constants/FontsConst.dart';
+import '../../../../Core/GloabalWidgets/nav_bar.dart';
 import '../../Riverpod/river_state.dart';
 import 'Widgets/courses_numbers.dart';
 import 'Widgets/courses_upper_part.dart';
@@ -78,6 +79,7 @@ class CoursesViewOnlyScreenState extends ConsumerState<CoursesViewOnlyScreen> {
               ),
             ),
           ),
+          const CustomBottomNavBar(selectedMenu: MenuState.courses),
         ],
       ),
     );

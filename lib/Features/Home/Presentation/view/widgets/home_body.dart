@@ -9,12 +9,12 @@ import '../../../../Courses/Riverpod/river_state.dart';
 import '../../../../Courses/Utils/courses_navigator.dart';
 import 'Course_card.dart';
 import 'Grades_card.dart';
-import 'home_page_all.dart';
+import 'home_upper_bar.dart';
 
-class HomeHorizontalScrollView extends ConsumerWidget {
+class HomeBody extends ConsumerWidget {
   final double gpa;
 
-  const HomeHorizontalScrollView({super.key, required this.gpa});
+  const HomeBody({super.key, required this.gpa});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

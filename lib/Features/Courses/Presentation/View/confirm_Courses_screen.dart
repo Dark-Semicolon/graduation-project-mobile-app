@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../Constants/FontsConst.dart';
+import '../../../../Core/GloabalWidgets/nav_bar.dart';
 import '../../Riverpod/river_state.dart';
 import 'Widgets/course_burrons.dart';
 import 'Widgets/courses_numbers.dart';
@@ -84,6 +85,7 @@ class _ConfirmCoursesScreenState extends ConsumerState<ConfirmCoursesScreen> {
               ),
             ),
           ),
+          const CustomBottomNavBar(selectedMenu: MenuState.courses),
         ],
       ),
     );

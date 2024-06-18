@@ -7,7 +7,7 @@ import '../Features/Courses/Presentation/View/courses_view_edit_screen.dart';
 import '../Features/Courses/Presentation/View/courses_view_only_screen.dart';
 import '../Features/Courses/Presentation/View/enrollments_ended_screen.dart';
 import '../Features/Grades/presentation/view/Grade_View.dart';
-import '../Features/Home/Presentation/view/home_page.dart';
+import '../Features/Home/Presentation/view/home_screen.dart';
 import '../Features/Login/Presentation/login_page.dart';
 import '../Features/Login/Presentation/logout_screen.dart';
 import '../Features/Login/Update user/update_user_screen.dart';

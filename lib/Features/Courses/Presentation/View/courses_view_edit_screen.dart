@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../Constants/FontsConst.dart';
+import '../../../../Core/GloabalWidgets/nav_bar.dart';
 import '../../Riverpod/river_state.dart';
 import 'Widgets/course_burrons.dart';
 import 'Widgets/courses_numbers.dart';
@@ -15,10 +16,10 @@ class CoursesViewAndEditScreen extends ConsumerStatefulWidget {
   });
 
   @override
-  _SelectedCoursesScreenState createState() => _SelectedCoursesScreenState();
+  SelectedCoursesScreenState createState() => SelectedCoursesScreenState();
 }
 
-class _SelectedCoursesScreenState
+class SelectedCoursesScreenState
     extends ConsumerState<CoursesViewAndEditScreen> {
   late int _expandedIndex;
 
@@ -83,6 +84,7 @@ class _SelectedCoursesScreenState
               ),
             ),
           ),
+          const CustomBottomNavBar(selectedMenu: MenuState.courses),
         ],
       ),
     );

@@ -17,10 +17,10 @@ class CoursesScreenUpperPart extends StatefulWidget {
   const CoursesScreenUpperPart({super.key});
 
   @override
-  _CoursesScreenUpperPartState createState() => _CoursesScreenUpperPartState();
+  CoursesScreenUpperPartState createState() => CoursesScreenUpperPartState();
 }
 
-class _CoursesScreenUpperPartState extends State<CoursesScreenUpperPart> {
+class CoursesScreenUpperPartState extends State<CoursesScreenUpperPart> {
   late Future<CourseSelection> _courseSelection;
 
   @override

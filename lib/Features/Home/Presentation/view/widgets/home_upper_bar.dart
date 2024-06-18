@@ -2,6 +2,7 @@ import 'package:eductionsystem/Constants/const.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../Constants/FontsConst.dart';
+import '../../../../../Data/API/Const/end_points.dart';
 import '../../../../../Data/API/Models/user_data.dart';
 import '../../../../../Data/API/Services/api_constant.dart';
 import '../../../../../Data/API/Services/auth_service.dart';
@@ -11,10 +12,10 @@ class HomePageUpperBar extends StatefulWidget {
   const HomePageUpperBar({super.key});
 
   @override
-  _HomePageUpperBarState createState() => _HomePageUpperBarState();
+  HomePageUpperBarState createState() => HomePageUpperBarState();
 }
 
-class _HomePageUpperBarState extends State<HomePageUpperBar> {
+class HomePageUpperBarState extends State<HomePageUpperBar> {
   final AuthRepository _authRepository = AuthRepository(
     authApi: AuthApi(baseUrl: ApiConstants.baseUrlShort),
   );
@@ -65,11 +66,11 @@ class _HomePageUpperBarState extends State<HomePageUpperBar> {
                       const SizedBox(height: 15),
                       CircleAvatar(
                         radius: 20,
-                        backgroundColor: Colors.grey[300],
+                        backgroundColor: kPrimaryColor,
                         backgroundImage: _userData != null &&
                                 _userData!.data!.attributes!.image != null
                             ? NetworkImage(
-                                'http://10.0.2.2:8000/storage/${_userData!.data!.attributes!.image}')
+                                '${MainApiConstants.baseUrl}/storage/${_userData!.data!.attributes!.image}')
                             : null,
                       ),
                       const SizedBox(height: 20),
@@ -79,7 +80,9 @@ class _HomePageUpperBarState extends State<HomePageUpperBar> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: 10,),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       Text(_userData?.data?.attributes?.name ?? 'name',
                           style: AppFonts.manropeBoldSizable(
                               color: Colors.white, fontSize: 20)),

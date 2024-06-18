@@ -6,16 +6,16 @@ import 'package:flutter/material.dart';
 
 import '../../../../Core/GloabalWidgets/nav_bar.dart';
 import '../../../../Data/API/Const/end_points.dart';
-import 'widgets/home_horizontal_scroller_view.dart';
+import 'widgets/home_body.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
-  _HomePageState createState() => _HomePageState();
+  HomePageState createState() => HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class HomePageState extends State<HomePage> {
   final AuthRepository _authRepository = AuthRepository(
     authApi: AuthApi(baseUrl: MainApiConstants.baseUrl),
   );
@@ -33,18 +33,18 @@ class _HomePageState extends State<HomePage> {
       if (token != null) {
         final userData = await _authRepository.fetchUserData(token);
         if (userData != null) {
-          print('Fetched user data: ${userData.toJson()}'); // Debug statement
+          // print('Fetched user data: ${userData.toJson()}'); // Debug statement
           setState(() {
             _userData = userData;
           });
         } else {
-          print('User data is null');
+          // print('User data is null');
         }
       } else {
-        print('Token is null');
+        // print('Token is null');
       }
     } catch (error) {
-      print('Error fetching user data: $error');
+      // print('Error fetching user data: $error');
     }
   }
 
@@ -63,7 +63,7 @@ class _HomePageState extends State<HomePage> {
       body: _userData != null
           ? Column(
               children: [
-                HomeHorizontalScrollView(gpa: _userData!.data!.gpa ?? 0.0),
+                HomeBody(gpa: _userData!.data!.gpa ?? 0.0),
                 const SizedBox(height: 25),
                 // ScheduleView(),
                 const SizedBox(height: 48),
