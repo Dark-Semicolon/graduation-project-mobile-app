@@ -5,6 +5,7 @@ import 'package:eductionsystem/Data/API/Token/token_manager.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../Core/GloabalWidgets/nav_bar.dart';
+import '../../../../Data/API/Const/end_points.dart';
 import 'widgets/home_horizontal_scroller_view.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,7 +17,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final AuthRepository _authRepository = AuthRepository(
-    authApi: AuthApi(baseUrl: 'http://10.0.2.2:8000'),
+    authApi: AuthApi(baseUrl:MainApiConstants.baseUrl),
   );
   UserDataModel? _userData;
 

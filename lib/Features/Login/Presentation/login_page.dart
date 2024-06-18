@@ -75,19 +75,7 @@ class _LoginPageState extends State<LoginPage> {
                       obscureText: true,
                       errorMessage: 'Please enter your password',
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        TextButton(
-                          onPressed: () {},
-                          child: const Text(
-                            'Forgot Password?',
-                            style: TextStyle(color: Colors.blueAccent),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 30),
                     ElevatedButton(
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
