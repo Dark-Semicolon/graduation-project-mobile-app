@@ -1,3 +1,4 @@
+import 'package:eductionsystem/Constants/const.dart';
 import 'package:flutter/material.dart';
 
 class CourseEnrollmentCard extends StatelessWidget {
@@ -23,7 +24,7 @@ class CourseEnrollmentCard extends StatelessWidget {
               offset: const Offset(-3, 4),
             ),
           ],
-          color: Colors.blue[800],
+          color: kPrimaryColor,
           borderRadius: BorderRadius.circular(16),
         ),
         child: Stack(

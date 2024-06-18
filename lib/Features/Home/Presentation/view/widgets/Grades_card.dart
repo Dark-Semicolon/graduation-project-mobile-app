@@ -1,3 +1,4 @@
+import 'package:eductionsystem/Constants/const.dart';
 import 'package:flutter/material.dart';
 
 class GradesCard extends StatelessWidget {
@@ -24,10 +25,10 @@ class GradesCard extends StatelessWidget {
               color: Colors.black.withOpacity(0.4),
               spreadRadius: 2,
               blurRadius: 12,
-              offset: Offset(-3, 4),
+              offset: const Offset(-3, 4),
             ),
           ],
-          color: Colors.blue[800],
+          color: kPrimaryColor,
           borderRadius: BorderRadius.circular(16),
         ),
         child: Stack(
@@ -39,7 +40,7 @@ class GradesCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Grades',
                     style: TextStyle(
                       color: Colors.white,
@@ -57,7 +58,7 @@ class GradesCard extends StatelessWidget {
                   Center(
                     child: Text(
                       'GPA ${gpa.toStringAsFixed(2)}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 16,
                       ),
@@ -80,11 +81,11 @@ class GradesCard extends StatelessWidget {
                       color: Colors.black.withOpacity(0.5),
                       spreadRadius: 2,
                       blurRadius: 5,
-                      offset: Offset(-1, 4),
+                      offset: const Offset(-1, 4),
                     ),
                   ],
                 ),
-                child: Center(
+                child: const Center(
                   child: Icon(
                     Icons.trending_up,
                     color: Colors.white,
