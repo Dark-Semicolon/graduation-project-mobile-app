@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../../../../Constants/const.dart';
 import '../../Features/Courses/Presentation/View/courses_enrollment_screen.dart';
+import '../../Features/Courses/Presentation/View/courses_view_edit_screen.dart';
+import '../../Features/Courses/Presentation/View/courses_view_only_screen.dart';
+import '../../Features/Courses/Presentation/View/enrollments_ended_screen.dart';
+import '../../Features/Courses/Riverpod/river_state.dart';
 import '../../Features/Grades/presentation/view/Grade_View.dart';
 import '../../Features/Home/Presentation/view/home_screen.dart';
 import '../../Features/profile/profile_page.dart';
 
-class CustomBottomNavBar extends StatelessWidget {
+class CustomBottomNavBar extends ConsumerWidget {
   final MenuState selectedMenu;
 
   const CustomBottomNavBar({
@@ -16,7 +22,7 @@ class CustomBottomNavBar extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: Container(
@@ -44,7 +50,7 @@ class CustomBottomNavBar extends StatelessWidget {
                 "assets/icons/Shop Icon.svg",
                 MenuState.home,
                 selectedMenu,
-                const HomePage(),
+                () async => const HomePage(),
               ),
               _buildNavItem(
                 context,
@@ -52,15 +58,15 @@ class CustomBottomNavBar extends StatelessWidget {
                 "assets/icons/Bill Icon.svg",
                 MenuState.courses,
                 selectedMenu,
-                const CoursesEnrollmentScreen(),
+                () => navigateBasedOnCourseSelection(context, ref),
               ),
               _buildNavItem(
                 context,
                 "Grades",
-                "assets/icons/grades.svg", // New Grades Icon
+                "assets/icons/grades.svg",
                 MenuState.Grades,
                 selectedMenu,
-                const GradesPage(),
+                () async => const GradesPage(),
               ),
               _buildNavItem(
                 context,
@@ -68,7 +74,7 @@ class CustomBottomNavBar extends StatelessWidget {
                 "assets/icons/User Icon.svg",
                 MenuState.account,
                 selectedMenu,
-                const ProfilePage(),
+                () async => const ProfilePage(),
               ),
             ],
           ),
@@ -83,21 +89,27 @@ class CustomBottomNavBar extends StatelessWidget {
     String iconPath,
     MenuState menuState,
     MenuState selectedMenu,
-    Widget destination,
+    Future<Widget> Function() destinationBuilder,
   ) {
     const Color inActiveIconColor = Color(0xFFB6B6B6);
     final Color iconColor =
         menuState == selectedMenu ? kPrimaryColor : inActiveIconColor;
 
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
         if (menuState != selectedMenu) {
-          Navigator.push(
-            context,
-            CustomPageRoute(
-              page: destination,
-            ),
-          );
+          showLoadingDialog(context);
+          try {
+            final destination = await destinationBuilder();
+            Navigator.pop(context); // Close the loading dialog
+            Navigator.push(
+              context,
+              CustomPageRoute(page: destination),
+            );
+          } catch (e) {
+            Navigator.pop(context); // Close the loading dialog
+            showErrorDialog(context, e.toString());
+          }
         }
       },
       child: AnimatedContainer(
@@ -131,19 +143,58 @@ class CustomBottomNavBar extends StatelessWidget {
     );
   }
 
-  Widget getPageForMenuState(MenuState menuState) {
-    switch (menuState) {
-      case MenuState.home:
-        return const HomePage();
-      case MenuState.courses:
+  Future<Widget> navigateBasedOnCourseSelection(
+      BuildContext context, WidgetRef ref) async {
+    final courseNotifier = ref.read(courseProvider.notifier);
+    final screenPath = await courseNotifier.determineNavigationScreen();
+
+    switch (screenPath) {
+      case '/CoursesEnrollmentScreen':
         return const CoursesEnrollmentScreen();
-      case MenuState.account:
-        return const ProfilePage();
-      case MenuState.Grades:
-        return const GradesPage();
+      case '/CoursesViewAndEditScreen':
+        return const CoursesViewAndEditScreen();
+      case '/CoursesViewOnlyScreen':
+        return const CoursesViewOnlyScreen();
+      case '/EnrollmentEndedScreen':
+        return const EnrollmentEndedScreen();
       default:
         return const HomePage();
     }
+  }
+
+  void showLoadingDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return Center(
+          child: LoadingAnimationWidget.waveDots(
+            color: Colors.blue,
+            size: 50,
+          ),
+        );
+      },
+    );
+  }
+
+  void showErrorDialog(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Error'),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }
 

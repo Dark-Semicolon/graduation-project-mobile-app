@@ -6,3 +6,4 @@ const kTranstionDuration = Duration(milliseconds: 250);
 const kFont = 'Montserrat';
 const kFeatureBox = 'feature_Box';
 const kNewestBox = 'newest_Box';
+//pushing

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../../../../../Constants/FontsConst.dart';
 import '../../../../../Constants/const.dart';
@@ -19,7 +20,6 @@ class HomeBody extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final courseNotifier = ref.read(courseProvider.notifier);
-    final courseSelectionFuture = courseNotifier.fetchCourseSelection();
 
     return Column(
       children: [
@@ -50,17 +50,26 @@ class HomeBody extends ConsumerWidget {
                       children: [
                         GradesCard(
                           gpa: double.parse(gpa.toStringAsFixed(2)),
-                          onPressed: () {
+                          onPressed: () async {
+                            showLoadingDialog(context);
+                            await Future.delayed(const Duration(
+                                seconds: 1)); // Simulating async operation
                             GoRouter.of(context).push("/GradesPage");
+                            Navigator.of(context)
+                                .pop(); // Dismiss loading dialog
                           },
                         ),
                         const SizedBox(width: 14),
                         FutureBuilder<CourseSelection>(
-                          future: courseSelectionFuture,
-                          builder: (context, snapshot) {
+                          future: courseNotifier.fetchCourseSelection(),
+                          builder: (context,
+                              AsyncSnapshot<CourseSelection> snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
-                              return const CircularProgressIndicator();
+                              return LoadingAnimationWidget.waveDots(
+                                color: Colors.blue,
+                                size: 50,
+                              );
                             } else if (snapshot.hasError) {
                               return Text('Error: ${snapshot.error}');
                             } else if (snapshot.hasData) {
@@ -68,8 +77,10 @@ class HomeBody extends ConsumerWidget {
                                   snapshot.data!.data!.attributes!.endAt!);
                               return CourseEnrollmentCard(
                                 daysLeft: daysLeft,
-                                onPressed: () => navigateBasedOnCourseSelection(
-                                    context, ref),
+                                onPressed: () {
+                                  showLoadingDialog(context);
+                                  navigateBasedOnCourseSelection(context, ref);
+                                },
                               );
                             } else {
                               return const Text('No data available');
@@ -92,5 +103,20 @@ class HomeBody extends ConsumerWidget {
     final now = DateTime.now();
     final deadline = DateTime.parse(endDate);
     return deadline.difference(now).inDays;
+  }
+
+  void showLoadingDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (BuildContext context) {
+        return Center(
+          child: LoadingAnimationWidget.waveDots(
+            color: Colors.blue,
+            size: 50,
+          ),
+        );
+      },
+    );
   }
 }
