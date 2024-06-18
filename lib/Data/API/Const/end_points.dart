@@ -7,5 +7,9 @@ class MainApiConstants {
   static const String courseSelectionAvailableCourses =
       '/api/v1/student/courseSelection/availableCourses';
   static const String courseSelectionEnrollments =
+
+
+
+
       '/api/v1/student/courseSelection/enrollments';
 }
