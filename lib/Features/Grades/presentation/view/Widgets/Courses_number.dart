@@ -19,7 +19,7 @@ class TotalCoursesWidget extends StatelessWidget {
         if (state is SuccessCourseGradeState) {
           return Text('${state.coursesGradeList.length}',style: const TextStyle(fontSize: 18,color: Colors.green));
         } else {
-          return const Text('--', style: TextStyle(fontSize:22,));
+          return const Text('-', style: TextStyle(fontSize:22,));
         }
       },
     );

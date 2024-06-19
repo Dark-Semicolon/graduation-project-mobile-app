@@ -83,8 +83,13 @@ class GradeViewBody extends StatelessWidget {
               if (state is FailureCourseGradeState) {
                 return Text(state.errMsg);
               }
-              return const Center(
-                child: Text('Hello! You should choose the year'),
+              return Column(
+                children: [
+                    SizedBox(height: 80,),
+                  const Center(
+                    child: Text('Hello! You should choose the year'),
+                  ),
+                ],
               );
             },
           ),

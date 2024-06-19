@@ -46,7 +46,7 @@ class _failedCoursesCount extends State<failedCoursesCount> {
   @override
   Widget build(BuildContext context) {
     return Text(
-      '${_userData?.data?.failedCoursesCount ?? '0'}',
+      '${_userData?.data?.failedCoursesCount ?? '_'}',
       style: const TextStyle(fontSize: 18,color: Colors.red),
 
     );
