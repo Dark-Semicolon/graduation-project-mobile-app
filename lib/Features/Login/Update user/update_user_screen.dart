@@ -8,6 +8,7 @@ import '../../../Constants/const.dart';
 import '../../../Data/API/Const/end_points.dart';
 import '../../../Data/API/Models/user_data.dart';
 import '../../../Data/API/Token/token_manager.dart';
+
 class UpdateUserDataScreen extends StatefulWidget {
   const UpdateUserDataScreen({super.key});
 
@@ -19,7 +20,8 @@ class UpdateUserDataScreenState extends State<UpdateUserDataScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _passwordConfirmationController = TextEditingController();
+  final TextEditingController _passwordConfirmationController =
+      TextEditingController();
   bool _isLoading = false;
   String? _errorMessage;
   UserDataModel? _userData;
@@ -89,7 +91,8 @@ class UpdateUserDataScreenState extends State<UpdateUserDataScreen> {
 
     final PatchUserData data = PatchUserData(
       name: _nameController.text.isNotEmpty ? _nameController.text : null,
-      password: _passwordController.text.isNotEmpty ? _passwordController.text : null,
+      password:
+          _passwordController.text.isNotEmpty ? _passwordController.text : null,
       passwordConfirmation: _passwordConfirmationController.text.isNotEmpty
           ? _passwordConfirmationController.text
           : null,
@@ -127,83 +130,83 @@ class UpdateUserDataScreenState extends State<UpdateUserDataScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('Update User Data', style: _titleStyle),
+        title: Text('Edit Your Data', style: _titleStyle),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: _userData == null
             ? const Center(child: CircularProgressIndicator())
             : Form(
-          key: _formKey,
-          child: ListView(
-            children: [
-              _buildEditableField(
-                enabled: false,
-                controller: _nameController,
-                labelText: 'Name',
-                hintText: 'Enter your name',
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your name';
-                  }
-                  return null;
-                },
-              ),
-              _buildEditableField(
-                controller: TextEditingController(
-                    text: _userData?.data?.attributes?.email ?? ''),
-                labelText: 'Email',
-                hintText: '',
-                enabled: false,
-              ),
-              _buildEditableField(
-                controller: _passwordController,
-                labelText: 'Password',
-                hintText: 'Enter your password',
-                obscureText: !_isPasswordVisible,
-                onToggleVisibility: () {
-                  setState(() {
-                    _isPasswordVisible = !_isPasswordVisible;
-                  });
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your password';
-                  }
-                  return null;
-                },
-              ),
-              _buildEditableField(
-                controller: _passwordConfirmationController,
-                labelText: 'Confirm Password',
-                hintText: 'Confirm your password',
-                obscureText: !_isPasswordConfirmationVisible,
-                onToggleVisibility: () {
-                  setState(() {
-                    _isPasswordConfirmationVisible =
-                    !_isPasswordConfirmationVisible;
-                  });
-                },
-                validator: (value) {
-                  if (value != _passwordController.text) {
-                    return 'Passwords do not match';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 32),
-              _buildUpdateButton(),
-              if (_errorMessage != null)
-                Padding(
-                  padding: const EdgeInsets.only(top: 16),
-                  child: Text(
-                    _errorMessage!,
-                    style: _errorStyle,
-                  ),
+                key: _formKey,
+                child: ListView(
+                  children: [
+                    _buildNonField(
+                      enabled: false,
+                      controller: _nameController,
+                      labelText: 'Name',
+                      hintText: 'Enter your name',
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your name';
+                        }
+                        return null;
+                      },
+                    ),
+                    _buildNonField(
+                      controller: TextEditingController(
+                          text: _userData?.data?.attributes?.email ?? ''),
+                      labelText: 'Email',
+                      hintText: '',
+                      enabled: false,
+                    ),
+                    _buildEditableField(
+                      controller: _passwordController,
+                      labelText: 'Password',
+                      hintText: 'Enter your password',
+                      obscureText: !_isPasswordVisible,
+                      onToggleVisibility: () {
+                        setState(() {
+                          _isPasswordVisible = !_isPasswordVisible;
+                        });
+                      },
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your password';
+                        }
+                        return null;
+                      },
+                    ),
+                    _buildEditableField(
+                      controller: _passwordConfirmationController,
+                      labelText: 'Confirm Password',
+                      hintText: 'Confirm your password',
+                      obscureText: !_isPasswordConfirmationVisible,
+                      onToggleVisibility: () {
+                        setState(() {
+                          _isPasswordConfirmationVisible =
+                              !_isPasswordConfirmationVisible;
+                        });
+                      },
+                      validator: (value) {
+                        if (value != _passwordController.text) {
+                          return 'Passwords do not match';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 32),
+                    _buildUpdateButton(),
+                    if (_errorMessage != null)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 16),
+                        child: Text(
+                          _errorMessage!,
+                          style: _errorStyle,
+                        ),
+                      ),
+                  ],
                 ),
-            ],
-          ),
-        ),
+              ),
       ),
     );
   }
@@ -240,7 +243,8 @@ class UpdateUserDataScreenState extends State<UpdateUserDataScreen> {
             decoration: InputDecoration(
               hintText: hintText,
               border: InputBorder.none,
-              contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+              contentPadding:
+                  const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
               errorStyle: _errorStyle,
               suffixIcon: IconButton(
                 icon: Icon(
@@ -251,6 +255,51 @@ class UpdateUserDataScreenState extends State<UpdateUserDataScreen> {
               ),
             ),
             obscureText: obscureText,
+            enabled: enabled,
+            style: const TextStyle(fontSize: 16),
+            validator: validator,
+          ),
+        ),
+        const SizedBox(height: 16),
+      ],
+    );
+  }
+
+  Widget _buildNonField({
+    required TextEditingController controller,
+    required String labelText,
+    required String hintText,
+    bool enabled = false,
+    FormFieldValidator<String>? validator,
+    VoidCallback? onToggleVisibility,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(labelText, style: _labelStyle),
+        const SizedBox(height: 8),
+        Container(
+          decoration: BoxDecoration(
+            color: enabled ? Colors.white : Colors.grey[200],
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                spreadRadius: 2,
+                blurRadius: 5,
+                offset: const Offset(0, 3),
+              ),
+            ],
+          ),
+          child: TextFormField(
+            controller: controller,
+            decoration: InputDecoration(
+              hintText: hintText,
+              border: InputBorder.none,
+              contentPadding:
+                  const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+              errorStyle: _errorStyle,
+            ),
             enabled: enabled,
             style: const TextStyle(fontSize: 16),
             validator: validator,
@@ -288,8 +337,8 @@ class UpdateUserDataScreenState extends State<UpdateUserDataScreen> {
         ),
         child: _isLoading
             ? const CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-        )
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              )
             : Text('Update', style: AppFonts.manropeBoldSizable()),
       ),
     );

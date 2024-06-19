@@ -1,10 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:eductionsystem/Features/Login/Presentation/view/widgets/form_field_custom.dart';
 import 'package:eductionsystem/Features/Login/Presentation/view/widgets/login_upper_part.dart';
+import 'package:flutter/material.dart';
+
 import '../Utils/auth_functions.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({super.key});
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -125,12 +126,18 @@ class _LoginPageState extends State<LoginPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(width: 10),
-                        Text(
-                          "If you don't have an account please go to students Affairs",
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontFamily: 'Outfit',
-                            fontWeight: FontWeight.w400,
+                        Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            "If you don't have an account please go to students Affairs",
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontFamily: 'Outfit',
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
                         ),
                         SizedBox(width: 10),
@@ -147,4 +154,3 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-

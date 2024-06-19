@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../Core/AssetsData.dart';
 import '../../../../Data/API/Token/token_manager.dart';
 import '../../../../Local App Data/Local/local_storage.dart';
 
@@ -23,7 +22,7 @@ class _SplashViewBodyState extends State<SplashViewBody>
 
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 2),
+      duration: const Duration(seconds: 1),
     );
 
     _fadeAnimation =
@@ -67,10 +66,11 @@ class _SplashViewBodyState extends State<SplashViewBody>
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-      Image.asset(
-      'assets/images/logo.png',
-      width: 100,
-      height: 100,),
+        Image.asset(
+          'assets/images/logo.png',
+          width: 100,
+          height: 100,
+        ),
         const SizedBox(height: 8),
         AnimatedBuilder(
           animation: _fadeAnimation,
@@ -78,24 +78,32 @@ class _SplashViewBodyState extends State<SplashViewBody>
             return FadeTransition(
               opacity: _fadeAnimation,
               child: const Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
-                    'Campus',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 44,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Text(
-                    'Suit',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 44,
-                      color: Colors.white,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Campus',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 44,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Text(
+                        'Suit',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 44,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

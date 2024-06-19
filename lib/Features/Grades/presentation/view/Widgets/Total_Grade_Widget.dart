@@ -71,27 +71,27 @@ class TotalGPAWidget extends StatelessWidget {
                           ),
                         ],
                       ),
-                      Column(
-                        children: [
-                          GestureDetector(
-                            onTap: () {},
-                            child: Container(
-                              width: 50,
-                              height: 50,
-                              decoration: const BoxDecoration(
-                                color: Colors.blue,
-                                shape: BoxShape.circle,
-                              ),
-                              child: const Center(
-                                child: Icon(
-                                  Icons.download_rounded,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                      // Column(
+                      //   children: [
+                      //     GestureDetector(
+                      //       onTap: () {},
+                      //       child: Container(
+                      //         width: 50,
+                      //         height: 50,
+                      //         decoration: const BoxDecoration(
+                      //           color: Colors.blue,
+                      //           shape: BoxShape.circle,
+                      //         ),
+                      //         // child: const Center(
+                      //         //   child: Icon(
+                      //         //     Icons.download_rounded,
+                      //         //     color: Colors.white,
+                      //         //   ),
+                      //         // ),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
                     ],
                   ),
                   const SizedBox(height: 6),
