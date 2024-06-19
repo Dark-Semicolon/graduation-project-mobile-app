@@ -24,6 +24,24 @@ class HomeBody extends ConsumerWidget {
     return Column(
       children: [
         const HomePageUpperBar(),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                "Student Services",
+                style: AppFonts.manropeNormalSizable(
+                  height: null,
+                  color: kPrimaryColor,
+                  fontSize: 20,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 20,),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           physics: const BouncingScrollPhysics(),
@@ -31,73 +49,54 @@ class HomeBody extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Text(
-                      "Student Services",
-                      style: AppFonts.manropeNormalSizable(
-                        height: null,
-                        color: kPrimaryColor,
-                        fontSize: 20,
+              const SizedBox(height: 22),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Row(
+                    children: [
+                      GradesCard(
+                        gpa: double.parse(gpa.toStringAsFixed(2)),
+                        onPressed: () async {
+                          showLoadingDialog(context);
+                          await Future.delayed(const Duration(
+                              seconds: 1)); // Simulating async operation
+                          GoRouter.of(context).push("/GradesPage");
+                          Navigator.of(context)
+                              .pop(); // Dismiss loading dialog
+                        },
                       ),
-                    ),
-                  ),
-                  const SizedBox(height: 22),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Row(
-                        children: [
-                          GradesCard(
-                            gpa: double.parse(gpa.toStringAsFixed(2)),
-                            onPressed: () async {
-                              showLoadingDialog(context);
-                              await Future.delayed(const Duration(
-                                  seconds: 1)); // Simulating async operation
-                              GoRouter.of(context).push("/GradesPage");
-                              Navigator.of(context)
-                                  .pop(); // Dismiss loading dialog
-                            },
-                          ),
-                          const SizedBox(width: 14),
-                          FutureBuilder<CourseSelection>(
-                            future: courseNotifier.fetchCourseSelection(),
-                            builder: (context,
-                                AsyncSnapshot<CourseSelection> snapshot) {
-                              if (snapshot.connectionState ==
-                                  ConnectionState.waiting) {
-                                return LoadingAnimationWidget.waveDots(
-                                  color: Colors.blue,
-                                  size: 50,
-                                );
-                              } else if (snapshot.hasError) {
-                                return Text('Error: ${snapshot.error}');
-                              } else if (snapshot.hasData) {
-                                final daysLeft = calculateDaysLeft(
-                                    snapshot.data!.data!.attributes!.endAt!);
-                                return CourseEnrollmentCard(
-                                  daysLeft: daysLeft,
-                                  onPressed: () {
-                                    showLoadingDialog(context);
-                                    navigateBasedOnCourseSelection(
-                                        context, ref);
-                                  },
-                                );
-                              } else {
-                                return const Text('No data available');
-                              }
-                            },
-                          ),
-                        ],
+                      const SizedBox(width: 14),
+                      FutureBuilder<CourseSelection>(
+                        future: courseNotifier.fetchCourseSelection(),
+                        builder: (context,
+                            AsyncSnapshot<CourseSelection> snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return LoadingAnimationWidget.waveDots(
+                              color: Colors.blue,
+                              size: 50,
+                            );
+                          } else if (snapshot.hasData) {
+                            final daysLeft = calculateDaysLeft(
+                                snapshot.data!.data!.attributes!.endAt!);
+                            return CourseEnrollmentCard(
+                              daysLeft: daysLeft,
+                              onPressed: () {
+                                showLoadingDialog(context);
+                                navigateBasedOnCourseSelection(
+                                    context, ref);
+                              },
+                            );
+                          } else {
+                            return const SizedBox(); // Show nothing if no data is available
+                          }
+                        },
                       ),
-                    ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ],
           ),
@@ -127,3 +126,6 @@ class HomeBody extends ConsumerWidget {
     );
   }
 }
+// else if (snapshot.hasError) {
+// //   return Text('Error: ${snapshot.error}');
+// // }
