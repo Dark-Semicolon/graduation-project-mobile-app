@@ -12,7 +12,7 @@ class failedCoursesCount extends StatefulWidget {
 
 class _failedCoursesCount extends State<failedCoursesCount> {
   final AuthRepository _authRepository = AuthRepository(
-    authApi: AuthApi(baseUrl: 'http://10.0.2.2:8000'),
+    authApi: AuthApi(baseUrl: 'https://api.campus-suit.wood-maker.net'),
   );
   UserDataModel? _userData;
 

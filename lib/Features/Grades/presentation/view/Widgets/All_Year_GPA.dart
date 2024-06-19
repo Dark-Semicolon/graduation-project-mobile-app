@@ -12,7 +12,7 @@ class AllYearGpa extends StatefulWidget {
 
 class _AllYearGpa extends State<AllYearGpa> {
   final AuthRepository _authRepository = AuthRepository(
-    authApi: AuthApi(baseUrl: 'http://10.0.2.2:8000'),
+    authApi: AuthApi(baseUrl: 'https://api.campus-suit.wood-maker.net'),
   );
   UserDataModel? _userData;
 
