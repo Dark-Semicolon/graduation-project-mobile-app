@@ -100,81 +100,11 @@ class HomePageUpperBarState extends State<HomePageUpperBar> {
                       Text(_userData?.data?.attributes?.name ?? 'name',
                           style: AppFonts.manropeBoldSizable(
                               color: Colors.white, fontSize: 20)),
+                      const SizedBox(height: 5),
                       Text('Welcome To CamusSuit',
                           style: AppFonts.manropeNormalSizable(
                               height: null, color: Colors.white, fontSize: 15)),
                       const SizedBox(height: 10),
-                      Consumer(
-                        builder: (context, ref, child) {
-                          final studentCoursesAsyncValue =
-                          ref.watch(studentCoursesProvider);
-
-                          return studentCoursesAsyncValue.when(
-                            data: (studentCourses) {
-                              if (studentCourses == null ||
-                                  studentCourses.data == null) {
-                                return const Center(
-                                    child: Text('No courses found.'));
-                              }
-
-                              final semester = studentCourses.semester;
-                              final academicYear = studentCourses.academicYear;
-
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Text(
-                                            '${semester.attributes.name} ',
-                                            style:
-                                            AppFonts.manropeNormalSizable(
-                                                color: Colors.white,
-                                                fontSize: 15),
-                                          ),
-                                          Text(
-                                            'Year ${academicYear.attributes.name} ',
-                                            style:
-                                            AppFonts.manropeNormalSizable(
-                                                color: Colors.white,
-                                                fontSize: 15),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-
-
-                                ],
-                              );
-                            },
-                            loading: () => Center(
-                              child: LoadingAnimationWidget.waveDots(
-                                color: Colors.blue,
-                                size: 15,
-                              ),
-                            ),
-                            error: (error, stack) => Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text('Error: ${error.toString()}'),
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      ref.refresh(studentCoursesProvider);
-                                    },
-                                    child: const Text('Retry'),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      ),
 
                     ],
                   ),
