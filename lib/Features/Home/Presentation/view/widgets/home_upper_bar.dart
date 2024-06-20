@@ -1,12 +1,16 @@
 import 'package:eductionsystem/Constants/const.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../../../../../Constants/FontsConst.dart';
+import '../../../../../Core/user data stuff.dart';
 import '../../../../../Data/API/Const/end_points.dart';
 import '../../../../../Data/API/Models/user_data.dart';
 import '../../../../../Data/API/Services/api_constant.dart';
 import '../../../../../Data/API/Services/auth_service.dart';
 import '../../../../../Data/API/Token/token_manager.dart';
+import '../../../../Courses/Presentation/View/student courses utils.dart';
 
 class HomePageUpperBar extends StatefulWidget {
   const HomePageUpperBar({super.key});
@@ -26,7 +30,17 @@ class HomePageUpperBarState extends State<HomePageUpperBar> {
     super.initState();
     _fetchUserData();
   }
-
+  Future<void> _loadUserData() async {
+    final gpa = await UserDataService.getGpa();
+    final failedCoursesCount = await UserDataService.getFailedCoursesCount();
+    final userName = await UserDataService.getUserName();
+    final userEmail = await UserDataService.getUserEmail();
+    final userCode = await UserDataService.getUserCode();
+    final userGrade = await UserDataService.getUserGrade();
+    final userStatus = await UserDataService.getUserStatus();
+    final userCreatedAt = await UserDataService.getUserCreatedAt();
+    final userUpdatedAt = await UserDataService.getUserUpdatedAt();
+  }
   Future<void> _fetchUserData() async {
     try {
       final token = await TokenManager.getToken();
@@ -89,6 +103,79 @@ class HomePageUpperBarState extends State<HomePageUpperBar> {
                       Text('Welcome To CamusSuit',
                           style: AppFonts.manropeNormalSizable(
                               height: null, color: Colors.white, fontSize: 15)),
+                      const SizedBox(height: 10),
+                      Consumer(
+                        builder: (context, ref, child) {
+                          final studentCoursesAsyncValue =
+                          ref.watch(studentCoursesProvider);
+
+                          return studentCoursesAsyncValue.when(
+                            data: (studentCourses) {
+                              if (studentCourses == null ||
+                                  studentCourses.data == null) {
+                                return const Center(
+                                    child: Text('No courses found.'));
+                              }
+
+                              final semester = studentCourses.semester;
+                              final academicYear = studentCourses.academicYear;
+
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Text(
+                                            '${semester.attributes.name} ',
+                                            style:
+                                            AppFonts.manropeNormalSizable(
+                                                color: Colors.white,
+                                                fontSize: 15),
+                                          ),
+                                          Text(
+                                            'Year ${academicYear.attributes.name} ',
+                                            style:
+                                            AppFonts.manropeNormalSizable(
+                                                color: Colors.white,
+                                                fontSize: 15),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+
+
+                                ],
+                              );
+                            },
+                            loading: () => Center(
+                              child: LoadingAnimationWidget.waveDots(
+                                color: Colors.blue,
+                                size: 15,
+                              ),
+                            ),
+                            error: (error, stack) => Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text('Error: ${error.toString()}'),
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      ref.refresh(studentCoursesProvider);
+                                    },
+                                    child: const Text('Retry'),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+
                     ],
                   ),
                   const Expanded(child: SizedBox()),
@@ -96,7 +183,7 @@ class HomePageUpperBarState extends State<HomePageUpperBar> {
               ),
             ),
             Positioned(
-              top: 65,
+              top: 85,
               child: Container(
                 decoration: const BoxDecoration(
                   color: Colors.white,
@@ -104,7 +191,7 @@ class HomePageUpperBarState extends State<HomePageUpperBar> {
                     topRight: Radius.circular(150),
                   ),
                 ),
-                height: 50,
+                height: 40,
                 width: MediaQuery.of(context).size.width,
               ),
             ),

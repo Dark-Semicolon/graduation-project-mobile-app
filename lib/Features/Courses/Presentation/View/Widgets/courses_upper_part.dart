@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -9,6 +10,7 @@ import '../../../../../Constants/const.dart';
 import '../../../../../Core/utils/retrive_user_data.dart';
 import '../../../Data/Models/course_selection.dart';
 import '../../../Data/Services/get_availble_courses_services.dart';
+import '../student courses utils.dart';
 
 DateTime dateTime = DateTime.parse('2024-03-26 02:08:00');
 String formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
@@ -87,8 +89,81 @@ class CoursesScreenUpperPartState extends State<CoursesScreenUpperPart> {
                               style: AppFonts.manropeNormalSizable(
                                   fontSize: 18, color: kPrimaryColor),
                             ),
+
                           ],
                         ),
+                        Consumer(
+                          builder: (context, ref, child) {
+                            final studentCoursesAsyncValue =
+                            ref.watch(studentCoursesProvider);
+
+                            return studentCoursesAsyncValue.when(
+                              data: (studentCourses) {
+                                if (studentCourses == null ||
+                                    studentCourses.data == null) {
+                                  return const Center(
+                                      child: Text('No courses found.'));
+                                }
+
+                                final semester = studentCourses.semester;
+                                final academicYear = studentCourses.academicYear;
+
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Text(
+                                              '${semester.attributes.name} ',
+                                              style:
+                                              AppFonts.manropeNormalSizable(
+                                                  color: kPrimaryColor,
+                                                  fontSize: 15),
+                                            ),
+                                            Text(
+                                              'Year ${academicYear.attributes.name} ',
+                                              style:
+                                              AppFonts.manropeNormalSizable(
+                                                  color: kPrimaryColor,
+                                                  fontSize: 15),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+
+
+                                  ],
+                                );
+                              },
+                              loading: () => Center(
+                                child: LoadingAnimationWidget.waveDots(
+                                  color: Colors.blue,
+                                  size: 15,
+                                ),
+                              ),
+                              error: (error, stack) => Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text('Error: ${error.toString()}'),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        ref.refresh(studentCoursesProvider);
+                                      },
+                                      child: const Text('Retry'),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+
                         const SizedBox(height: 5),
                         Row(
                           children: [

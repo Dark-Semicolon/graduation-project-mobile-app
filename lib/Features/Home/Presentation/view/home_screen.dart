@@ -3,6 +3,7 @@ import 'package:eductionsystem/Data/API/Models/user_data.dart';
 import 'package:eductionsystem/Data/API/Services/auth_service.dart';
 import 'package:eductionsystem/Data/API/Token/token_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../../../../Core/GloabalWidgets/nav_bar.dart';
 import '../../../../Data/API/Const/end_points.dart';
@@ -73,7 +74,12 @@ class HomePageState extends State<HomePage> {
                 )
               ],
             )
-          : const Center(child: CircularProgressIndicator()),
+          : Center(
+              child: LoadingAnimationWidget.waveDots(
+                color: Colors.white,
+                size: 20,
+              ),
+            ),
       bottomNavigationBar: const CustomBottomNavBar(
         selectedMenu: MenuState.home,
       ),

@@ -6,6 +6,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import '../../../../../Constants/FontsConst.dart';
 import '../../../../../Constants/const.dart';
 import '../../../../Courses/Data/Models/course_selection.dart';
+import '../../../../Courses/Presentation/View/courses_view_only_screen.dart';
 import '../../../../Courses/Riverpod/river_state.dart';
 import '../../../../Courses/Utils/courses_navigator.dart';
 import 'Course_card.dart';
@@ -41,7 +42,9 @@ class HomeBody extends ConsumerWidget {
             ],
           ),
         ),
-        const SizedBox(height: 20,),
+        const SizedBox(
+          height: 20,
+        ),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           physics: const BouncingScrollPhysics(),
@@ -63,15 +66,14 @@ class HomeBody extends ConsumerWidget {
                           await Future.delayed(const Duration(
                               seconds: 1)); // Simulating async operation
                           GoRouter.of(context).push("/GradesPage");
-                          Navigator.of(context)
-                              .pop(); // Dismiss loading dialog
+                          Navigator.of(context).pop(); // Dismiss loading dialog
                         },
                       ),
                       const SizedBox(width: 14),
                       FutureBuilder<CourseSelection>(
                         future: courseNotifier.fetchCourseSelection(),
-                        builder: (context,
-                            AsyncSnapshot<CourseSelection> snapshot) {
+                        builder:
+                            (context, AsyncSnapshot<CourseSelection> snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
                             return LoadingAnimationWidget.waveDots(
@@ -85,15 +87,18 @@ class HomeBody extends ConsumerWidget {
                               daysLeft: daysLeft,
                               onPressed: () {
                                 showLoadingDialog(context);
-                                navigateBasedOnCourseSelection(
-                                    context, ref);
+                                navigateBasedOnCourseSelection(context, ref);
                               },
                             );
                           } else {
-                            return const SizedBox(); // Show nothing if no data is available
+                            return  StudentCourses(onPressed: () {
+                              GoRouter.of(context).push("/CoursesViewOnlyScreen");
+                            },);
                           }
                         },
                       ),
+                      const SizedBox(width: 14),
+                      StudentCourses(onPressed: () {  GoRouter.of(context).push("/CoursesViewOnlyScreen");},),
                     ],
                   ),
                 ),

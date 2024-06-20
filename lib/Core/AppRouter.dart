@@ -1,4 +1,5 @@
 import 'package:eductionsystem/Core/privacy_policy_screen.dart';
+import 'package:eductionsystem/Core/user%20data%20stuff.dart';
 import 'package:go_router/go_router.dart';
 
 import '../Features/Courses/Presentation/View/confirm_Courses_screen.dart';
@@ -33,6 +34,10 @@ abstract class AppRouter {
       GoRoute(
         path: '/LogoutScreen',
         builder: (context, state) => const LogoutScreen(),
+      ),
+      GoRoute(
+        path: '/UserProfileScreen',
+        builder: (context, state) => const UserProfileScreen(),
       ),
       GoRoute(
         path: '/CoursesEnrollmentScreen',

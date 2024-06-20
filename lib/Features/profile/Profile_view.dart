@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
-class ProfileListView extends StatelessWidget {
+class ProfileListView extends StatelessWidget  {
   const ProfileListView({super.key});
 
   @override
@@ -42,6 +42,18 @@ class ProfileListView extends StatelessWidget {
           onTap: () async {
             final navigator = GoRouter.of(context);
             navigator.push('/PrivacyPolicyScreen');
+          },
+        ),
+        ListTile(
+          leading: SvgPicture.asset(
+            "assets/icons/Flash Icon.svg",
+            colorFilter: const ColorFilter.mode(iconColor, BlendMode.srcIn),
+          ),
+          title: const Text("Terms & Conditions"),
+          trailing: const Icon(Icons.arrow_forward_ios),
+          onTap: () async {
+            final navigator = GoRouter.of(context);
+            navigator.push('/UserProfileScreen');
           },
         ),
         ListTile(
