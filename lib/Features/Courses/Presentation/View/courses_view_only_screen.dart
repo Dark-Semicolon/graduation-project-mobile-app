@@ -95,8 +95,8 @@ class CoursesViewOnlyScreenState extends ConsumerState<CoursesViewOnlyScreen> {
                                   padding: EdgeInsets.all(20.0),
                                   child: Row(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.start,
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       CoursesNumbers(),
                                       Expanded(child: SizedBox()),
@@ -112,22 +112,17 @@ class CoursesViewOnlyScreenState extends ConsumerState<CoursesViewOnlyScreen> {
                               size: 15,
                             ),
                           ),
-                          error: (error, stack) => Center(
+                          error: (error, stack) => const Center(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                const Text(
+                                Text(
                                   'You have no courses enrolled.',
                                   style: TextStyle(
                                     fontSize: 18,
                                     color: kPrimaryColor,
                                   ),
-                                ),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    ref.refresh(studentCoursesProvider);
-                                  },
-                                  child: const Text('Retry'),
                                 ),
                               ],
                             ),
