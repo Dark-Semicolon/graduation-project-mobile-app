@@ -21,6 +21,7 @@ class HomePageState extends State<HomePage> {
     authApi: AuthApi(baseUrl: MainApiConstants.baseUrl),
   );
   UserDataModel? _userData;
+  bool _isLoading = true;
 
   @override
   void initState() {
@@ -34,18 +35,25 @@ class HomePageState extends State<HomePage> {
       if (token != null) {
         final userData = await _authRepository.fetchUserData(token);
         if (userData != null) {
-          // print('Fetched user data: ${userData.toJson()}'); // Debug statement
           setState(() {
             _userData = userData;
+            _isLoading = false;
           });
         } else {
-          // print('User data is null');
+          setState(() {
+            _isLoading = false;
+          });
         }
       } else {
-        // print('Token is null');
+        setState(() {
+          _isLoading = false;
+        });
       }
     } catch (error) {
-      // print('Error fetching user data: $error');
+      setState(() {
+        _isLoading = false;
+      });
+      print('Error fetching user data: $error'); // Debug statement
     }
   }
 
@@ -61,24 +69,22 @@ class HomePageState extends State<HomePage> {
           backgroundColor: kPrimaryColor,
         ),
       ),
-      body: _userData != null
-          ? Column(
+      body: _isLoading
+          ? Center(
+              child: LoadingAnimationWidget.waveDots(
+                color: kPrimaryColor,
+                size: 50,
+              ),
+            )
+          : Column(
               children: [
-                HomeBody(gpa: _userData!.data!.gpa ?? 0.0),
+                HomeBody(gpa: _userData?.data?.gpa ?? 0.0),
                 const SizedBox(height: 25),
-                // ScheduleView(),
-                const SizedBox(height: 48),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Image.asset('assets/images/college_project-bro.png'),
                 )
               ],
-            )
-          : Center(
-              child: LoadingAnimationWidget.waveDots(
-                color: Colors.white,
-                size: 20,
-              ),
             ),
       bottomNavigationBar: const CustomBottomNavBar(
         selectedMenu: MenuState.home,

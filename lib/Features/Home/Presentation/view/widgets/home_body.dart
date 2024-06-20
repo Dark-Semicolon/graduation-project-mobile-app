@@ -20,7 +20,7 @@ class HomeBody extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final courseNotifier = ref.read(courseProvider.notifier);
+    final courseNotifier = ref.watch(courseProvider.notifier);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -111,7 +111,7 @@ class HomeBody extends ConsumerWidget {
   void showLoadingDialog(BuildContext context) {
     showDialog(
       context: context,
-      barrierDismissible: true,
+      barrierDismissible: false,
       builder: (BuildContext context) {
         return Center(
           child: LoadingAnimationWidget.waveDots(
