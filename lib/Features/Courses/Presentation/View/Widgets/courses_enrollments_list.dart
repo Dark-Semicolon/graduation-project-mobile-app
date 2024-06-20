@@ -82,96 +82,12 @@ class _CoursesListState extends ConsumerState<CoursesList> {
     }
   }
 
-  void _showAddCourseDialog(AvailableCoursesData courseData) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Center(
-              child: Text('Add Course',
-                  style: AppFonts.manropeBoldSizable(
-                      fontSize: 20, color: kPrimaryColor))),
-          content: Text(
-            'Are you sure you want to add this course?',
-            style: AppFonts.manropeNormalSizable(
-                fontSize: 15, color: Colors.black),
-          ),
-          actions: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    _addCourse(courseData);
-                  },
-                  child: Text('Add',
-                      style: AppFonts.manropeBoldSizable(
-                          fontSize: 15, color: Colors.black)),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text('Cancel',
-                      style: AppFonts.manropeNormalSizable(
-                          fontSize: 15, color: Colors.black)),
-                ),
-              ],
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   void _addCourse(AvailableCoursesData courseData) {
     final courseNotifier = ref.read(courseProvider.notifier);
     if (!courseNotifier.addCourse(courseData)) {
       _showErrorDialog(
           'Failed to add course. It may exceed the maximum credit hours.');
     }
-  }
-
-  void _showRemoveCourseDialog(int courseId) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Center(
-              child: Text('Remove Course',
-                  style: AppFonts.manropeBoldSizable(
-                      fontSize: 20, color: kPrimaryColor))),
-          content: Text('Are you sure you want to remove this course?',
-              style: AppFonts.manropeNormalSizable(
-                  fontSize: 15, color: Colors.black)),
-          actions: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    _removeCourse(courseId);
-                  },
-                  child: Text('Remove',
-                      style: AppFonts.manropeBoldSizable(
-                          fontSize: 15, color: Colors.black)),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text('Cancel',
-                      style: AppFonts.manropeNormalSizable(
-                          fontSize: 15, color: Colors.black)),
-                ),
-              ],
-            ),
-          ],
-        );
-      },
-    );
   }
 
   void _removeCourse(int courseId) {
@@ -189,35 +105,197 @@ class _CoursesListState extends ConsumerState<CoursesList> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Center(
-              child: Text('Warning',
-                  style: AppFonts.manropeBoldSizable(
-                      color: Colors.redAccent, fontSize: 20))),
-          content: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          title: Column(
             children: [
-              Flexible(
-                child: Text(
-                  message,
-                  style: AppFonts.manropeNormalSizable(
-                      color: Colors.black, fontSize: 15),
-                  overflow: TextOverflow.clip,
-                  softWrap: true,
-                  maxLines: 2,
+              Image.asset('assets/images/wrong.png', height: 50),
+              const SizedBox(height: 10),
+              Text(
+                'Warning',
+                style: AppFonts.manropeBoldSizable(
+                  color: Colors.redAccent,
+                  fontSize: 20,
                 ),
               ),
             ],
           ),
+          content: Text(
+            message,
+            style: AppFonts.manropeNormalSizable(
+              color: Colors.black,
+              fontSize: 15,
+            ),
+            textAlign: TextAlign.center,
+          ),
           actions: [
             Center(
-              child: TextButton(
+              child: ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('OK',
-                    style: AppFonts.manropeBoldSizable(
-                        color: Colors.redAccent, fontSize: 15)),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.redAccent,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: Text(
+                  'OK',
+                  style: AppFonts.manropeBoldSizable(
+                    color: Colors.white,
+                    fontSize: 15,
+                  ),
+                ),
               ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showAddCourseDialog(AvailableCoursesData courseData) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Column(
+            children: [
+              Image.asset('assets/images/righ.png', height: 50),
+              const SizedBox(height: 10),
+              Text(
+                'Add Course',
+                style: AppFonts.manropeBoldSizable(
+                  fontSize: 20,
+                  color: Colors.black,
+                ),
+              ),
+            ],
+          ),
+          content: Text(
+            'Are you sure you want to add this course?',
+            style: AppFonts.manropeNormalSizable(
+              fontSize: 15,
+              color: Colors.black,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          actions: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    _addCourse(courseData);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  child: Text(
+                    'Add',
+                    style: AppFonts.manropeBoldSizable(
+                      fontSize: 15,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.grey,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  child: Text(
+                    'Cancel',
+                    style: AppFonts.manropeNormalSizable(
+                      fontSize: 15,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showRemoveCourseDialog(int courseId) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Column(
+            children: [
+              Image.asset('assets/images/wrong.png', height: 50),
+              const SizedBox(height: 10),
+              Text(
+                'Remove Course',
+                style: AppFonts.manropeBoldSizable(
+                  fontSize: 20,
+                  color: Colors.black,
+                ),
+              ),
+            ],
+          ),
+          content: Text(
+            'Are you sure you want to remove this course?',
+            style: AppFonts.manropeNormalSizable(
+              fontSize: 15,
+              color: Colors.black,
+            ),
+            textAlign: TextAlign.center,
+          ),
+          actions: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    _removeCourse(courseId);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  child: Text(
+                    'Remove',
+                    style: AppFonts.manropeBoldSizable(
+                      fontSize: 15,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.grey,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  child: Text(
+                    'Cancel',
+                    style: AppFonts.manropeNormalSizable(
+                      fontSize: 15,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         );

@@ -127,20 +127,21 @@ class _LoginPageState extends State<LoginPage> {
                       children: [
                         SizedBox(width: 10),
                         Padding(
-                          padding: EdgeInsets.all(8.0),
+                          padding: EdgeInsets.all(5.0),
                           child: Text(
                             "If you don't have an account please go to students Affairs",
                             overflow: TextOverflow.ellipsis,
                             maxLines: 2,
+                            softWrap: true,
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontSize: 12,
+                              fontSize: 10,
                               fontFamily: 'Outfit',
                               fontWeight: FontWeight.w400,
                             ),
                           ),
                         ),
-                        SizedBox(width: 10),
+                        SizedBox(width: 12),
                       ],
                     ),
                     const SizedBox(height: 20),

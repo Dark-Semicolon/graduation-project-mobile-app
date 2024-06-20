@@ -1,7 +1,5 @@
 import 'package:eductionsystem/Constants/const.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../../../../../Constants/FontsConst.dart';
 import '../../../../../Core/user data stuff.dart';
@@ -10,7 +8,6 @@ import '../../../../../Data/API/Models/user_data.dart';
 import '../../../../../Data/API/Services/api_constant.dart';
 import '../../../../../Data/API/Services/auth_service.dart';
 import '../../../../../Data/API/Token/token_manager.dart';
-import '../../../../Courses/Presentation/View/student courses utils.dart';
 
 class HomePageUpperBar extends StatefulWidget {
   const HomePageUpperBar({super.key});
@@ -30,6 +27,7 @@ class HomePageUpperBarState extends State<HomePageUpperBar> {
     super.initState();
     _fetchUserData();
   }
+
   Future<void> _loadUserData() async {
     final gpa = await UserDataService.getGpa();
     final failedCoursesCount = await UserDataService.getFailedCoursesCount();
@@ -41,6 +39,7 @@ class HomePageUpperBarState extends State<HomePageUpperBar> {
     final userCreatedAt = await UserDataService.getUserCreatedAt();
     final userUpdatedAt = await UserDataService.getUserUpdatedAt();
   }
+
   Future<void> _fetchUserData() async {
     try {
       final token = await TokenManager.getToken();
@@ -70,45 +69,56 @@ class HomePageUpperBarState extends State<HomePageUpperBar> {
           children: [
             Container(
               color: kPrimaryColor, // Blue container
-              height: 110,
+              height: 120,
               width: double.infinity,
-              child: Row(
+              child: Column(
                 children: [
-                  const SizedBox(width: 25),
-                  Column(
+                  const SizedBox(height: 5),
+                  Row(
                     children: [
-                      const SizedBox(height: 15),
-                      CircleAvatar(
-                        radius: 20,
-                        backgroundColor: kPrimaryColor,
-                        backgroundImage: _userData != null &&
-                                _userData!.data!.attributes!.image != null
-                            ? NetworkImage(
-                                '${MainApiConstants.baseUrl}/storage/${_userData!.data!.attributes!.image}')
-                            : null,
+                      const SizedBox(width: 30),
+                      Column(
+                        children: [
+                          const SizedBox(height: 10),
+                          CircleAvatar(
+                            radius: 30,
+                            backgroundColor: Colors.grey[300],
+                            backgroundImage: NetworkImage(
+                              '${MainApiConstants.baseUrl}/storage/${_userData!.data!.attributes!.image ?? ''}',
+                            ),
+                            child: _userData!.data!.attributes!.image != null
+                                ? null
+                                : const Icon(
+                                    Icons.person,
+                                    size: 48,
+                                    color: kPrimaryColor,
+                                  ),
+                          ),
+                          const SizedBox(height: 20),
+                        ],
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(width: 20),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(_userData?.data?.attributes?.name ?? 'name',
+                              style: AppFonts.manropeBoldSizable(
+                                  color: Colors.white, fontSize: 20)),
+                          const SizedBox(height: 5),
+                          Text('Welcome To CamusSuit',
+                              style: AppFonts.manropeNormalSizable(
+                                  height: null,
+                                  color: Colors.white,
+                                  fontSize: 15)),
+                          const SizedBox(height: 10),
+                        ],
+                      ),
+                      const Expanded(child: SizedBox()),
                     ],
                   ),
-                  const SizedBox(width: 5),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(_userData?.data?.attributes?.name ?? 'name',
-                          style: AppFonts.manropeBoldSizable(
-                              color: Colors.white, fontSize: 20)),
-                      const SizedBox(height: 5),
-                      Text('Welcome To CamusSuit',
-                          style: AppFonts.manropeNormalSizable(
-                              height: null, color: Colors.white, fontSize: 15)),
-                      const SizedBox(height: 10),
-
-                    ],
-                  ),
-                  const Expanded(child: SizedBox()),
                 ],
               ),
             ),

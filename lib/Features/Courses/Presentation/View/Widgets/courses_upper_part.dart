@@ -1,16 +1,16 @@
+import 'package:eductionsystem/Constants/const.dart';
+import 'package:eductionsystem/Data/API/Const/end_points.dart';
+import 'package:eductionsystem/Data/API/Models/user_data.dart';
+import 'package:eductionsystem/Data/API/Services/auth_service.dart';
+import 'package:eductionsystem/Data/API/Token/token_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../../../../../Constants/FontsConst.dart';
-import '../../../../../Constants/Icons.dart';
-import '../../../../../Constants/const.dart';
 import '../../../../../Core/utils/retrive_user_data.dart';
 import '../../../Data/Models/course_selection.dart';
 import '../../../Data/Services/get_availble_courses_services.dart';
-import '../student courses utils.dart';
 
 DateTime dateTime = DateTime.parse('2024-03-26 02:08:00');
 String formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
@@ -24,11 +24,32 @@ class CoursesScreenUpperPart extends StatefulWidget {
 
 class CoursesScreenUpperPartState extends State<CoursesScreenUpperPart> {
   late Future<CourseSelection> _courseSelection;
+  UserDataModel? _userData;
+  final AuthRepository _authRepository = AuthRepository(
+    authApi: AuthApi(baseUrl: MainApiConstants.baseUrl),
+  );
 
   @override
   void initState() {
     super.initState();
     _courseSelection = CoursesApiService().fetchCourseSelection();
+    _fetchUserData();
+  }
+
+  Future<void> _fetchUserData() async {
+    try {
+      final token = await TokenManager.getToken();
+      if (token != null) {
+        final userData = await _authRepository.fetchUserData(token);
+        if (userData != null) {
+          setState(() {
+            _userData = userData;
+          });
+        }
+      }
+    } catch (error) {
+      print('Error fetching user data: $error');
+    }
   }
 
   int calculateDaysLeft(String endDate) {
@@ -65,12 +86,27 @@ class CoursesScreenUpperPartState extends State<CoursesScreenUpperPart> {
                   children: [
                     Column(
                       children: [
-                        const SizedBox(height: 20),
-                        SvgPicture.asset(
-                          userIconPath,
-                          height: 40,
-                          width: 40,
-                        ),
+                        const SizedBox(height: 15),
+                        _userData != null
+                            ? CircleAvatar(
+                                radius: 25,
+                                backgroundColor: Colors.grey[300],
+                                backgroundImage: NetworkImage(
+                                  '${MainApiConstants.baseUrl}/storage/${_userData!.data!.attributes!.image ?? ''}',
+                                ),
+                                child:
+                                    _userData!.data!.attributes!.image != null
+                                        ? null
+                                        : const Icon(
+                                            Icons.person,
+                                            size: 30,
+                                            color: kPrimaryColor,
+                                          ),
+                              )
+                            : LoadingAnimationWidget.waveDots(
+                                color: Colors.blue,
+                                size: 50,
+                              ),
                       ],
                     ),
                     const SizedBox(width: 15),
@@ -89,10 +125,8 @@ class CoursesScreenUpperPartState extends State<CoursesScreenUpperPart> {
                               style: AppFonts.manropeNormalSizable(
                                   fontSize: 18, color: kPrimaryColor),
                             ),
-
                           ],
                         ),
-
                         const SizedBox(height: 5),
                         Row(
                           children: [

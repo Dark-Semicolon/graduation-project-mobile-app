@@ -1,3 +1,4 @@
+import 'package:eductionsystem/Constants/const.dart';
 import 'package:eductionsystem/Data/API/Const/end_points.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -66,6 +67,13 @@ class _ProfilePageState extends State<ProfilePage> {
                         backgroundImage: NetworkImage(
                           '${MainApiConstants.baseUrl}/storage/${_userData!.data!.attributes!.image ?? ''}',
                         ),
+                        child: _userData!.data!.attributes!.image != null
+                            ? null
+                            : const Icon(
+                                Icons.person,
+                                size: 48,
+                                color: kPrimaryColor,
+                              ),
                       ),
                       const SizedBox(height: 16),
                       Text(

@@ -38,7 +38,7 @@ class CoursesExpandableSection extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: isSelected ? null : kPrimaryColor,
                   gradient: isSelected
-                      ? LinearGradient(
+                      ? const LinearGradient(
                           colors: [Colors.teal, kPrimaryColor],
                           begin: Alignment.centerLeft,
                           end: Alignment.centerRight,
@@ -115,7 +115,7 @@ class CoursesExpandableSection extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
                 child: Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(10),

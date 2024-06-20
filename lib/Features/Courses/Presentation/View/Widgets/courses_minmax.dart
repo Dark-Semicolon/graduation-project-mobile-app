@@ -14,20 +14,45 @@ class CourseMinMax extends ConsumerWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text(
-            'Minimum Credit Hours Not Reached',
-            style: TextStyle(fontSize: 20, color: Colors.black),
+          title: Column(
+            children: [
+              Image.asset('assets/images/warning.png', height: 50),
+              const SizedBox(height: 10),
+              Text(
+                'Minimum Credit Hours Not Reached',
+                style: AppFonts.manropeBoldSizable(
+                  fontSize: 20,
+                  color: Colors.black,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ],
           ),
-          content: const Text(
+          content: Text(
             'You have not reached the minimum required credit hours.',
-            style: TextStyle(fontSize: 20, color: kPrimaryColor),
+            style: AppFonts.manropeNormalSizable(
+              fontSize: 15,
+              color: Colors.redAccent,
+            ),
+            textAlign: TextAlign.center,
           ),
           actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text(
-                'OK',
-                style: TextStyle(fontSize: 20, color: Colors.black),
+            Center(
+              child: ElevatedButton(
+                onPressed: () => Navigator.of(context).pop(),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.redAccent,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                child: Text(
+                  'OK',
+                  style: AppFonts.manropeBoldSizable(
+                    fontSize: 15,
+                    color: Colors.white,
+                  ),
+                ),
               ),
             ),
           ],
