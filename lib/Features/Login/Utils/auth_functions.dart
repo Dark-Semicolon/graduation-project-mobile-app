@@ -1,6 +1,7 @@
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../../../Data/API/Const/end_points.dart';
 import '../../../Data/API/Models/auth_data.dart';
@@ -11,8 +12,7 @@ class LoginUserProcess extends StatefulWidget {
   final String email;
   final String password;
 
-  const LoginUserProcess(
-      {Key? key, required this.email, required this.password})
+  const LoginUserProcess({Key? key, required this.email, required this.password})
       : super(key: key);
 
   @override
@@ -24,7 +24,7 @@ class _LoginUserProcessState extends State<LoginUserProcess> {
   late String _password;
 
   final authRepository =
-      AuthRepository(authApi: AuthApi(baseUrl: MainApiConstants.baseUrl));
+  AuthRepository(authApi: AuthApi(baseUrl: MainApiConstants.baseUrl));
 
   @override
   void initState() {
@@ -48,20 +48,22 @@ class _LoginUserProcessState extends State<LoginUserProcess> {
         TokenManager.setToken(result);
         GoRouter.of(context).push('/Homepage');
       } else {
-        Navigator.pop(context,
-            result); // Pass the error message back to the previous screen
+        Navigator.pop(context, result); // Pass the error message back to the previous screen
       }
     } catch (e) {
-      Navigator.pop(context,
-          'Error: ${e.toString()}'); // Handle error and pass message back to the previous screen
+      Navigator.pop(context, 'Error: ${e.toString()}'); // Handle error and pass message back to the previous screen
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
+      backgroundColor: Colors.white, // Set background color to white
       body: Center(
-        child: CircularProgressIndicator(),
+        child: LoadingAnimationWidget.waveDots(
+          color: Colors.blue,
+          size: 50.0,
+        ),
       ),
     );
   }

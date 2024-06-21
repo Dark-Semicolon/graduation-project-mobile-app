@@ -1,3 +1,4 @@
+import 'package:eductionsystem/Constants/FontsConst.dart';
 import 'package:eductionsystem/Constants/const.dart';
 import 'package:eductionsystem/Data/API/Const/end_points.dart';
 import 'package:flutter/material.dart';
@@ -75,23 +76,15 @@ class _ProfilePageState extends State<ProfilePage> {
                                 color: kPrimaryColor,
                               ),
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 20),
                       Text(
                         _userData!.data!.attributes!.name ?? '',
-                        style: const TextStyle(
-                          fontSize: 24,
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w900,
-                        ),
+                        style: AppFonts.manropeBoldSizable( fontSize: 25,color: kPrimaryColor)
                       ),
                       const SizedBox(height: 8),
                       Text(
                         _userData!.data!.attributes!.email ?? '',
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontFamily: 'Montserrat',
-                          fontWeight: FontWeight.w900,
-                        ),
+                        style:AppFonts.manropeNormalSizable( fontSize: 20,color: Colors.black45)
                       ),
                     ],
                   )

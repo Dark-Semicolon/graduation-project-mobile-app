@@ -1,13 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:eductionsystem/Data/API/Const/end_points.dart';
+import 'package:eductionsystem/Data/API/Token/token_manager.dart';
 import 'package:http/http.dart' as http;
 
-import '../../../../Data/API/Const/end_points.dart';
-import '../../../../Data/API/Token/token_manager.dart';
-
-
+// API Service
 class StudentCoursesService {
   final String baseUrl;
 
@@ -29,26 +27,18 @@ class StudentCoursesService {
       ).timeout(const Duration(seconds: 5));
 
       if (response.statusCode == 200) {
-        return StudentCoursesModel.fromJson(json.decode(response.body));
+        final decodedResponse = json.decode(response.body);
+        return StudentCoursesModel.fromJson(decodedResponse);
       } else {
         throw Exception(
-            'Failed to load student courses: ${response.statusCode}');
+            'Failed to load student courses: ${response.statusCode} ${response.body}');
       }
     } catch (e) {
-      throw Exception('Error fetching student courses: $e');
+      print('Error fetching student courses: $e');
+      rethrow;
     }
   }
 }
-
-final studentCoursesServiceProvider = Provider<StudentCoursesService>((ref) {
-  return StudentCoursesService(MainApiConstants.baseUrl);
-});
-
-final studentCoursesProvider = FutureProvider<StudentCoursesModel?>((ref) async {
-  final service = ref.read(studentCoursesServiceProvider);
-  return service.fetchStudentCourses();
-});
-
 
 class StudentCoursesModel {
   StudentCoursesModel({
@@ -57,12 +47,14 @@ class StudentCoursesModel {
     required this.academicYear,
   });
 
-  late final List<Data> data;
+  late final List<StudentCoursesData> data;
   late final Semester semester;
   late final AcademicYear academicYear;
 
   StudentCoursesModel.fromJson(Map<String, dynamic> json) {
-    data = (json['data'] as List).map((e) => Data.fromJson(e)).toList();
+    data = (json['data'] as List)
+        .map((e) => StudentCoursesData.fromJson(e))
+        .toList();
     semester = Semester.fromJson(json['semester']);
     academicYear = AcademicYear.fromJson(json['academicYear']);
   }
@@ -76,8 +68,8 @@ class StudentCoursesModel {
   }
 }
 
-class Data {
-  Data({
+class StudentCoursesData {
+  StudentCoursesData({
     required this.type,
     required this.id,
     required this.attributes,
@@ -87,7 +79,7 @@ class Data {
   late final int id;
   late final DataAttributes attributes;
 
-  Data.fromJson(Map<String, dynamic> json) {
+  StudentCoursesData.fromJson(Map<String, dynamic> json) {
     type = json['type'];
     id = json['id'];
     attributes = DataAttributes.fromJson(json['attributes']);
@@ -219,3 +211,5 @@ class AcademicYearAttributes {
     return _data;
   }
 }
+
+// UI Code
