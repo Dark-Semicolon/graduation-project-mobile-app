@@ -110,7 +110,6 @@ class CourseEnrollmentCard extends StatelessWidget {
   }
 }
 
-
 // class CourseEnrollmentCardNoCourses extends StatelessWidget {
 //   final VoidCallback onPressed;
 //
@@ -210,8 +209,7 @@ class CourseEnrollmentCard extends StatelessWidget {
 class StudentCourses extends StatelessWidget {
   final VoidCallback onPressed;
 
-  const StudentCourses(
-      {super.key, required this.onPressed});
+  const StudentCourses({super.key, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {

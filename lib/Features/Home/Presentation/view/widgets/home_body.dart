@@ -6,9 +6,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import '../../../../../Constants/FontsConst.dart';
 import '../../../../../Constants/const.dart';
 import '../../../../Courses/Data/Models/course_selection.dart';
-import '../../../../Courses/Presentation/View/courses_view_only_screen.dart';
 import '../../../../Courses/Riverpod/river_state.dart';
-import '../../../../Courses/Utils/courses_navigator.dart';
 import 'Course_card.dart';
 import 'Grades_card.dart';
 import 'home_upper_bar.dart';
@@ -16,7 +14,7 @@ import 'home_upper_bar.dart';
 class HomeBody extends ConsumerWidget {
   final double gpa;
 
-  const HomeBody({Key? key, required this.gpa}) : super(key: key);
+  const HomeBody({super.key, required this.gpa});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -53,30 +51,31 @@ class HomeBody extends ConsumerWidget {
                       GradesCard(
                         gpa: double.parse(gpa.toStringAsFixed(2)),
                         onPressed: () {
-                          showLoadingDialog(context);
-                          Future.delayed(const Duration(seconds: 1), () {
-                            GoRouter.of(context).push("/GradesPage");
-                            Navigator.of(context).pop();
-                          });
+                          GoRouter.of(context).push("/GradesPage");
                         },
                       ),
                       const SizedBox(width: 14),
                       FutureBuilder<CourseSelection>(
                         future: courseNotifier.fetchCourseSelection(),
-                        builder: (context, AsyncSnapshot<CourseSelection> snapshot) {
-                          if (snapshot.connectionState == ConnectionState.waiting) {
-                            return LoadingAnimationWidget.waveDots(
-                              color: Colors.blue,
-                              size: 50,
+                        builder:
+                            (context, AsyncSnapshot<CourseSelection> snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Container(
+                              color: Colors.white,
+                              child: LoadingAnimationWidget.fourRotatingDots(
+                                color: Colors.blue,
+                                size: 35,
+                              ),
                             );
                           } else if (snapshot.hasError) {
                             return Text('Error: ${snapshot.error}');
                           } else if (snapshot.hasData) {
-                            final daysLeft = calculateDaysLeft(snapshot.data!.data!.attributes!.endAt!);
+                            final daysLeft = calculateDaysLeft(
+                                snapshot.data!.data!.attributes!.endAt!);
                             return CourseEnrollmentCard(
                               daysLeft: daysLeft,
                               onPressed: () {
-                                showLoadingDialog(context);
                                 navigateBasedOnCourseSelection(context, ref);
                               },
                             );
@@ -108,6 +107,39 @@ class HomeBody extends ConsumerWidget {
     return deadline.difference(now).inDays;
   }
 
+  Future<void> navigateBasedOnCourseSelection(
+      BuildContext context, WidgetRef ref) async {
+    final courseNotifier = ref.read(courseProvider.notifier);
+
+    // Show loading dialog
+    showLoadingDialog(context);
+
+    try {
+      // Determine the navigation screen
+      final screen = await courseNotifier.determineNavigationScreen();
+
+      // Check if context is still valid before navigating
+      if (context.mounted) {
+        // Pop the loading dialog
+        Navigator.of(context).pop();
+
+        // Navigate to the determined screen
+        GoRouter.of(context).push(screen);
+      }
+    } catch (e) {
+      // Check if context is still valid before showing error
+      if (context.mounted) {
+        // Pop the loading dialog in case of error
+        Navigator.of(context).pop();
+
+        // Show error message
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error determining navigation: $e')),
+        );
+      }
+    }
+  }
+
   void showLoadingDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -117,7 +149,6 @@ class HomeBody extends ConsumerWidget {
           child: LoadingAnimationWidget.waveDots(
             color: Colors.blue,
             size: 50,
-
           ),
         );
       },

@@ -9,8 +9,6 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'Widgets/courses_upper_part.dart';
 import 'Widgets/exapndable_bar_view_only.dart';
 
-
-
 class CoursesViewOnlyScreen extends StatefulWidget {
   const CoursesViewOnlyScreen({super.key});
 
@@ -22,7 +20,7 @@ class CoursesViewOnlyScreenState extends State<CoursesViewOnlyScreen> {
   int _expandedIndex = -1;
   late Future<StudentCoursesModel?> _studentCoursesFuture;
   final StudentCoursesService _studentCoursesService =
-  StudentCoursesService(MainApiConstants.baseUrl);
+      StudentCoursesService(MainApiConstants.baseUrl);
 
   @override
   void initState() {

@@ -93,11 +93,15 @@ class GradeViewBody extends StatelessWidget {
                     ),
                   );
                 }
-                return  Center(
+                return Center(
                   child: Column(
                     children: [
                       const SizedBox(height: 80),
-                      Text('Hello! You should choose the year',style: AppFonts.manropeBoldSizable( color:kPrimaryColor),),
+                      Text(
+                        'Hello! You should choose the year',
+                        style:
+                            AppFonts.manropeBoldSizable(color: kPrimaryColor),
+                      ),
                     ],
                   ),
                 );
