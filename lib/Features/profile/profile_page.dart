@@ -77,15 +77,13 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                       ),
                       const SizedBox(height: 20),
-                      Text(
-                        _userData!.data!.attributes!.name ?? '',
-                        style: AppFonts.manropeBoldSizable( fontSize: 25,color: kPrimaryColor)
-                      ),
+                      Text(_userData!.data!.attributes!.name ?? '',
+                          style: AppFonts.manropeBoldSizable(
+                              fontSize: 25, color: kPrimaryColor)),
                       const SizedBox(height: 8),
-                      Text(
-                        _userData!.data!.attributes!.email ?? '',
-                        style:AppFonts.manropeNormalSizable( fontSize: 20,color: Colors.black45)
-                      ),
+                      Text(_userData!.data!.attributes!.email ?? '',
+                          style: AppFonts.manropeNormalSizable(
+                              fontSize: 20, color: Colors.black45)),
                     ],
                   )
                 : LoadingAnimationWidget.waveDots(

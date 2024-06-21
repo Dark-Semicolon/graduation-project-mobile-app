@@ -11,9 +11,139 @@ import '../../../../../Constants/FontsConst.dart';
 import '../../../../../Core/utils/retrive_user_data.dart';
 import '../../../Data/Models/course_selection.dart';
 import '../../../Data/Services/get_availble_courses_services.dart';
+import '../student courses utils.dart';
 
 DateTime dateTime = DateTime.parse('2024-03-26 02:08:00');
 String formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
+
+class CoursesScreenUpperPartNoDeadLine extends StatefulWidget {
+  const CoursesScreenUpperPartNoDeadLine({super.key});
+
+  @override
+  CoursesScreenUpperPartNoDeadLineState createState() =>
+      CoursesScreenUpperPartNoDeadLineState();
+}
+
+class CoursesScreenUpperPartNoDeadLineState
+    extends State<CoursesScreenUpperPartNoDeadLine> {
+  UserDataModel? _userData;
+  String? _semester;
+  String? _academicYear;
+
+  final AuthRepository _authRepository = AuthRepository(
+    authApi: AuthApi(baseUrl: MainApiConstants.baseUrl),
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchUserData();
+    _fetchSemesterAndYear();
+  }
+
+  Future<void> _fetchUserData() async {
+    try {
+      final token = await TokenManager.getToken();
+      if (token != null) {
+        final userData = await _authRepository.fetchUserData(token);
+        if (userData != null) {
+          setState(() {
+            _userData = userData;
+          });
+        }
+      }
+    } catch (error) {
+      print('Error fetching user data: $error');
+    }
+  }
+
+  Future<void> _fetchSemesterAndYear() async {
+    try {
+      final studentCoursesService =
+          StudentCoursesService(MainApiConstants.baseUrl);
+      final courseSelection = await studentCoursesService.fetchStudentCourses();
+      if (courseSelection != null) {
+        setState(() {
+          _semester = courseSelection.semester.attributes.name;
+          _academicYear = courseSelection.academicYear.attributes.name;
+        });
+      }
+    } catch (error) {
+      print('Error fetching semester and year: $error');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(15.0),
+      child: Column(
+        children: [
+          const SizedBox(height: 15),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                children: [
+                  const SizedBox(height: 15),
+                  _userData != null
+                      ? CircleAvatar(
+                          radius: 25,
+                          backgroundColor: Colors.grey[300],
+                          backgroundImage: NetworkImage(
+                            '${MainApiConstants.baseUrl}/storage/${_userData!.data!.attributes!.image ?? ''}',
+                          ),
+                          child: _userData!.data!.attributes!.image != null
+                              ? null
+                              : const Icon(
+                                  Icons.person,
+                                  size: 30,
+                                  color: kPrimaryColor,
+                                ),
+                        )
+                      : LoadingAnimationWidget.waveDots(
+                          color: Colors.blue,
+                          size: 50,
+                        ),
+                ],
+              ),
+              const SizedBox(width: 15),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Text(
+                        'Hi, ',
+                        style: AppFonts.manropeBoldSizable(
+                            fontSize: 20, color: kPrimaryColor),
+                      ),
+                      UserName(
+                        style: AppFonts.manropeNormalSizable(
+                            fontSize: 20, color: kPrimaryColor),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  if (_semester != null && _academicYear != null)
+                    Text(
+                      '$_semester, $_academicYear',
+                      style: AppFonts.manropeNormalSizable(
+                        color: kPrimaryColor,
+                        fontSize: 15,
+                      ),
+                    ),
+                ],
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+        ],
+      ),
+    );
+  }
+}
 
 class CoursesScreenUpperPart extends StatefulWidget {
   const CoursesScreenUpperPart({super.key});
@@ -113,7 +243,7 @@ class CoursesScreenUpperPartState extends State<CoursesScreenUpperPart> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const SizedBox(height: 15),
+                        const SizedBox(height: 20),
                         Row(
                           children: [
                             Text(
@@ -147,11 +277,6 @@ class CoursesScreenUpperPartState extends State<CoursesScreenUpperPart> {
                             ),
                           ],
                         ),
-                      ],
-                    ),
-                    const Column(
-                      children: [
-                        SizedBox(height: 10),
                       ],
                     ),
                   ],

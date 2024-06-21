@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../../../Constants/FontsConst.dart';
 import '../../../Constants/const.dart';
@@ -31,8 +32,8 @@ class UpdateUserDataScreenState extends State<UpdateUserDataScreen> {
 
   // Define text styles
   final TextStyle _titleStyle = AppFonts.manropeNormalSizable(
-    color: kPrimaryColor,
-    fontSize: 25,
+    color: Colors.black,
+    fontSize: 20,
   );
   final TextStyle _labelStyle = AppFonts.manropeNormalSizable(
     color: kPrimaryColor,
@@ -131,81 +132,119 @@ class UpdateUserDataScreenState extends State<UpdateUserDataScreen> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text('Edit Your Data', style: _titleStyle),
+        backgroundColor: Colors.white,
+        elevation: 0,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: _userData == null
             ? const Center(child: CircularProgressIndicator())
-            : Form(
-                key: _formKey,
-                child: ListView(
-                  children: [
-                    _buildNonField(
-                      enabled: false,
-                      controller: _nameController,
-                      labelText: 'Name',
-                      hintText: 'Enter your name',
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your name';
-                        }
-                        return null;
-                      },
-                    ),
-                    _buildNonField(
-                      controller: TextEditingController(
-                          text: _userData?.data?.attributes?.email ?? ''),
-                      labelText: 'Email',
-                      hintText: '',
-                      enabled: false,
-                    ),
-                    _buildEditableField(
-                      controller: _passwordController,
-                      labelText: 'Password',
-                      hintText: 'Enter your password',
-                      obscureText: !_isPasswordVisible,
-                      onToggleVisibility: () {
-                        setState(() {
-                          _isPasswordVisible = !_isPasswordVisible;
-                        });
-                      },
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your password';
-                        }
-                        return null;
-                      },
-                    ),
-                    _buildEditableField(
-                      controller: _passwordConfirmationController,
-                      labelText: 'Confirm Password',
-                      hintText: 'Confirm your password',
-                      obscureText: !_isPasswordConfirmationVisible,
-                      onToggleVisibility: () {
-                        setState(() {
-                          _isPasswordConfirmationVisible =
-                              !_isPasswordConfirmationVisible;
-                        });
-                      },
-                      validator: (value) {
-                        if (value != _passwordController.text) {
-                          return 'Passwords do not match';
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 32),
-                    _buildUpdateButton(),
-                    if (_errorMessage != null)
-                      Padding(
-                        padding: const EdgeInsets.only(top: 16),
-                        child: Text(
-                          _errorMessage!,
-                          style: _errorStyle,
-                        ),
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Form(
+                      key: _formKey,
+                      child: ListView(
+                        children: [
+                          Center(
+                            child: CircleAvatar(
+                              radius: 48,
+                              backgroundColor: Colors.grey[300],
+                              backgroundImage: NetworkImage(
+                                '${MainApiConstants.baseUrl}/storage/${_userData!.data!.attributes!.image ?? ''}',
+                              ),
+                              child: _userData!.data!.attributes!.image != null
+                                  ? null
+                                  : const Icon(
+                                      Icons.person,
+                                      size: 48,
+                                      color: kPrimaryColor,
+                                    ),
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          _buildNonField(
+                            enabled: false,
+                            controller: _nameController,
+                            labelText: 'Name',
+                            hintText: 'Enter your name',
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your name';
+                              }
+                              return null;
+                            },
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          _buildNonField(
+                            controller: TextEditingController(
+                                text: _userData?.data?.attributes?.email ?? ''),
+                            labelText: 'Email',
+                            hintText: '',
+                            enabled: false,
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          _buildEditableField(
+                            controller: _passwordController,
+                            labelText: 'Password',
+                            hintText: 'Enter your password',
+                            obscureText: !_isPasswordVisible,
+                            onToggleVisibility: () {
+                              setState(() {
+                                _isPasswordVisible = !_isPasswordVisible;
+                              });
+                            },
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter your password';
+                              }
+                              return null;
+                            },
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          _buildEditableField(
+                            controller: _passwordConfirmationController,
+                            labelText: 'Confirm Password',
+                            hintText: 'Confirm your password',
+                            obscureText: !_isPasswordConfirmationVisible,
+                            onToggleVisibility: () {
+                              setState(() {
+                                _isPasswordConfirmationVisible =
+                                    !_isPasswordConfirmationVisible;
+                              });
+                            },
+                            validator: (value) {
+                              if (value != _passwordController.text) {
+                                return 'Passwords do not match';
+                              }
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: 32),
+                          if (_errorMessage != null)
+                            Padding(
+                              padding: const EdgeInsets.only(top: 16),
+                              child: Text(
+                                _errorMessage!,
+                                style: _errorStyle,
+                              ),
+                            ),
+                        ],
                       ),
-                  ],
-                ),
+                    ),
+                  ),
+                  _buildUpdateButton(),
+                  const SizedBox(
+                    height: 50,
+                  )
+                ],
               ),
       ),
     );
@@ -246,13 +285,15 @@ class UpdateUserDataScreenState extends State<UpdateUserDataScreen> {
               contentPadding:
                   const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
               errorStyle: _errorStyle,
-              suffixIcon: IconButton(
-                icon: Icon(
-                  obscureText ? Icons.visibility_off : Icons.visibility,
-                  color: Colors.grey,
-                ),
-                onPressed: onToggleVisibility,
-              ),
+              suffixIcon: onToggleVisibility != null
+                  ? IconButton(
+                      icon: Icon(
+                        obscureText ? Icons.visibility_off : Icons.visibility,
+                        color: Colors.grey,
+                      ),
+                      onPressed: onToggleVisibility,
+                    )
+                  : null,
             ),
             obscureText: obscureText,
             enabled: enabled,
@@ -271,7 +312,6 @@ class UpdateUserDataScreenState extends State<UpdateUserDataScreen> {
     required String hintText,
     bool enabled = false,
     FormFieldValidator<String>? validator,
-    VoidCallback? onToggleVisibility,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -336,8 +376,9 @@ class UpdateUserDataScreenState extends State<UpdateUserDataScreen> {
           elevation: 0,
         ),
         child: _isLoading
-            ? const CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+            ? LoadingAnimationWidget.waveDots(
+                color: Colors.white,
+                size: 20,
               )
             : Text('Update', style: AppFonts.manropeBoldSizable()),
       ),

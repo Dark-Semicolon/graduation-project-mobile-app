@@ -6,9 +6,10 @@ import 'package:eductionsystem/Features/Courses/Presentation/View/student%20cour
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
-import 'Widgets/courses_numbers.dart';
 import 'Widgets/courses_upper_part.dart';
 import 'Widgets/exapndable_bar_view_only.dart';
+
+
 
 class CoursesViewOnlyScreen extends StatefulWidget {
   const CoursesViewOnlyScreen({super.key});
@@ -72,12 +73,10 @@ class CoursesViewOnlyScreenState extends State<CoursesViewOnlyScreen> {
           }
 
           final studentCourses = snapshot.data!;
-          final semester = studentCourses.semester.attributes.name;
-          final academicYear = studentCourses.academicYear.attributes.name;
 
           return Column(
             children: [
-              const CoursesScreenUpperPart(),
+              const CoursesScreenUpperPartNoDeadLine(),
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
@@ -87,17 +86,6 @@ class CoursesViewOnlyScreenState extends State<CoursesViewOnlyScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              top: 5.0, left: 15.0, right: 15.0),
-                          child: Text(
-                            ' $semester, $academicYear',
-                            style: AppFonts.manropeBoldSizable(
-                              color: kPrimaryColor,
-                              fontSize: 15,
-                            ),
-                          ),
-                        ),
                         Padding(
                           padding: const EdgeInsets.only(
                               top: 15.0, left: 15.0, right: 15.0),
@@ -120,7 +108,6 @@ class CoursesViewOnlyScreenState extends State<CoursesViewOnlyScreen> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              CoursesNumbers(),
                               Expanded(child: SizedBox()),
                             ],
                           ),
