@@ -1,3 +1,5 @@
+import 'package:eductionsystem/Constants/FontsConst.dart';
+import 'package:eductionsystem/Constants/const.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
@@ -7,7 +9,7 @@ class ProfileListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const iconColor = Colors.blueAccent;
+    const iconColor = kPrimaryColor;
     double space = 15;
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -16,9 +18,10 @@ class ProfileListView extends StatelessWidget {
         ListTile(
           leading: SvgPicture.asset(
             "assets/icons/User Icon.svg",
+
             colorFilter: const ColorFilter.mode(iconColor, BlendMode.srcIn),
           ),
-          title: const Text("Edit Your Account"),
+          title:  Text("Edit Your Account", style: AppFonts.manropeNormalSizable(color:Colors.black,fontSize: 18)),
           trailing: const Icon(Icons.arrow_forward_ios),
           onTap: () {
             GoRouter.of(context).push('/UpdateUserDataScreen');
@@ -30,7 +33,7 @@ class ProfileListView extends StatelessWidget {
             "assets/icons/Flash Icon.svg",
             colorFilter: const ColorFilter.mode(iconColor, BlendMode.srcIn),
           ),
-          title: const Text("Terms & Conditions"),
+          title:  Text("Terms & Conditions", style: AppFonts.manropeNormalSizable(color:Colors.black,fontSize: 18)),
           trailing: const Icon(Icons.arrow_forward_ios),
           onTap: () async {
             final navigator = GoRouter.of(context);
@@ -41,10 +44,10 @@ class ProfileListView extends StatelessWidget {
         ListTile(
           leading: SvgPicture.asset(
             "assets/icons/Log out.svg",
-            colorFilter: const ColorFilter.mode(iconColor, BlendMode.srcIn),
+            colorFilter: const ColorFilter.mode(Colors.redAccent, BlendMode.srcIn),
           ),
-          title: const Text("Logout"),
-          trailing: const Icon(Icons.arrow_forward_ios),
+          title:  Text("Logout", style: AppFonts.manropeNormalSizable(color:Colors.redAccent,fontSize: 18)),
+          trailing: const Icon(Icons.arrow_forward_ios,color: Colors.redAccent,),
           onTap: () async {
             final navigator = GoRouter.of(context);
             navigator.go('/LogoutScreen');
