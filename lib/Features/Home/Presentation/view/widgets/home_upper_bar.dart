@@ -2,7 +2,6 @@ import 'package:eductionsystem/Constants/const.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../../Constants/FontsConst.dart';
-import '../../../../../Core/user data stuff.dart';
 import '../../../../../Data/API/Const/end_points.dart';
 import '../../../../../Data/API/Models/user_data.dart';
 import '../../../../../Data/API/Services/api_constant.dart';
@@ -28,36 +27,20 @@ class HomePageUpperBarState extends State<HomePageUpperBar> {
     _fetchUserData();
   }
 
-  Future<void> _loadUserData() async {
-    final gpa = await UserDataService.getGpa();
-    final failedCoursesCount = await UserDataService.getFailedCoursesCount();
-    final userName = await UserDataService.getUserName();
-    final userEmail = await UserDataService.getUserEmail();
-    final userCode = await UserDataService.getUserCode();
-    final userGrade = await UserDataService.getUserGrade();
-    final userStatus = await UserDataService.getUserStatus();
-    final userCreatedAt = await UserDataService.getUserCreatedAt();
-    final userUpdatedAt = await UserDataService.getUserUpdatedAt();
-  }
-
   Future<void> _fetchUserData() async {
     try {
       final token = await TokenManager.getToken();
       if (token != null) {
         final userData = await _authRepository.fetchUserData(token);
         if (userData != null) {
-          // print('Fetched user data: ${userData.toJson()}'); // Debug statement
           setState(() {
             _userData = userData;
           });
-        } else {
-          // print('User data is null');
         }
-      } else {
-        // print('Token is null');
       }
     } catch (error) {
-      // print('Error fetching user data: $error');
+      // Handle error appropriately
+      print('Error fetching user data: $error');
     }
   }
 
@@ -68,7 +51,7 @@ class HomePageUpperBarState extends State<HomePageUpperBar> {
         Stack(
           children: [
             Container(
-              color: kPrimaryColor, // Blue container
+              color: kPrimaryColor,
               height: 120,
               width: double.infinity,
               child: Column(
@@ -83,16 +66,19 @@ class HomePageUpperBarState extends State<HomePageUpperBar> {
                           CircleAvatar(
                             radius: 30,
                             backgroundColor: Colors.grey[300],
-                            backgroundImage: NetworkImage(
-                              '${MainApiConstants.baseUrl}/storage/${_userData!.data!.attributes!.image ?? ''}',
-                            ),
-                            child: _userData!.data!.attributes!.image != null
-                                ? null
-                                : const Icon(
+                            backgroundImage: _userData
+                                        ?.data?.attributes?.image !=
+                                    null
+                                ? NetworkImage(
+                                    '${MainApiConstants.baseUrl}/storage/${_userData!.data!.attributes!.image}')
+                                : null,
+                            child: _userData?.data?.attributes?.image == null
+                                ? const Icon(
                                     Icons.person,
                                     size: 48,
                                     color: kPrimaryColor,
-                                  ),
+                                  )
+                                : null,
                           ),
                           const SizedBox(height: 20),
                         ],
@@ -104,15 +90,22 @@ class HomePageUpperBarState extends State<HomePageUpperBar> {
                           const SizedBox(
                             height: 10,
                           ),
-                          Text(_userData?.data?.attributes?.name ?? 'name',
-                              style: AppFonts.manropeBoldSizable(
-                                  color: Colors.white, fontSize: 20)),
+                          Text(
+                            _userData?.data?.attributes?.name ?? 'name',
+                            style: AppFonts.manropeBoldSizable(
+                              color: Colors.white,
+                              fontSize: 20,
+                            ),
+                          ),
                           const SizedBox(height: 5),
-                          Text('Welcome To CamusSuit',
-                              style: AppFonts.manropeNormalSizable(
-                                  height: null,
-                                  color: Colors.white,
-                                  fontSize: 15)),
+                          Text(
+                            'Welcome To CamusSuit',
+                            style: AppFonts.manropeNormalSizable(
+                              height: null,
+                              color: Colors.white,
+                              fontSize: 15,
+                            ),
+                          ),
                           const SizedBox(height: 10),
                         ],
                       ),

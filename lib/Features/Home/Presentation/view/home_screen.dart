@@ -71,21 +71,29 @@ class HomePageState extends State<HomePage> {
       ),
       body: _isLoading
           ? Center(
-              child: LoadingAnimationWidget.waveDots(
-                color: kPrimaryColor,
-                size: 50,
+        child: LoadingAnimationWidget.waveDots(
+          color: kPrimaryColor,
+          size: 50,
+        ),
+      )
+          : SingleChildScrollView(
+        child: Column(
+          children: [
+            HomeBody(gpa: _userData?.data?.gpa ?? 0.0),
+            const SizedBox(height: 25),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: AspectRatio(
+                aspectRatio: 16 / 9,
+                child: Image.asset(
+                  'assets/images/college_project-bro.png',
+                  fit: BoxFit.cover,
+                ),
               ),
-            )
-          : Column(
-              children: [
-                HomeBody(gpa: _userData?.data?.gpa ?? 0.0),
-                const SizedBox(height: 25),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Image.asset('assets/images/college_project-bro.png'),
-                )
-              ],
             ),
+          ],
+        ),
+      ),
       bottomNavigationBar: const CustomBottomNavBar(
         selectedMenu: MenuState.home,
       ),
