@@ -1,6 +1,7 @@
 import 'package:eductionsystem/Constants/const.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../../../../../Constants/FontsConst.dart';
 import '../../../Data/Models/availble_courses.dart';
@@ -21,13 +22,14 @@ class CoursesList extends ConsumerStatefulWidget {
 class _CoursesListState extends ConsumerState<CoursesList> {
   late int _expandedIndex;
   late List<CoursesSectionData> _sectionData;
+  late Future<void> _loadingFuture;
 
   @override
   void initState() {
     super.initState();
     _expandedIndex = -1;
     _sectionData = [];
-    _fetchSectionData();
+    _loadingFuture = _fetchSectionData();
   }
 
   Future<void> _fetchSectionData() async {
@@ -305,55 +307,77 @@ class _CoursesListState extends ConsumerState<CoursesList> {
 
   @override
   Widget build(BuildContext context) {
-    final courseState = ref.watch(courseProvider);
-    return Expanded(
-      child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(
-          decelerationRate: ScrollDecelerationRate.fast,
-        ),
-        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-        clipBehavior: Clip.antiAlias,
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 20, top: 25),
-              child: Row(
+    return FutureBuilder<void>(
+      future: _loadingFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+            child: LoadingAnimationWidget.waveDots(
+              color: kPrimaryColor,
+              size: 50,
+            ),
+          );
+        } else if (snapshot.connectionState == ConnectionState.done) {
+          final courseState = ref.watch(courseProvider);
+          return Expanded(
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(
+                decelerationRate: ScrollDecelerationRate.fast,
+              ),
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+              clipBehavior: Clip.antiAlias,
+              child: Column(
                 children: [
-                  Text(
-                    'Available Courses To Enroll',
-                    style: AppFonts.manropeBoldSizable(
-                        color: kPrimaryColor, fontSize: 17),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20, top: 25),
+                    child: Row(
+                      children: [
+                        Text(
+                          'Available Courses To Enroll',
+                          style: AppFonts.manropeBoldSizable(
+                              color: kPrimaryColor, fontSize: 17),
+                        ),
+                      ],
+                    ),
                   ),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: _sectionData.length,
+                    itemBuilder: (context, index) {
+                      final sectionData = _sectionData[index];
+                      final isSelected = courseState.selectedCourseIds
+                          .contains(sectionData.courseData.id);
+                      return CoursesExpandableSection(
+                        sectionData: sectionData,
+                        index: index,
+                        isExpanded: _expandedIndex == index,
+                        isSelected: isSelected,
+                        onTap: () {
+                          setState(() {
+                            _expandedIndex =
+                                (_expandedIndex == index) ? -1 : index;
+                          });
+                        },
+                        buttonAction: () =>
+                            _toggleCourseEnrollment(sectionData.courseData),
+                      );
+                    },
+                  ),
+                  const CourseMinMax(),
                 ],
               ),
             ),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: _sectionData.length,
-              itemBuilder: (context, index) {
-                final sectionData = _sectionData[index];
-                final isSelected = courseState.selectedCourseIds
-                    .contains(sectionData.courseData.id);
-                return CoursesExpandableSection(
-                  sectionData: sectionData,
-                  index: index,
-                  isExpanded: _expandedIndex == index,
-                  isSelected: isSelected,
-                  onTap: () {
-                    setState(() {
-                      _expandedIndex = (_expandedIndex == index) ? -1 : index;
-                    });
-                  },
-                  buttonAction: () =>
-                      _toggleCourseEnrollment(sectionData.courseData),
-                );
-              },
+          );
+        } else {
+          return const Center(
+            child: Text(
+              'Failed to load data',
+              style: TextStyle(color: Colors.red, fontSize: 16),
             ),
-            const CourseMinMax(),
-          ],
-        ),
-      ),
+          );
+        }
+      },
     );
   }
 }

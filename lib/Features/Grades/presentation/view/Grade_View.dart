@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../../../../Core/GloabalWidgets/nav_bar.dart';
 
@@ -14,9 +15,17 @@ class GradesPage extends StatefulWidget {
 }
 
 class _GradesPageState extends State<GradesPage> {
+  late Future<void> _loadingFuture;
+
   @override
   void initState() {
     super.initState();
+    _loadingFuture = _simulateLoading();
+  }
+
+  Future<void> _simulateLoading() async {
+    await Future.delayed(
+        const Duration(seconds: 2)); // Simulate a 2-second delay
   }
 
   @override
@@ -47,7 +56,28 @@ class _GradesPageState extends State<GradesPage> {
           },
         ),
       ),
-      body: const GradeViewBody(),
+      body: FutureBuilder<void>(
+        future: _loadingFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: LoadingAnimationWidget.waveDots(
+                color: Colors.blue,
+                size: 50,
+              ),
+            );
+          } else if (snapshot.connectionState == ConnectionState.done) {
+            return const GradeViewBody();
+          } else {
+            return const Center(
+              child: Text(
+                'Failed to load data',
+                style: TextStyle(color: Colors.red, fontSize: 16),
+              ),
+            );
+          }
+        },
+      ),
       bottomNavigationBar: const CustomBottomNavBar(
         selectedMenu: MenuState.Grades,
       ),

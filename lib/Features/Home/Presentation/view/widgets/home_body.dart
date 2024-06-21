@@ -117,6 +117,7 @@ class HomeBody extends ConsumerWidget {
           child: LoadingAnimationWidget.waveDots(
             color: Colors.blue,
             size: 50,
+
           ),
         );
       },
